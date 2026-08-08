@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#141210">
+<meta name="mobile-web-app-capable" content="yes">
+<title>MAXAGIST — массаж в Риге · студия FIFTY и выезд</title>
+<meta name="description" content="MAXAGIST — массаж в Риге. Студия FIFTY и выезд на дом, в отель, офис. Первый визит — €30. Запись в WhatsApp или онлайн.">
+<meta property="og:title" content="MAXAGIST — массаж в Риге">
+<meta property="og:description" content="Массаж без спешки, под ваше состояние. Первый визит — €30. Студия FIFTY или выезд по Риге.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_LV">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141210; --bg2:#1b1813; --panel:rgba(38,32,26,.5); --panel-2:rgba(46,39,31,.62);
+  --line:rgba(199,161,120,.26); --line-2:rgba(199,161,120,.14);
+  --gold:#c7a17a; --gold-hi:#e4c9a2; --gold-dim:#9c7d57;
+  --cream:#ece4d7; --muted:#9a8f80; --muted-2:#7c7264;
+  --wa:#3aa35a; --wa-deep:#2c7f45;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Karla",system-ui,Arial,sans-serif;
+  /* glass */
+  --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.085);
+  --glass-hi:rgba(255,255,255,.5); --glass-border:rgba(228,201,162,.22);
+  --glass-blur:22px;
+  --r-lg:26px; --r-md:18px; --r-sm:13px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--cream);font:400 17px/1.65 var(--sans);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+a,button{touch-action:manipulation}
+button,input,textarea{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+input,textarea,select{font-size:16px}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:.005em;line-height:1.04;margin:0}
+p{margin:0}
+::selection{background:rgba(199,161,120,.3)}
+
+/* backdrop: warm dark + soft top glow + fine grain */
+.bg-base{position:fixed;inset:0;z-index:-4;background:
+  radial-gradient(90% 60% at 72% -8%, #2a231a 0%, #191510 42%, #131110 100%)}
+.bg-grain{position:fixed;inset:0;z-index:-2;opacity:.05;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* ambient color blooms — light for the glass panels to catch */
+.bg-glow{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden}
+.bg-glow i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.bg-glow i:nth-child(1){width:46vw;height:46vw;top:-14vw;right:-10vw;background:radial-gradient(circle,#8a6a3f,transparent 70%)}
+.bg-glow i:nth-child(2){width:36vw;height:36vw;bottom:-6vw;left:-8vw;background:radial-gradient(circle,#5f4a6b,transparent 70%);opacity:.28}
+.bg-glow i:nth-child(3){width:26vw;height:26vw;top:38%;left:52%;background:radial-gradient(circle,#c7a17a,transparent 70%);opacity:.16}
+
+/* reusable glass surface */
+.glass{background:linear-gradient(160deg,var(--glass-2),var(--glass));
+  border:1px solid var(--glass-border);border-radius:var(--r-lg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(160%);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(160%);
+  box-shadow:0 1px 0 0 rgba(255,255,255,.09) inset,0 0 0 1px rgba(0,0,0,.15) inset,0 30px 70px -35px rgba(0,0,0,.85);
+  position:relative}
+/* fallback for browsers/older Android WebViews without backdrop-filter support */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .glass,.top,.wa-bubble,.btn-line,.btn-wa{background:#211c17}
+  .offer-info::before{filter:none}
+}
+
+.wrap{max-width:1160px;margin:auto;padding:0 26px}
+section{scroll-margin-top:100px}
+
+.eyebrow{font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--gold)}
+
+/* hairline "thread" divider echoing the logo baseline */
+.thread{max-width:1160px;margin:0 auto;height:1px;padding:0 26px}
+.thread i{display:block;height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:11px;padding:15px 28px;border-radius:999px;
+  font-family:var(--sans);font-weight:600;font-size:.98rem;letter-spacing:.02em;cursor:pointer;
+  border:1px solid transparent;transition:transform .2s,background .2s,color .2s,border-color .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a140d;
+  box-shadow:0 16px 34px -16px rgba(199,161,120,.85),0 1px 0 rgba(255,255,255,.4) inset}
+.btn-gold:hover{box-shadow:0 20px 40px -14px rgba(199,161,120,1),0 1px 0 rgba(255,255,255,.5) inset}
+.btn-line{background:var(--glass);border-color:var(--glass-border);color:var(--cream);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.btn-line:hover{border-color:var(--gold);color:var(--gold-hi);background:var(--glass-2)}
+.btn-wa{background:rgba(58,163,90,.12);border-color:rgba(58,163,90,.55);color:#dff1e4;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.btn-wa:hover{background:var(--wa-deep);border-color:var(--wa-deep);color:#fff;
+  box-shadow:0 16px 30px -16px rgba(58,163,90,.7)}
+.btn svg{width:19px;height:19px;flex:none}
+
+/* header */
+.top{position:sticky;top:0;z-index:40;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  background:rgba(20,18,16,.56);border-bottom:1px solid var(--glass-border);
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:74px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:34px;width:auto}
+.brand .wm{font-family:var(--serif);font-size:1.32rem;letter-spacing:.42em;padding-left:.42em;color:var(--cream)}
+.nav{display:flex;gap:30px;font-size:.86rem;letter-spacing:.04em}
+.nav a{padding:6px 0;color:var(--muted);transition:color .18s;position:relative}
+.nav a:hover{color:var(--cream)}
+.top-tel{font-size:.88rem;letter-spacing:.03em;color:var(--cream);white-space:nowrap}
+.burger{display:none;background:none;border:0;color:var(--gold);cursor:pointer;
+  width:44px;height:44px;align-items:center;justify-content:center;flex:none}
+.burger svg{width:24px;height:24px}
+.burger .ic-close{display:none}
+.burger[aria-expanded="true"] .ic-menu{display:none}
+.burger[aria-expanded="true"] .ic-close{display:block}
+
+/* hero — asymmetric */
+.hero{padding:74px 0 64px}
+.hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.9rem,6.2vw,5.4rem);margin:26px 0 0}
+.hero h1 .price{color:var(--gold);font-weight:500}
+.hero h1 .old{font-family:var(--sans);font-size:.24em;font-weight:500;color:var(--muted-2);
+  letter-spacing:.03em;vertical-align:super;margin-left:14px;text-decoration:line-through;text-decoration-color:var(--gold-dim)}
+.hero .lead{font-size:1.16rem;color:var(--muted);max-width:520px;margin-top:24px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero-trust{margin-top:30px;font-size:.9rem;color:var(--muted-2);letter-spacing:.02em}
+.hero-trust b{color:var(--gold);font-weight:500}
+.hero-art{position:relative;display:flex;justify-content:center;padding:14px}
+.hero-art::before{content:"";position:absolute;inset:-6% -4%;
+  background:radial-gradient(circle at 50% 42%,rgba(199,161,120,.28),transparent 62%);filter:blur(20px)}
+.hero-art .frame{position:relative;width:min(420px,100%);padding:14px;border-radius:calc(var(--r-lg) + 14px)}
+.hero-art img{position:relative;width:100%;display:block;border-radius:var(--r-lg);opacity:.98}
+.hero-art .badge{position:absolute;left:32px;bottom:32px;z-index:2;display:flex;align-items:center;gap:10px;
+  padding:10px 16px;border-radius:999px;font-size:.82rem;color:var(--cream)}
+.hero-art .badge b{color:var(--gold-hi)}
+.hero-art .dot{width:8px;height:8px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 4px rgba(58,163,90,.25)}
+
+/* formats — glass card grid */
+.formats{padding:20px 0 12px}
+.fmt-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:end;margin-bottom:14px}
+.fmt-intro h2{font-size:clamp(2.2rem,4.6vw,3.4rem)}
+.fmt-intro p{color:var(--muted);max-width:440px}
+.fmt-list{margin-top:30px;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.fmt{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:30px 28px;transition:.25s}
+.fmt:hover{transform:translateY(-4px);border-color:var(--gold);
+  box-shadow:0 1px 0 0 rgba(255,255,255,.12) inset,0 0 0 1px rgba(0,0,0,.15) inset,0 34px 70px -30px rgba(0,0,0,.9)}
+.fmt .fmt-ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:var(--glass-2);border:1px solid var(--glass-border);color:var(--gold)}
+.fmt .fmt-ic svg{width:22px;height:22px}
+.fmt h3{font-size:1.5rem;color:var(--cream)}
+.fmt p{color:var(--muted);font-size:.95rem}
+.fmt .go{margin-top:auto;padding-top:6px;font-size:.85rem;letter-spacing:.05em;color:var(--gold);white-space:nowrap;font-weight:600}
+.fmt:hover .go{color:var(--gold-hi)}
+
+/* offer + form */
+.offer{padding:56px 0}
+.offer-panel{border-radius:var(--r-lg);overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr}
+.offer-panel>div{padding:46px}
+.offer-info{position:relative;border-right:1px solid var(--glass-border);isolation:isolate}
+.offer-info::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(160deg,rgba(20,17,14,.72),rgba(15,13,11,.88)),url("photos/spa-tools.jpg") center/cover;
+  filter:saturate(85%)}
+.offer-price{font-family:var(--serif);font-size:4.6rem;font-weight:500;color:var(--gold);
+  line-height:1;margin:20px 0 6px;display:flex;align-items:baseline;gap:16px}
+.offer-price .old{font-family:var(--sans);font-size:.24em;color:var(--muted-2);text-decoration:line-through}
+.offer-info p{color:var(--muted)}
+.offer-info ul{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:13px}
+.offer-info li{display:flex;gap:13px;align-items:flex-start;color:var(--cream);font-size:.98rem}
+.offer-info li i{width:16px;height:1px;background:var(--gold);margin-top:13px;flex:none}
+form label{display:block;font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:22px}
+form input,form textarea{display:block;width:100%;margin-top:9px;padding:10px 2px;border:0;
+  border-bottom:1px solid var(--line);background:transparent;outline:0;font-size:1.02rem;
+  color:var(--cream);letter-spacing:.01em;transition:border-color .18s}
+form input::placeholder,form textarea::placeholder{color:var(--muted-2)}
+form input:focus,form textarea:focus{border-bottom-color:var(--gold)}
+.consent{display:flex;gap:11px;align-items:flex-start;text-transform:none;letter-spacing:0;
+  font-size:.82rem;font-weight:400;color:var(--muted)}
+.consent input{width:auto;margin:4px 0 0;accent-color:var(--gold)}
+.consent a{color:var(--gold);border-bottom:1px solid var(--line)}
+form .btn-gold{width:100%;justify-content:center;margin-top:6px}
+.status{font-size:.9rem;margin-top:14px;min-height:1.1em;letter-spacing:.01em}
+.status.ok{color:var(--gold-hi)}
+.status.err{color:#d98d6a}
+.wa-fallback{display:none;margin-top:12px;width:100%;justify-content:center}
+.wa-fallback.show{display:inline-flex}
+
+/* studio */
+.studio{padding:48px 0}
+.studio-in{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--r-lg);overflow:hidden}
+.studio-txt{padding:52px 46px}
+.studio-txt h2{font-size:clamp(2rem,4.2vw,3rem);margin-top:16px}
+.studio-txt p{color:var(--muted);margin-top:16px;max-width:440px}
+.studio-txt .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.studio-visual{position:relative;min-height:320px;display:flex;align-items:flex-end;
+  border-left:1px solid var(--glass-border);
+  background:linear-gradient(0deg,rgba(15,13,11,.86),rgba(15,13,11,.15) 55%),url("photos/studio-room.jpg") center/cover}
+.studio-visual .pin{position:absolute;top:30px;left:30px;font-size:.7rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);border:1px solid var(--glass-border);padding:8px 13px;border-radius:999px;
+  background:var(--glass);backdrop-filter:blur(10px)}
+.studio-visual .cap{padding:34px 30px;color:var(--cream);font-family:var(--serif);font-size:1.4rem;
+  font-style:italic;line-height:1.35}
+
+/* about specialist */
+.about{padding:48px 0}
+.about-in{display:grid;grid-template-columns:1.05fr .95fr;gap:0;border-radius:var(--r-lg);overflow:hidden}
+.about-txt{padding:52px 46px}
+.about-txt h2{font-size:clamp(2rem,4.2vw,3rem);margin-top:16px}
+.about-txt p{color:var(--muted);margin-top:16px;max-width:460px}
+.creds{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:13px;max-width:460px}
+.creds li{display:flex;gap:13px;align-items:flex-start;color:var(--cream);font-size:.97rem}
+.creds li i{width:16px;height:1px;background:var(--gold);margin-top:13px;flex:none}
+.about-txt .row{margin-top:30px}
+.about-gallery{position:relative;display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;
+  gap:3px;min-height:380px;border-left:1px solid var(--glass-border)}
+.about-gallery .g1{grid-row:1 / span 2}
+.about-gallery img{width:100%;height:100%;object-fit:cover;display:block}
+.about-gallery .g2{object-position:center 20%}
+.about-gallery .cap{position:absolute;left:16px;bottom:16px;z-index:2;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;padding:8px 13px;border-radius:999px;color:var(--gold-hi)}
+
+/* certificate link trigger */
+.cert-link{background:none;border:0;padding:0;font:inherit;color:var(--gold);cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line);transition:color .18s}
+.cert-link:hover{color:var(--gold-hi)}
+
+/* certificate lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  padding:24px;background:rgba(10,8,6,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lightbox.open{display:flex}
+.lb-figure{position:relative;max-width:min(720px,92vw);max-height:88vh;display:flex;flex-direction:column;
+  align-items:center;gap:18px}
+.lb-figure img{max-width:100%;max-height:70vh;width:auto;border-radius:var(--r-md);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9);background:#1a1712;object-fit:contain}
+.lb-figure figcaption{color:var(--cream);font-family:var(--serif);font-size:1.15rem;text-align:center;max-width:540px}
+.lb-figure figcaption .lb-meta{display:block;margin-top:6px;font-family:var(--sans);font-size:.72rem;
+  font-weight:600;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.lb-figure figcaption .lb-desc{margin-top:8px;font-family:var(--sans);font-size:.88rem;
+  color:var(--muted);letter-spacing:.01em;line-height:1.5}
+.lb-close,.lb-nav{position:fixed;background:var(--glass-2);border:1px solid var(--glass-border);
+  color:var(--cream);border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);touch-action:manipulation}
+.lb-close:hover,.lb-nav:hover{border-color:var(--gold);color:var(--gold-hi)}
+.lb-close{top:20px;right:20px;width:46px;height:46px}
+.lb-close svg{width:20px;height:20px}
+.lb-nav{top:50%;transform:translateY(-50%);width:52px;height:52px}
+.lb-nav svg{width:24px;height:24px}
+.lb-prev{left:16px}
+.lb-next{right:16px}
+.lb-dots{position:fixed;left:0;right:0;bottom:18px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:0 64px}
+.lb-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);border:0;padding:0;cursor:pointer;transition:.2s;flex:none}
+.lb-dot.active{background:var(--gold);width:22px;border-radius:5px}
+
+/* faq */
+.faq{padding:56px 0;max-width:840px;margin:auto}
+.faq-head{margin-bottom:20px}
+.faq-head h2{font-size:clamp(2rem,4.4vw,3rem);margin-top:12px}
+details{border-bottom:1px solid var(--line-2);padding:22px 2px}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;
+  font-family:var(--serif);font-size:1.42rem;color:var(--cream)}
+summary::-webkit-details-marker{display:none}
+summary .pm{font-family:var(--sans);font-weight:300;font-size:1.5rem;color:var(--gold);
+  transition:transform .22s;line-height:1}
+details[open] summary .pm{transform:rotate(45deg)}
+details .a{color:var(--muted);margin-top:14px;max-width:680px}
+details .a a{color:var(--gold);border-bottom:1px solid var(--line)}
+
+/* undecided nudge banner */
+.nudge{padding:8px 0 40px}
+.nudge-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;
+  padding:36px 40px}
+.nudge-in h3{font-size:1.5rem;color:var(--cream);margin-top:6px}
+.nudge-in p{color:var(--muted);margin-top:8px;max-width:440px}
+
+/* contacts */
+.contacts{padding:56px 0}
+.contacts-in{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+.contacts-in h2{font-size:clamp(2rem,4.4vw,3rem);margin-top:14px}
+.contacts-in .note{color:var(--muted);margin-top:16px;max-width:340px}
+.clinks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.clink{display:flex;align-items:center;gap:15px;padding:18px 20px;border-radius:var(--r-md);transition:.2s}
+.clink:hover{border-color:var(--gold);transform:translateY(-3px);background:var(--glass-2)}
+.clink .ic{width:38px;height:38px;flex:none;border:1px solid var(--glass-border);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold)}
+.clink.wa .ic{color:var(--wa);border-color:rgba(58,163,90,.5)}
+.clink .ic svg{width:19px;height:19px}
+.clink b{font-weight:600;font-size:.98rem;color:var(--cream)}
+.clink small{display:block;color:var(--muted-2);font-size:.8rem;margin-top:2px}
+
+/* footer */
+footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
+.foot{display:grid;grid-template-columns:1.7fr 1fr 1.5fr;gap:36px}
+.foot .brand img{height:30px}.foot .brand .wm{font-size:1.15rem}
+.foot .about{color:var(--muted);font-size:.92rem;margin-top:16px;max-width:300px}
+.foot b{display:block;color:var(--gold);font-family:var(--sans);font-weight:600;font-size:.78rem;
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.foot a{display:block;color:var(--muted);margin:9px 0;font-size:.94rem}
+.foot a:hover{color:var(--cream)}
+.foot .gdpr{color:var(--muted-2);font-size:.86rem;line-height:1.55}
+.copy{margin-top:40px;padding-top:22px;border-top:1px solid var(--line-2);
+  color:var(--muted-2);font-size:.82rem;letter-spacing:.01em}
+
+/* floating WhatsApp magnet */
+.wa-dock{position:fixed;right:calc(22px + env(safe-area-inset-right));
+  bottom:calc(24px + env(safe-area-inset-bottom));z-index:60;display:flex;flex-direction:row-reverse;
+  align-items:flex-end;gap:12px}
+.wa-fab{width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;border:0;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 16px 34px -12px rgba(58,163,90,.8);transition:transform .2s;flex:none}
+.wa-fab:hover{transform:scale(1.07)}
+.wa-fab svg{width:31px;height:31px}
+.wa-bubble{position:relative;max-width:248px;padding:16px 18px 15px;border-radius:18px 18px 4px 18px;
+  background:linear-gradient(160deg,var(--glass-2),var(--glass));border:1px solid var(--glass-border);
+  color:var(--cream);font-size:.9rem;line-height:1.45;
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  box-shadow:0 1px 0 0 rgba(255,255,255,.09) inset,0 20px 44px -20px rgba(0,0,0,.9);
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:.35s}
+.wa-bubble.show{opacity:1;transform:none;pointer-events:auto}
+.wa-bubble b{font-family:var(--serif);font-size:1.12rem;color:var(--gold-hi);display:block;margin-bottom:4px}
+.wa-bubble a{color:var(--wa);font-weight:600}
+.wa-bubble .x{position:absolute;top:0;right:0;width:38px;height:38px;display:grid;place-items:center;
+  background:none;border:0;color:var(--muted-2);font-size:1.15rem;cursor:pointer;line-height:1}
+
+/* load-in */
+.rise{opacity:0;transform:translateY(16px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+.rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.18s}.rise.d3{animation-delay:.3s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+@media(max-width:900px){
+  body{font-size:16px}
+  .nav{display:none;position:absolute;top:74px;left:0;right:0;flex-direction:column;gap:0;
+    background:rgba(20,18,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav.open{display:flex}
+  .nav a{padding:15px 26px;border-bottom:1px solid var(--line-2);color:var(--cream)}
+  .burger{display:flex}
+  .nav a{min-height:44px;display:flex;align-items:center}
+  .top-tel{display:none}
+  .hero-in{grid-template-columns:1fr;gap:8px}
+  .hero-art{display:none}
+  .fmt-intro,.offer-panel,.studio-in,.about-in,.contacts-in,.foot{grid-template-columns:1fr}
+  .fmt-list{grid-template-columns:1fr}
+  .offer-info{border-right:0;border-bottom:1px solid var(--glass-border)}
+  .studio-visual{min-height:220px;border-left:0;border-top:1px solid var(--glass-border)}
+  .about-gallery{min-height:260px;border-left:0;border-top:1px solid var(--glass-border)}
+  .nudge-in{flex-direction:column;align-items:flex-start}
+  .clinks{grid-template-columns:1fr}
+  .offer-panel>div,.studio-txt,.about-txt{padding:30px}
+  .lb-figure img{max-height:56vh}
+  .lb-nav{width:44px;height:44px}
+  .lb-nav svg{width:20px;height:20px}
+  .lb-prev{left:6px}
+  .lb-next{right:6px}
+  .lb-close{top:calc(12px + env(safe-area-inset-top));right:calc(12px + env(safe-area-inset-right));width:44px;height:44px}
+  .lb-dots{bottom:calc(14px + env(safe-area-inset-bottom));padding:0 54px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important;animation:none!important;opacity:1!important;transform:none!important}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+</style>
+</head>
+<body id="top">
+<div class="bg-base"></div>
+<div class="bg-glow"><i></i><i></i><i></i></div>
+<div class="bg-grain"></div>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a href="#top" class="brand"><img src="photos/logo.png" alt="MAXAGIST"><span class="wm">MAXAGIST</span></a>
+    <nav class="nav" id="nav">
+      <a href="#formats">Услуги</a>
+      <a href="#offer">Первый визит</a>
+      <a href="#studio">Студия</a>
+      <a href="#about">О специалисте</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="top-tel" href="tel:+37128251366">+371 28 251 366</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+      <svg class="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero wrap">
+  <div class="hero-in">
+    <div>
+      <span class="eyebrow rise">Массаж в Риге · студия и выезд</span>
+      <h1 class="rise d1">Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span></h1>
+      <p class="lead rise d2">Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.</p>
+      <div class="hero-cta rise d2">
+        <a class="btn btn-wa" id="wa-hero" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+          Написать в WhatsApp</a>
+        <a class="btn btn-line" href="#offer">Или записаться на сайте</a>
+      </div>
+      <p class="hero-trust rise d3">Не знаете, что выбрать? Просто напишите — подскажем формат и время за пару минут. Отвечаем обычно <b>в течение нескольких минут</b>.</p>
+    </div>
+    <div class="hero-art">
+      <div class="frame glass">
+        <img src="photos/massage-back.jpg" alt="Массаж спины в студии FIFTY" loading="eager">
+        <span class="badge glass"><span class="dot"></span>Онлайн · отвечаем сейчас</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="thread"><i></i></div>
+
+<!-- FORMATS -->
+<section id="formats" class="formats wrap">
+  <div class="fmt-intro">
+    <h2>Как вам удобнее</h2>
+    <p>Три формата приёма плюс запись онлайн. Если не знаете, что выбрать, напишите в WhatsApp — подскажем под вашу ситуацию.</p>
+  </div>
+  <div class="fmt-list">
+    <a class="fmt glass" href="#studio">
+      <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-5.7 7-11a7 7 0 0 0-14 0c0 5.3 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+      <h3>В студии FIFTY</h3>
+      <p>Тихое пространство для расслабления и работы с привычным напряжением.</p>
+      <span class="go">Подробнее</span>
+    </a>
+    <a class="fmt glass" href="#offer">
+      <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h13l-3-3m3 3-3 3M18 7v10"/></svg></span>
+      <h3>С выездом</h3>
+      <p>Приедем с оборудованием домой, в отель или офис по Риге и рядом.</p>
+      <span class="go">Запросить</span>
+    </a>
+    <a class="fmt glass" href="#offer">
+      <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.7-5.5 6-5.5s6 2.5 6 5.5M15 20c0-2.3 1.8-4.2 4-4.5"/></svg></span>
+      <h3>Для команды и событий</h3>
+      <p>Кресельный или столовый массаж для сотрудников, клиентских дней, частных встреч.</p>
+      <span class="go">Обсудить</span>
+    </a>
+    <a class="fmt glass" href="https://n1022981.alteg.io" target="_blank" rel="noopener">
+      <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
+      <h3>Онлайн-запись</h3>
+      <p>Свободные слоты и запись через Altegio, когда удобно.</p>
+      <span class="go">Открыть Altegio ↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- OFFER + FORM -->
+<section id="offer" class="offer wrap">
+  <div class="offer-panel glass">
+    <div class="offer-info">
+      <span class="eyebrow">Новым клиентам</span>
+      <div class="offer-price">€30 <span class="old">€50</span></div>
+      <p>Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.</p>
+      <ul>
+        <li><i></i>Цена €30 — за первый визит в студию</li>
+        <li><i></i>Подберём силу, темп и зоны под вас</li>
+        <li><i></i>Свяжемся, чтобы согласовать время</li>
+      </ul>
+    </div>
+    <div>
+      <form id="lead-form" novalidate>
+        <label>Имя<input name="name" required autocomplete="name" placeholder="Как к вам обращаться"></label>
+        <label>Телефон<input type="tel" name="phone" required autocomplete="tel" placeholder="+371 …"></label>
+        <label>Email<input type="email" name="email" autocomplete="email" placeholder="для подтверждения, по желанию"></label>
+        <label>Сообщение<textarea name="message" rows="2" placeholder="Удобные дни, время, пожелания"></textarea></label>
+        <label class="consent"><input type="checkbox" required>
+          <span>Согласен(-на) на обработку данных для ответа на запрос. <a href="#terms">Условия</a>.</span></label>
+        <button class="btn btn-gold" type="submit" id="submit-btn">Оставить заявку</button>
+        <p class="status" id="status" aria-live="polite"></p>
+        <a class="btn btn-wa wa-fallback" id="wa-fallback" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+          Отправить в WhatsApp</a>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- STUDIO -->
+<section id="studio" class="studio wrap">
+  <div class="studio-in glass">
+    <div class="studio-txt">
+      <span class="eyebrow">Студия FIFTY</span>
+      <h2>Место, где можно выдохнуть</h2>
+      <p>Приём проходит в FIFTY Beauty Studio. Откройте карту для навигации — детали доступа пришлём после подтверждения записи.</p>
+      <div class="row">
+        <a class="btn btn-gold" href="https://www.google.com/maps/search/?api=1&query=FIFTY+Beauty+Studio+Riga" target="_blank" rel="noopener">Открыть карту ↗</a>
+        <a class="btn btn-line" href="https://www.fiftystudio.lv/" target="_blank" rel="noopener">Сайт FIFTY ↗</a>
+      </div>
+    </div>
+    <div class="studio-visual">
+      <span class="pin">FIFTY · Рига</span>
+      <p class="cap">Приходите на пару минут раньше — чтобы спокойно настроиться до сеанса.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SPECIALIST -->
+<section id="about" class="about wrap">
+  <div class="about-in glass">
+    <div class="about-txt">
+      <span class="eyebrow">О специалисте</span>
+      <h2>Максим Анохин — образование, которому можно доверять</h2>
+      <p>Массаж — не хобби на выходных, а профессия с дипломом. Медицинское образование, диплом RISEBA, международная квалификация ITEC и ещё девять профильных сертификатов — от классического массажа до работы с фасцией.</p>
+      <ul class="creds">
+        <li><i></i>Медицинское образование и сертификат «Сестринское дело»</li>
+        <li><i></i>ITEC Level 3 (Великобритания) и SPA SPECIĀLISTS (Латвия)</li>
+        <li><i></i>Ещё 9 сертификатов — <button type="button" class="cert-link" id="open-certs">смотреть дипломы ↗</button></li>
+      </ul>
+      <div class="row">
+        <a class="btn btn-wa" id="wa-about" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+          Есть вопрос по опыту? Спросить</a>
+      </div>
+    </div>
+    <div class="about-gallery">
+      <img class="g1" src="photos/cert-spaschool.jpg" alt="Сертификат SPA School">
+      <img class="g2" src="photos/diploma-riseba.jpg" alt="Вручение диплома массажиста, RISEBA">
+      <img src="photos/massage-leg.jpg" alt="Массаж в процессе сеанса">
+      <span class="cap glass">Дипломы и практика</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq wrap">
+  <div class="faq-head">
+    <span class="eyebrow">Вопросы</span>
+    <h2>Перед первым визитом</h2>
+  </div>
+  <details open><summary>Как подготовиться?<span class="pm">+</span></summary>
+    <p class="a">Ничего особенного. Приходите на несколько минут раньше, пейте воду как обычно и расскажите о травмах, самочувствии и пожеланиях до начала сеанса.</p></details>
+  <details><summary>Что надеть?<span class="pm">+</span></summary>
+    <p class="a">Что-то, в чём вам комфортно. Раздеваетесь только до удобного для вас уровня; во время процедуры используется профессиональное укрытие.</p></details>
+  <details><summary>Когда лучше перенести?<span class="pm">+</span></summary>
+    <p class="a">При температуре, острой инфекции или плохом самочувствии визит стоит перенести. При беременности, недавней операции или серьёзной травме сначала посоветуйтесь с врачом.</p></details>
+  <details><summary>Как записаться?<span class="pm">+</span></summary>
+    <p class="a">Быстрее всего — написать в WhatsApp или Telegram. Можно выбрать слот самому через <a href="https://n1022981.alteg.io" target="_blank" rel="noopener">Altegio</a>.</p></details>
+</section>
+
+<!-- UNDECIDED NUDGE -->
+<section class="nudge wrap">
+  <div class="nudge-in glass">
+    <div>
+      <span class="eyebrow">Не нашли ответ?</span>
+      <h3>Просто напишите — разберёмся вместе</h3>
+      <p>Не обязательно точно знать формат и время заранее. Расскажите, что беспокоит — предложим вариант.</p>
+    </div>
+    <a class="btn btn-wa" id="wa-nudge" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+      Написать в WhatsApp</a>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts" class="contacts wrap">
+  <div class="contacts-in">
+    <div>
+      <span class="eyebrow">Контакты</span>
+      <h2>Напишите удобным способом</h2>
+      <p class="note">Не уверены, что выбрать? Напишите в WhatsApp — подскажем формат и время под вас.</p>
+    </div>
+    <div class="clinks">
+      <a class="clink glass wa" id="wa-contact" href="#" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg></span>
+        <span><b>WhatsApp</b><small>Ответим за пару минут</small></span></a>
+      <a class="clink glass" href="https://t.me/maxagist" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.2-8.3c.4-.4-.1-.6-.6-.2L6 12.9l-4.9-1.5c-1-.3-1.1-1 .2-1.5L20.6 2.9c.9-.3 1.6.2 1.3 1.4Z"/></svg></span>
+        <span><b>Telegram</b><small>@maxagist</small></span></a>
+      <a class="clink glass" href="https://www.instagram.com/maxagist" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+        <span><b>Instagram</b><small>@maxagist</small></span></a>
+      <a class="clink glass" href="tel:+37128251366">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg></span>
+        <span><b>Позвонить</b><small>+371 28 251 366</small></span></a>
+      <a class="clink glass" href="https://n1022981.alteg.io" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
+        <span><b>Онлайн-запись</b><small>Свободные слоты в Altegio</small></span></a>
+      <a class="clink glass" href="https://www.google.com/maps/search/?api=1&query=FIFTY+Beauty+Studio+Riga" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-5.7 7-11a7 7 0 0 0-14 0c0 5.3 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+        <span><b>Карта студии</b><small>FIFTY Beauty Studio, Рига</small></span></a>
+    </div>
+  </div>
+</section>
+
+<footer id="terms">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="brand"><img src="photos/logo.png" alt="MAXAGIST"><span class="wm">MAXAGIST</span></a>
+        <p class="about">Массаж в Риге: студия FIFTY и выезд на дом, в отель, офис.</p>
+      </div>
+      <div>
+        <b>Разделы</b>
+        <a href="#formats">Услуги</a>
+        <a href="#offer">Первый визит €30</a>
+        <a href="#studio">Студия</a>
+        <a href="#about">О специалисте</a>
+        <a href="#faq">Вопросы</a>
+      </div>
+      <div>
+        <b>Данные и GDPR</b>
+        <p class="gdpr">Форма собирает имя, телефон и email только для ответа на запрос и организации визита. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.</p>
+      </div>
+    </div>
+    <div class="copy">© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.</div>
+  </div>
+</footer>
+
+<div class="wa-dock">
+  <button class="wa-fab" id="wa-fab" aria-label="Написать в WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+  </button>
+  <div class="wa-bubble" id="wa-bubble">
+    <button class="x" id="wa-x" aria-label="Закрыть">×</button>
+    <b>Не знаете, что выбрать?</b>
+    Напишите в <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — подскажем формат и время за пару минут.
+  </div>
+</div>
+
+<!-- CERTIFICATE LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lb-close" aria-label="Закрыть">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>
+  </button>
+  <button class="lb-nav lb-prev" id="lb-prev" aria-label="Предыдущий сертификат">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button class="lb-nav lb-next" id="lb-next" aria-label="Следующий сертификат">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <figure class="lb-figure">
+    <img id="lb-img" src="" alt="">
+    <figcaption id="lb-caption"></figcaption>
+  </figure>
+  <div class="lb-dots" id="lb-dots"></div>
+</div>
+
+<script>
+/* ===== CONFIG — впиши свои значения ===== */
+const SUPABASE_URL      = 'https://YOUR-PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const LEADS_TABLE       = 'leads';
+const WA_PHONE          = '37128251366';
+/* ======================================== */
+
+const waLink = t => `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(t)}`;
+document.getElementById('wa-hero').href        = waLink('Здравствуйте! Хочу записаться на первый визит за €30.');
+document.getElementById('wa-about').href       = waLink('Здравствуйте! Есть вопрос по вашему опыту и образованию.');
+document.getElementById('wa-nudge').href       = waLink('Здравствуйте! Не могу определиться, что мне нужно — подскажете?');
+document.getElementById('wa-contact').href     = waLink('Здравствуйте! Подскажите по массажу, пожалуйста.');
+document.getElementById('wa-bubble-link').href = waLink('Здравствуйте! Не могу определиться с форматом — подскажете?');
+document.getElementById('wa-fab').onclick      = () => window.open(waLink('Здравствуйте! Хочу записаться на массаж.'), '_blank');
+
+const burger = document.getElementById('burger'), nav = document.getElementById('nav');
+burger.onclick = () => { const o = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
+nav.querySelectorAll('a').forEach(a => a.onclick = () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); });
+
+const bubble = document.getElementById('wa-bubble');
+if (!sessionStorage.getItem('wa-hidden')) setTimeout(() => bubble.classList.add('show'), 4000);
+document.getElementById('wa-x').onclick = () => { bubble.classList.remove('show'); sessionStorage.setItem('wa-hidden', '1'); };
+
+const form = document.getElementById('lead-form');
+const statusEl = document.getElementById('status');
+const submitBtn = document.getElementById('submit-btn');
+const waFallback = document.getElementById('wa-fallback');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  statusEl.className = 'status'; waFallback.classList.remove('show');
+  const d = Object.fromEntries(new FormData(form).entries());
+  if (!d.name || !d.phone || !form.querySelector('[type=checkbox]').checked) {
+    statusEl.textContent = 'Заполните имя, телефон и отметьте согласие.'; statusEl.classList.add('err'); return;
+  }
+  const payload = { name:d.name.trim(), phone:d.phone.trim(),
+    email:(d.email||'').trim()||null, message:(d.message||'').trim()||null, source:'landing' };
+  const waText = `Здравствуйте! Заявка с сайта на первый визит €30.\nИмя: ${payload.name}\nТелефон: ${payload.phone}` +
+    (payload.email?`\nEmail: ${payload.email}`:'') + (payload.message?`\nСообщение: ${payload.message}`:'');
+  waFallback.href = waLink(waText);
+
+  const configured = !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR_');
+  if (!configured) {
+    statusEl.textContent = 'Supabase не подключён (dev). Можно отправить заявку в WhatsApp:';
+    statusEl.classList.add('err'); waFallback.classList.add('show'); return;
+  }
+  submitBtn.disabled = true; statusEl.textContent = 'Отправляем…';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${LEADS_TABLE}`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':SUPABASE_ANON_KEY,
+        'Authorization':`Bearer ${SUPABASE_ANON_KEY}`, 'Prefer':'return=minimal' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    form.reset();
+    statusEl.textContent = 'Спасибо! Заявка получена — свяжемся с вами в ближайшее время.';
+    statusEl.classList.add('ok');
+  } catch (err) {
+    statusEl.textContent = 'Не удалось отправить. Напишите нам напрямую в WhatsApp:';
+    statusEl.classList.add('err'); waFallback.classList.add('show');
+  } finally { submitBtn.disabled = false; }
+});
+
+/* ===== certificate lightbox ===== */
+const CERTS = [
+  { src:'photos/certs/cert-itec.jpg', title:'ITEC Level 3 Diploma in Complementary Therapies', meta:'№ 96542/354/93012/93578', desc:'Международный британский диплом: массаж тела, рефлексология, ароматерапия, анатомия и физиология.' },
+  { src:'photos/certs/cert-spa-specialist.jpg', title:'SPA SPECIĀLISTS', meta:'Nr. 02-18/1050', desc:'Латвия, SPA School — 1060 часов: SPA-процедуры, работа с клиентом, основы здорового образа жизни.' },
+  { src:'photos/certs/cert-classic-massage.jpg', title:'Классический массаж', meta:'№ 781801049275', desc:'Санкт-Петербург, 72 часа — база техник, на которой строятся все остальные виды массажа.' },
+  { src:'photos/certs/cert-nursing.jpg', title:'Сертификат специалиста «Сестринское дело»', meta:'№ 0878180776837', desc:'Документ гос. образца — допуск к медицинской деятельности, понимание противопоказаний и безопасности.' },
+  { src:'photos/certs/cert-fitness-instructor.jpg', title:'Инструктор фитнеса, бодибилдинга и оздоровительной физической культуры', meta:'№ 08321', desc:'Колледж Вейдера — как тело работает под нагрузкой, полезно для понимания мышечных зажимов.' },
+  { src:'photos/certs/cert-personal-trainer.jpg', title:'Персональный тренер по бодибилдингу и фитнесу', meta:'№ 3375', desc:'Углублённый курс — индивидуальная работа с телом и восстановление после нагрузок.' },
+  { src:'photos/certs/cert-medical-diploma.jpg', title:'Диплом о среднем медицинском образовании', meta:'№ 117818 0348193', desc:'Квалификация «Медицинский брат», специальность «Сестринское дело» — полное медицинское образование.' },
+  { src:'photos/certs/cert-thai-massage.jpg', title:'Тайский (йога) массаж на столе', meta:'19.05.2015', desc:'Мастер-класс по традиционному тайскому массажу и массажу стоп.' },
+  { src:'photos/certs/cert-fascia.jpg', title:'«Работа с фасцией и другой соединительной тканью»', meta:'№ 371', desc:'Авторский курс «Больше чем массаж» — техника глубокой работы с хроническими зажимами.' },
+  { src:'photos/certs/cert-chiro-body.jpg', title:'Хиромассаж тела. Базовый курс', meta:'08–11.07.2019', desc:'Школа Magistra, 40 часов — техника ручного массажа тела повышенной точности.' },
+  { src:'photos/certs/cert-chiro-face.jpg', title:'Хиромассаж лица. Базовый курс', meta:'02–05.09.2020', desc:'Школа Magistra, 40 часов — массаж лица для расслабления и лифтинг-эффекта.' }
+];
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCaption = document.getElementById('lb-caption');
+const lbDots = document.getElementById('lb-dots');
+let lbIndex = 0;
+
+function lbRender(){
+  const c = CERTS[lbIndex];
+  lbImg.src = c.src; lbImg.alt = c.title;
+  lbCaption.innerHTML = c.title
+    + (c.meta ? `<span class="lb-meta">${c.meta}</span>` : '')
+    + (c.desc ? `<span class="lb-desc">${c.desc}</span>` : '');
+  lbDots.innerHTML = CERTS.map((_, i) =>
+    `<button class="lb-dot${i === lbIndex ? ' active' : ''}" data-i="${i}" aria-label="Сертификат ${i + 1} из ${CERTS.length}"></button>`
+  ).join('');
+}
+function lbOpen(i){
+  lbIndex = i; lbRender();
+  lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function lbClose(){
+  lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+function lbNav(delta){
+  lbIndex = (lbIndex + delta + CERTS.length) % CERTS.length; lbRender();
+}
+
+document.getElementById('open-certs').onclick = () => lbOpen(0);
+document.getElementById('lb-close').onclick = lbClose;
+document.getElementById('lb-prev').onclick = () => lbNav(-1);
+document.getElementById('lb-next').onclick = () => lbNav(1);
+lbDots.onclick = e => { const b = e.target.closest('.lb-dot'); if (b) { lbIndex = +b.dataset.i; lbRender(); } };
+lightbox.addEventListener('click', e => { if (e.target === lightbox) lbClose(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') lbClose();
+  if (e.key === 'ArrowLeft') lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+});
+let lbTouchX = null;
+lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener('touchend', e => {
+  if (lbTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if (Math.abs(dx) > 40) lbNav(dx > 0 ? -1 : 1);
+  lbTouchX = null;
+}, { passive: true });
+</script>
+</body>
+</html>
