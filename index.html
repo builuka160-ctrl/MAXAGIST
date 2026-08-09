@@ -30,7 +30,10 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--cream);font:400 17px/1.65 var(--sans);
+body{margin:0;color:var(--cream);font:400 17px/1.65 var(--sans);
+  background:var(--bg);
+  background-image:radial-gradient(90% 60% at 72% -8%, #2a231a 0%, #191510 42%, #131110 100%);
+  background-attachment:fixed;
   -webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 a,button{touch-action:manipulation}
@@ -148,6 +151,28 @@ section{scroll-margin-top:100px}
 .fmt p{color:var(--muted);font-size:.95rem}
 .fmt .go{margin-top:auto;padding-top:6px;font-size:.85rem;letter-spacing:.05em;color:var(--gold);white-space:nowrap;font-weight:600}
 .fmt:hover .go{color:var(--gold-hi)}
+
+/* outcall path */
+.outcall{padding:20px 0 12px}
+.outcall-in{padding:44px 46px;border-radius:var(--r-lg)}
+.outcall-head{max-width:620px}
+.outcall-head h2{font-size:clamp(2rem,4.2vw,3rem);margin-top:12px}
+.outcall-head p{color:var(--muted);margin-top:14px}
+.steps{list-style:none;padding:0;margin:34px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  counter-reset:step}
+.step{position:relative;padding:26px 24px;border-radius:var(--r-md);
+  background:var(--glass);border:1px solid var(--glass-border)}
+.step .step-n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font-family:var(--serif);font-size:1.3rem;color:#1a140d;
+  background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+  box-shadow:0 8px 20px -8px rgba(199,161,120,.8)}
+.step h3{font-size:1.24rem;color:var(--cream);margin-top:16px}
+.step p{color:var(--muted);font-size:.94rem;margin-top:8px}
+.step .arrow{position:absolute;top:44px;right:-13px;z-index:2;color:var(--gold-dim)}
+.step:last-child .arrow{display:none}
+.step .arrow svg{width:22px;height:22px}
+.outcall-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.outcall-note{color:var(--muted-2);font-size:.88rem;margin-top:16px}
 
 /* offer + form */
 .offer{padding:56px 0}
@@ -315,8 +340,10 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
 .wa-bubble.show{opacity:1;transform:none;pointer-events:auto}
 .wa-bubble b{font-family:var(--serif);font-size:1.12rem;color:var(--gold-hi);display:block;margin-bottom:4px}
 .wa-bubble a{color:var(--wa);font-weight:600}
-.wa-bubble .x{position:absolute;top:0;right:0;width:38px;height:38px;display:grid;place-items:center;
-  background:none;border:0;color:var(--muted-2);font-size:1.15rem;cursor:pointer;line-height:1}
+.wa-bubble .x{position:absolute;top:-11px;right:-11px;width:30px;height:30px;display:grid;place-items:center;
+  background:var(--bg2);border:1px solid var(--glass-border);border-radius:50%;color:var(--cream);
+  font-size:1.05rem;cursor:pointer;line-height:1;box-shadow:0 6px 16px -4px rgba(0,0,0,.6);transition:.18s}
+.wa-bubble .x:hover{color:var(--gold-hi);border-color:var(--gold);transform:scale(1.08)}
 
 /* load-in */
 .rise{opacity:0;transform:translateY(16px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
@@ -336,12 +363,18 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
   .hero-art{display:none}
   .fmt-intro,.offer-panel,.studio-in,.about-in,.contacts-in,.foot{grid-template-columns:1fr}
   .fmt-list{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:14px}
+  .step .arrow{top:auto;right:auto;left:24px;bottom:-13px;transform:rotate(90deg)}
   .offer-info{border-right:0;border-bottom:1px solid var(--glass-border)}
   .studio-visual{min-height:220px;border-left:0;border-top:1px solid var(--glass-border)}
   .about-gallery{min-height:260px;border-left:0;border-top:1px solid var(--glass-border)}
   .nudge-in{flex-direction:column;align-items:flex-start}
   .clinks{grid-template-columns:1fr}
-  .offer-panel>div,.studio-txt,.about-txt{padding:30px}
+  .wrap{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  .thread{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  .offer-panel>div,.studio-txt,.about-txt{padding:26px 22px}
+  .nudge-in{padding:28px 24px}
+  .outcall-in{padding:28px 24px}
   .lb-figure img{max-height:56vh}
   .lb-nav{width:44px;height:44px}
   .lb-nav svg{width:20px;height:20px}
@@ -366,6 +399,7 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
     <a href="#top" class="brand"><img src="photos/logo.png" alt="MAXAGIST"><span class="wm">MAXAGIST</span></a>
     <nav class="nav" id="nav">
       <a href="#formats">Услуги</a>
+      <a href="#outcall">Выезд</a>
       <a href="#offer">Первый визит</a>
       <a href="#studio">Студия</a>
       <a href="#about">О специалисте</a>
@@ -419,13 +453,13 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
       <p>Тихое пространство для расслабления и работы с привычным напряжением.</p>
       <span class="go">Подробнее</span>
     </a>
-    <a class="fmt glass" href="#offer">
+    <a class="fmt glass" href="#outcall">
       <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h13l-3-3m3 3-3 3M18 7v10"/></svg></span>
       <h3>С выездом</h3>
       <p>Приедем с оборудованием домой, в отель или офис по Риге и рядом.</p>
       <span class="go">Запросить</span>
     </a>
-    <a class="fmt glass" href="#offer">
+    <a class="fmt glass" href="#outcall">
       <span class="fmt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c0-3 2.7-5.5 6-5.5s6 2.5 6 5.5M15 20c0-2.3 1.8-4.2 4-4.5"/></svg></span>
       <h3>Для команды и событий</h3>
       <p>Кресельный или столовый массаж для сотрудников, клиентских дней, частных встреч.</p>
@@ -437,6 +471,43 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
       <p>Свободные слоты и запись через Altegio, когда удобно.</p>
       <span class="go">Открыть Altegio ↗</span>
     </a>
+  </div>
+</section>
+
+<!-- OUTCALL PATH -->
+<section id="outcall" class="outcall wrap">
+  <div class="outcall-in glass">
+    <div class="outcall-head">
+      <span class="eyebrow">Выезд · команда и события</span>
+      <h2>Как проходит выезд</h2>
+      <p>Выезд и корпоративный формат считаются отдельно от студийного визита за €30 — цена зависит от адреса, формата и числа участников. Всё согласуем заранее, чтобы не было сюрпризов.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-n">1</span>
+        <h3>Обсуждение</h3>
+        <p>Пишете запрос и адрес — согласуем формат, дату, время и стоимость под вашу ситуацию.</p>
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </li>
+      <li class="step">
+        <span class="step-n">2</span>
+        <h3>Инвойс</h3>
+        <p>Присылаем счёт на согласованную сумму и бронируем время — визит зафиксирован.</p>
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </li>
+      <li class="step">
+        <span class="step-n">3</span>
+        <h3>Сеанс у вас</h3>
+        <p>Приезжаем с оборудованием домой, в отель или офис — вам остаётся только расслабиться.</p>
+      </li>
+    </ol>
+    <div class="outcall-cta">
+      <a class="btn btn-wa" id="wa-outcall" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+        Запросить выезд в WhatsApp</a>
+      <a class="btn btn-line" href="#offer">Оставить заявку на сайте</a>
+    </div>
+    <p class="outcall-note">Цена €30 действует на первый визит в студию FIFTY. Выезд рассчитывается индивидуально.</p>
   </div>
 </section>
 
@@ -644,6 +715,7 @@ const waLink = t => `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(t)}`;
 document.getElementById('wa-hero').href        = waLink('Здравствуйте! Хочу записаться на первый визит за €30.');
 document.getElementById('wa-about').href       = waLink('Здравствуйте! Есть вопрос по вашему опыту и образованию.');
 document.getElementById('wa-nudge').href       = waLink('Здравствуйте! Не могу определиться, что мне нужно — подскажете?');
+document.getElementById('wa-outcall').href     = waLink('Здравствуйте! Хочу уточнить про выезд массажа. Адрес и пожелания: ');
 document.getElementById('wa-contact').href     = waLink('Здравствуйте! Подскажите по массажу, пожалуйста.');
 document.getElementById('wa-bubble-link').href = waLink('Здравствуйте! Не могу определиться с форматом — подскажете?');
 document.getElementById('wa-fab').onclick      = () => window.open(waLink('Здравствуйте! Хочу записаться на массаж.'), '_blank');
