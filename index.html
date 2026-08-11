@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#141210">
 <meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="apple-touch-icon.png" sizes="180x180" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="mask-icon" href="favicon.svg" color="#c7a17a">
 <title>MAXAGIST — массаж в Риге · студия FIFTY и выезд</title>
 <meta name="description" content="MAXAGIST — массаж в Риге. Студия FIFTY и выезд на дом, в отель, офис. Первый визит — €30. Запись в WhatsApp или онлайн.">
 <meta name="keywords" content="массаж Рига, массаж на дом Рига, выезд массажиста, массаж студия FIFTY, классический массаж, хиромассаж, тайский массаж, masāža Rīga, massage Riga">
@@ -549,11 +553,12 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
       <img src="photos/logo.png" alt="MAXAGIST">
     </div>
     <span class="wm">MAXAGIST</span>
-    <span class="tagline">Masāža Rīgā · Массаж в Риге</span>
-    <p class="choose">Izvēlieties valodu · Выберите язык</p>
+    <span class="tagline">Masāža Rīgā · Массаж в Риге · Massage in Riga</span>
+    <p class="choose">Izvēlieties valodu · Выберите язык · Choose language</p>
     <div class="langs">
       <button type="button" data-lang="lv">Latviešu</button>
       <button type="button" data-lang="ru">Русский</button>
+      <button type="button" data-lang="en">English</button>
     </div>
   </div>
 </div>
@@ -572,9 +577,10 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
     </nav>
     <div class="top-right">
       <a class="top-tel" href="tel:+37128251366">+371 28 251 366</a>
-      <div class="lang" id="lang-switch" role="group" aria-label="Valoda / Язык">
+      <div class="lang" id="lang-switch" role="group" aria-label="Valoda / Язык / Language">
         <button type="button" data-lang="lv">LV</button>
         <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
       </div>
     <button class="burger" id="burger" aria-label="Меню" data-i18n-aria="a.menu" aria-expanded="false">
       <svg class="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -936,7 +942,8 @@ const waLink = t => `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(t)}`;
 /* ===== i18n dictionary ===== */
 const TITLE = {
   ru: 'MAXAGIST — массаж в Риге · студия FIFTY и выезд',
-  lv: 'MAXAGIST — masāža Rīgā · studija FIFTY un izbraukums'
+  lv: 'MAXAGIST — masāža Rīgā · studija FIFTY un izbraukums',
+  en: 'MAXAGIST — massage in Riga · FIFTY studio & outcall'
 };
 const I18N = {
   ru: {
@@ -1074,6 +1081,74 @@ const I18N = {
     'bubble.b':'Nezināt, ko izvēlēties?','bubble.text':'Rakstiet uz <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — ieteiksim formātu un laiku pāris minūtēs.',
     'st.fill':'Aizpildiet vārdu, tālruni un atzīmējiet piekrišanu.','st.dev':'Supabase nav pievienots (dev). Pieteikumu var nosūtīt WhatsApp:',
     'st.sending':'Nosūtām…','st.ok':'Paldies! Pieteikums saņemts — sazināsimies ar jums tuvākajā laikā.','st.err':'Neizdevās nosūtīt. Rakstiet mums tieši WhatsApp:'
+  },
+  en: {
+    'a.menu':'Menu','a.close':'Close',
+    'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio',
+    'nav.about':'About','nav.faq':'FAQ','nav.contacts':'Contacts',
+    'hero.eyebrow':'Massage in Riga · studio & outcall',
+    'hero.h1':'First visit —<br><span class="price">€30</span><span class="old">usually €50</span>',
+    'hero.lead':'A first session to get to know the format, with massage tailored to your body and needs. At FIFTY studio or an outcall to you — home, hotel or office.',
+    'hero.wa':'Message on WhatsApp','hero.book':'Or book on the site',
+    'hero.trust':'Not sure what to choose? Just write — we’ll suggest a format and time in a couple of minutes. We usually reply <b>within a few minutes</b>.',
+    'hero.badge':'Online · replying now',
+    'fmt.title':'However suits you best',
+    'fmt.intro':'Three ways to be seen, plus online booking. If you’re not sure what to choose, message us on WhatsApp — we’ll advise for your situation.',
+    'fmt.studio.h':'At FIFTY studio','fmt.studio.p':'A quiet space to relax and work through familiar tension.','fmt.studio.go':'Learn more',
+    'fmt.outcall.h':'With outcall','fmt.outcall.p':'We come with equipment to your home, hotel or office in Riga and nearby.','fmt.outcall.go':'Request',
+    'fmt.team.h':'For teams & events','fmt.team.p':'Chair or table massage for staff, client days and private gatherings.','fmt.team.go':'Discuss',
+    'fmt.online.h':'Online booking','fmt.online.p':'Free slots and booking via Altegio, whenever it suits you.','fmt.online.go':'Open Altegio ↗',
+    'svc.eyebrow':'Studio services','svc.title':'Massage for your needs',
+    'svc.intro':'The full list of studio services with durations. We don’t publish prices — we’ll send the current price list and PDF menu on WhatsApp in a couple of minutes.',
+    'svc.min':'min',
+    'svc.cat.massage':'Massage','svc.cat.spanish':'Spanish techniques & osteo','svc.cat.spa':'SPA',
+    'svc.sport':'Sports massage','svc.classic':'Classic massage','svc.back':'Back massage',
+    'svc.neck':'Neck & shoulder massage','svc.legs':'Leg massage','svc.visceral':'Visceral massage',
+    'svc.sculpt':'Body-sculpting massage','svc.lymph':'Lymphatic drainage massage',
+    'svc.chiro':'Spanish body chiromassage','svc.face':'Spanish facial massage',
+    'svc.osteolift':'Face & décolleté osteolifting','svc.osteobody':'Osteo-body',
+    'svc.hotstone':'Hot stone massage','svc.aroma':'Aroma massage',
+    'svc.note':'First visit — <b>€30</b> for any massage on the list lasting up to 60 minutes.',
+    'svc.price':'Ask prices on WhatsApp',
+    'oc.eyebrow':'Outcall · teams & events','oc.h':'How an outcall works',
+    'oc.p':'Outcall and corporate formats are priced separately from the €30 studio visit — the cost depends on the address, format and number of people. We agree everything in advance, so there are no surprises.',
+    'oc.s1h':'Discussion','oc.s1p':'You send your request and address — we agree the format, date, time and price for your situation.',
+    'oc.s2h':'Invoice','oc.s2p':'We send an invoice for the agreed amount and book the time — the visit is confirmed.',
+    'oc.s3h':'Session at yours','oc.s3p':'We arrive with equipment at your home, hotel or office — all you have to do is relax.',
+    'oc.wa':'Request an outcall on WhatsApp','oc.form':'Leave a request on the site',
+    'oc.note':'The €30 price applies to a first visit at FIFTY studio. Outcalls are quoted individually.',
+    'offer.eyebrow':'For new clients',
+    'offer.p':'A first studio visit at a special price. A short talk before the session to understand your needs, and massage tuned to how you feel.',
+    'offer.li1':'€30 price — for a first studio visit','offer.li2':'We’ll tune pressure, pace and areas to you','offer.li3':'We’ll get in touch to agree a time',
+    'form.name':'Name','form.name.ph':'How should we address you','form.phone':'Phone',
+    'form.email':'Email','form.email.ph':'for confirmation, optional','form.msg':'Message','form.msg.ph':'Convenient days, time, wishes',
+    'form.consent':'I agree to my data being processed to answer my request. <a href="#terms">Terms</a>.',
+    'form.submit':'Leave a request','form.wafallback':'Send via WhatsApp',
+    'studio.eyebrow':'FIFTY studio','studio.h':'A place to breathe out',
+    'studio.p':'Sessions take place at FIFTY Beauty Studio. Open the map for directions — access details are sent after your booking is confirmed.',
+    'studio.map':'Open map ↗','studio.site':'FIFTY website ↗','studio.pin':'FIFTY · Riga',
+    'studio.cap':'Come a couple of minutes early — to settle in calmly before the session.',
+    'about.eyebrow':'About','about.h':'Maxim Anokhin — training you can trust',
+    'about.p':'Massage isn’t a weekend hobby but a profession with a diploma. Medical education, a RISEBA diploma, international ITEC qualification and nine more specialist certificates — from classic massage to fascia work.',
+    'about.li1':'Medical education and a «Nursing» certificate','about.li2':'ITEC Level 3 (UK) and SPA SPECIĀLISTS (Latvia)',
+    'about.li3':'9 more certificates — ','about.certbtn':'see diplomas ↗','about.wa':'A question about experience? Ask','about.galcap':'Diplomas and practice',
+    'faq.eyebrow':'FAQ','faq.h':'Before your first visit',
+    'faq.q1':'How do I prepare?','faq.a1':'Nothing special. Arrive a few minutes early, drink water as usual, and tell us about any injuries, how you feel and your wishes before the session starts.',
+    'faq.q2':'What should I wear?','faq.a2':'Something you feel comfortable in. You undress only to a level that’s comfortable for you; professional draping is used during the procedure.',
+    'faq.q3':'When is it better to reschedule?','faq.a3':'With a fever, an acute infection or feeling unwell, it’s best to reschedule. In case of pregnancy, recent surgery or a serious injury, consult a doctor first.',
+    'faq.q4':'How do I book?','faq.a4':'The quickest way is to message on WhatsApp or Telegram. You can also pick a slot yourself via <a href="https://n1022981.alteg.io" target="_blank" rel="noopener">Altegio</a>.',
+    'nudge.eyebrow':'Didn’t find an answer?','nudge.h':'Just write — we’ll figure it out together',
+    'nudge.p':'You don’t need to know the exact format and time in advance. Tell us what’s bothering you — we’ll suggest an option.','nudge.wa':'Message on WhatsApp',
+    'contacts.eyebrow':'Contacts','contacts.h':'Reach out however suits you',
+    'contacts.note':'Not sure what to choose? Message us on WhatsApp — we’ll suggest a format and time for you.',
+    'contact.wa.s':'We reply within a couple of minutes','contact.call.b':'Call',
+    'contact.online.b':'Online booking','contact.online.s':'Free slots in Altegio','contact.map.b':'Studio map','contact.map.s':'FIFTY Beauty Studio, Riga',
+    'foot.about':'Massage in Riga: FIFTY studio and outcall to your home, hotel or office.','foot.sections':'Sections','foot.first':'First visit €30','foot.gdprhead':'Data & GDPR',
+    'foot.gdpr':'The form collects your name, phone and email only to answer your request and arrange a visit. Legal details, retention period and data controller contacts must be confirmed before public launch.',
+    'foot.copy':'© 2026 MAXAGIST · Massage supports relaxation and wellbeing but does not replace medical diagnosis or treatment.',
+    'bubble.b':'Not sure what to choose?','bubble.text':'Message us on <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — we’ll suggest a format and time in a couple of minutes.',
+    'st.fill':'Fill in your name, phone and tick the consent box.','st.dev':'Supabase isn’t connected (dev). You can send the request on WhatsApp:',
+    'st.sending':'Sending…','st.ok':'Thank you! Your request has been received — we’ll be in touch shortly.','st.err':'Couldn’t send. Message us directly on WhatsApp:'
   }
 };
 const WA_MSG = {
@@ -1096,11 +1171,22 @@ const WA_MSG = {
     contact:'Sveiki! Lūdzu, pastāstiet par masāžu.',
     bubble:'Sveiki! Nevaru izlemt par formātu — vai varat ieteikt?',
     fab:'Sveiki! Vēlos pieteikties masāžai.'
+  },
+  en: {
+    hero:'Hello! I’d like to book a first visit for €30.',
+    price:'Hello! Please send me your current service prices and the PDF menu.',
+    about:'Hello! I have a question about your experience and training.',
+    nudge:'Hello! I can’t decide what I need — could you advise?',
+    outcall:'Hello! I’d like to ask about a massage outcall. Address and wishes: ',
+    contact:'Hello! Could you tell me about your massage, please.',
+    bubble:'Hello! I can’t decide on the format — could you advise?',
+    fab:'Hello! I’d like to book a massage.'
   }
 };
 const WA_LBL = {
   ru: { lead:'Здравствуйте! Заявка с сайта на первый визит €30.', name:'Имя', phone:'Телефон', email:'Email', message:'Сообщение' },
-  lv: { lead:'Sveiki! Pieteikums no mājaslapas pirmajai vizītei €30.', name:'Vārds', phone:'Tālrunis', email:'E-pasts', message:'Ziņa' }
+  lv: { lead:'Sveiki! Pieteikums no mājaslapas pirmajai vizītei €30.', name:'Vārds', phone:'Tālrunis', email:'E-pasts', message:'Ziņa' },
+  en: { lead:'Hello! A request from the website for a first visit €30.', name:'Name', phone:'Phone', email:'Email', message:'Message' }
 };
 
 let LANG = 'ru';
@@ -1136,7 +1222,8 @@ const preload = document.getElementById('preload');
 function dismissPreload(){ preload.classList.add('hide'); setTimeout(() => { preload.style.display = 'none'; }, 650); }
 (function initLang(){
   let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
-  const browser = (navigator.language || '').toLowerCase().startsWith('lv') ? 'lv' : 'ru';
+  const b = (navigator.language || '').toLowerCase();
+  const browser = b.startsWith('lv') ? 'lv' : b.startsWith('en') ? 'en' : 'ru';
   applyLang(saved || browser);
   preload.querySelectorAll('.langs button').forEach(b => {
     b.addEventListener('click', () => { applyLang(b.dataset.lang); dismissPreload(); });
