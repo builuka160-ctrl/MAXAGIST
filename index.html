@@ -205,6 +205,28 @@ section{scroll-margin-top:100px}
 .fmt .go{margin-top:auto;padding-top:6px;font-size:.85rem;letter-spacing:.05em;color:var(--gold);white-space:nowrap;font-weight:600}
 .fmt:hover .go{color:var(--gold-hi)}
 
+/* studio services menu (no prices) */
+.services{padding:44px 0 20px}
+.svc-intro{max-width:640px;margin-bottom:30px}
+.svc-intro h2{font-size:clamp(2rem,4.2vw,3rem);margin-top:12px}
+.svc-intro p{color:var(--muted);margin-top:14px}
+.svc-groups{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.svc-col{display:grid;gap:18px}
+.svc-cat{padding:28px 30px}
+.svc-cat-h{font-size:1.5rem;color:var(--gold-hi);padding-bottom:14px;
+  border-bottom:1px solid var(--line)}
+.svc-items{list-style:none;margin:6px 0 0;padding:0}
+.svc-items li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:12px 0;border-bottom:1px solid var(--line-2)}
+.svc-items li:last-child{border-bottom:0;padding-bottom:0}
+.svc-name{color:var(--cream);font-size:1rem}
+.svc-dur{color:var(--gold);font-family:var(--sans);font-size:.85rem;letter-spacing:.03em;
+  white-space:nowrap;font-variant-numeric:tabular-nums}
+.svc-foot{margin-top:24px;display:flex;justify-content:space-between;align-items:center;
+  gap:20px 26px;flex-wrap:wrap}
+.svc-note{color:var(--muted);font-size:.9rem;max-width:560px}
+.svc-note b{color:var(--gold-hi);font-weight:700}
+
 /* outcall path */
 .outcall{padding:20px 0 12px}
 .outcall-in{padding:44px 46px;border-radius:var(--r-lg)}
@@ -425,6 +447,8 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
   .hero-art{display:none}
   .fmt-intro,.offer-panel,.studio-in,.about-in,.contacts-in,.foot{grid-template-columns:1fr}
   .fmt-list{grid-template-columns:1fr}
+  .svc-groups{grid-template-columns:1fr}
+  .svc-cat{padding:24px 22px}
   .steps{grid-template-columns:1fr;gap:14px}
   .step .arrow{top:auto;right:auto;left:24px;bottom:-13px;transform:rotate(90deg)}
   .offer-info{border-right:0;border-bottom:1px solid var(--glass-border)}
@@ -538,7 +562,7 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
   <div class="wrap top-in">
     <a href="#top" class="brand"><img src="photos/logo.png" alt="MAXAGIST"><span class="wm">MAXAGIST</span></a>
     <nav class="nav" id="nav">
-      <a href="#formats" data-i18n="nav.services">Услуги</a>
+      <a href="#services" data-i18n="nav.services">Услуги</a>
       <a href="#outcall" data-i18n="nav.outcall">Выезд</a>
       <a href="#offer" data-i18n="nav.first">Первый визит</a>
       <a href="#studio" data-i18n="nav.studio">Студия</a>
@@ -617,6 +641,56 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
       <p data-i18n="fmt.online.p">Свободные слоты и запись через Altegio, когда удобно.</p>
       <span class="go" data-i18n="fmt.online.go">Открыть Altegio ↗</span>
     </a>
+  </div>
+</section>
+
+<div class="thread"><i></i></div>
+
+<!-- STUDIO SERVICES (no prices) -->
+<section id="services" class="services wrap">
+  <div class="svc-intro">
+    <span class="eyebrow" data-i18n="svc.eyebrow">Услуги студии</span>
+    <h2 data-i18n="svc.title">Массаж под ваш запрос</h2>
+    <p data-i18n="svc.intro">Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.</p>
+  </div>
+  <div class="svc-groups">
+    <div class="svc-cat glass">
+      <h3 class="svc-cat-h" data-i18n="svc.cat.massage">Массаж</h3>
+      <ul class="svc-items">
+        <li><span class="svc-name" data-i18n="svc.sport">Спортивный массаж</span><span class="svc-dur">60 / 90 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.classic">Классический массаж</span><span class="svc-dur">60 / 90 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.back">Массаж спины</span><span class="svc-dur">45 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.neck">Массаж шейно-воротниковой зоны</span><span class="svc-dur">30 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.legs">Массаж ног</span><span class="svc-dur">45 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.visceral">Висцеральный массаж</span><span class="svc-dur">45 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.sculpt">Скульптурирующий массаж</span><span class="svc-dur">60 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.lymph">Лимфодренажный массаж</span><span class="svc-dur">90 <span data-i18n="svc.min">мин</span></span></li>
+      </ul>
+    </div>
+    <div class="svc-col">
+      <div class="svc-cat glass">
+        <h3 class="svc-cat-h" data-i18n="svc.cat.spanish">Испанские техники и остео</h3>
+        <ul class="svc-items">
+          <li><span class="svc-name" data-i18n="svc.chiro">Испанский хиромассаж тела</span><span class="svc-dur">60 / 90 <span data-i18n="svc.min">мин</span></span></li>
+          <li><span class="svc-name" data-i18n="svc.face">Испанский массаж лица</span><span class="svc-dur">50 <span data-i18n="svc.min">мин</span></span></li>
+          <li><span class="svc-name" data-i18n="svc.osteolift">Остеолифтинг лица и декольте</span><span class="svc-dur">50 <span data-i18n="svc.min">мин</span></span></li>
+          <li><span class="svc-name" data-i18n="svc.osteobody">Остео-боди</span><span class="svc-dur">60 <span data-i18n="svc.min">мин</span></span></li>
+        </ul>
+      </div>
+      <div class="svc-cat glass">
+        <h3 class="svc-cat-h" data-i18n="svc.cat.spa">SPA</h3>
+        <ul class="svc-items">
+          <li><span class="svc-name" data-i18n="svc.hotstone">Hot stone massage</span><span class="svc-dur">70 <span data-i18n="svc.min">мин</span></span></li>
+          <li><span class="svc-name" data-i18n="svc.aroma">Аромамассаж</span><span class="svc-dur">60 <span data-i18n="svc.min">мин</span></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="svc-foot">
+    <p class="svc-note" data-i18n-html="svc.note">Первый визит — <b>€30</b> на любой массаж из списка длительностью до 60 минут включительно.</p>
+    <a class="btn btn-wa" id="wa-price" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+      <span data-i18n="svc.price">Узнать цены в WhatsApp</span></a>
   </div>
 </section>
 
@@ -805,7 +879,7 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
       </div>
       <div>
         <b data-i18n="foot.sections">Разделы</b>
-        <a href="#formats" data-i18n="nav.services">Услуги</a>
+        <a href="#services" data-i18n="nav.services">Услуги</a>
         <a href="#offer" data-i18n="foot.first">Первый визит €30</a>
         <a href="#studio" data-i18n="nav.studio">Студия</a>
         <a href="#about" data-i18n="nav.about">О специалисте</a>
@@ -881,6 +955,18 @@ const I18N = {
     'fmt.outcall.h':'С выездом','fmt.outcall.p':'Приедем с оборудованием домой, в отель или офис по Риге и рядом.','fmt.outcall.go':'Запросить',
     'fmt.team.h':'Для команды и событий','fmt.team.p':'Кресельный или столовый массаж для сотрудников, клиентских дней, частных встреч.','fmt.team.go':'Обсудить',
     'fmt.online.h':'Онлайн-запись','fmt.online.p':'Свободные слоты и запись через Altegio, когда удобно.','fmt.online.go':'Открыть Altegio ↗',
+    'svc.eyebrow':'Услуги студии','svc.title':'Массаж под ваш запрос',
+    'svc.intro':'Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.',
+    'svc.min':'мин',
+    'svc.cat.massage':'Массаж','svc.cat.spanish':'Испанские техники и остео','svc.cat.spa':'SPA',
+    'svc.sport':'Спортивный массаж','svc.classic':'Классический массаж','svc.back':'Массаж спины',
+    'svc.neck':'Массаж шейно-воротниковой зоны','svc.legs':'Массаж ног','svc.visceral':'Висцеральный массаж',
+    'svc.sculpt':'Скульптурирующий массаж','svc.lymph':'Лимфодренажный массаж',
+    'svc.chiro':'Испанский хиромассаж тела','svc.face':'Испанский массаж лица',
+    'svc.osteolift':'Остеолифтинг лица и декольте','svc.osteobody':'Остео-боди',
+    'svc.hotstone':'Hot stone massage','svc.aroma':'Аромамассаж',
+    'svc.note':'Первый визит — <b>€30</b> на любой массаж из списка длительностью до 60 минут включительно.',
+    'svc.price':'Узнать цены в WhatsApp',
     'oc.eyebrow':'Выезд · команда и события','oc.h':'Как проходит выезд',
     'oc.p':'Выезд и корпоративный формат считаются отдельно от студийного визита за €30 — цена зависит от адреса, формата и числа участников. Всё согласуем заранее, чтобы не было сюрпризов.',
     'oc.s1h':'Обсуждение','oc.s1p':'Пишете запрос и адрес — согласуем формат, дату, время и стоимость под вашу ситуацию.',
@@ -937,6 +1023,18 @@ const I18N = {
     'fmt.outcall.h':'Ar izbraukumu','fmt.outcall.p':'Atbrauksim ar aprīkojumu mājās, viesnīcā vai birojā Rīgā un tuvumā.','fmt.outcall.go':'Pieprasīt',
     'fmt.team.h':'Komandām un pasākumiem','fmt.team.p':'Krēsla vai galda masāža darbiniekiem, klientu dienām, privātām tikšanās reizēm.','fmt.team.go':'Apspriest',
     'fmt.online.h':'Pieraksts tiešsaistē','fmt.online.p':'Brīvie laiki un pieraksts caur Altegio, kad ērti.','fmt.online.go':'Atvērt Altegio ↗',
+    'svc.eyebrow':'Studijas pakalpojumi','svc.title':'Masāža jūsu vajadzībām',
+    'svc.intro':'Pilns studijas pakalpojumu saraksts ar ilgumu. Cenas nepublicējam — aktuālo cenrādi un PDF izvēlni atsūtīsim WhatsApp pāris minūtēs.',
+    'svc.min':'min',
+    'svc.cat.massage':'Masāža','svc.cat.spanish':'Spāņu tehnikas un osteo','svc.cat.spa':'SPA',
+    'svc.sport':'Sporta masāža','svc.classic':'Klasiskā masāža','svc.back':'Muguras masāža',
+    'svc.neck':'Kakla-plecu zonas masāža','svc.legs':'Kāju masāža','svc.visceral':'Viscerālā masāža',
+    'svc.sculpt':'Skulpturējošā masāža','svc.lymph':'Limfodrenāžas masāža',
+    'svc.chiro':'Spāņu ķermeņa hiromasāža','svc.face':'Spāņu sejas masāža',
+    'svc.osteolift':'Sejas un dekoltē osteolifts','svc.osteobody':'Osteo-body',
+    'svc.hotstone':'Hot stone masāža','svc.aroma':'Aromamasāža',
+    'svc.note':'Pirmā vizīte — <b>€30</b> jebkurai masāžai no saraksta, kuras ilgums nepārsniedz 60 minūtes.',
+    'svc.price':'Uzzināt cenas WhatsApp',
     'oc.eyebrow':'Izbraukums · komandas un pasākumi','oc.h':'Kā notiek izbraukums',
     'oc.p':'Izbraukums un korporatīvais formāts tiek aprēķināts atsevišķi no studijas vizītes par €30 — cena atkarīga no adreses, formāta un dalībnieku skaita. Visu saskaņojam iepriekš, lai nebūtu pārsteigumu.',
     'oc.s1h':'Pārrunas','oc.s1p':'Rakstāt pieprasījumu un adresi — saskaņojam formātu, datumu, laiku un cenu jūsu situācijai.',
@@ -981,6 +1079,7 @@ const I18N = {
 const WA_MSG = {
   ru: {
     hero:'Здравствуйте! Хочу записаться на первый визит за €30.',
+    price:'Здравствуйте! Пришлите, пожалуйста, актуальные цены на услуги и PDF-меню.',
     about:'Здравствуйте! Есть вопрос по вашему опыту и образованию.',
     nudge:'Здравствуйте! Не могу определиться, что мне нужно — подскажете?',
     outcall:'Здравствуйте! Хочу уточнить про выезд массажа. Адрес и пожелания: ',
@@ -990,6 +1089,7 @@ const WA_MSG = {
   },
   lv: {
     hero:'Sveiki! Vēlos pieteikties pirmajai vizītei par €30.',
+    price:'Sveiki! Lūdzu, atsūtiet aktuālās cenas pakalpojumiem un PDF izvēlni.',
     about:'Sveiki! Man ir jautājums par jūsu pieredzi un izglītību.',
     nudge:'Sveiki! Nevaru izlemt, kas man vajadzīgs — vai varat ieteikt?',
     outcall:'Sveiki! Vēlos precizēt par masāžas izbraukumu. Adrese un vēlmes: ',
@@ -1010,6 +1110,7 @@ function setWaLinks(){
   const set = (id, msg) => { const el = document.getElementById(id); if (el) el.href = waLink(msg); };
   set('wa-hero', m.hero); set('wa-about', m.about); set('wa-nudge', m.nudge);
   set('wa-outcall', m.outcall); set('wa-contact', m.contact); set('wa-bubble-link', m.bubble);
+  set('wa-price', m.price);
 }
 
 function applyLang(lang){
