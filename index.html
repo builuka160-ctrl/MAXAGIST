@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<script>try{if(localStorage.getItem('lang'))document.documentElement.classList.add('lang-set');}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#141210">
 <meta name="mobile-web-app-capable" content="yes">
@@ -127,6 +128,7 @@
       <a href="#about" data-i18n="nav.about">О специалисте</a>
       <a href="#faq" data-i18n="nav.faq">Вопросы</a>
       <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
+      <a class="nav-tel" href="tel:+37128251366"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg><span><span data-i18n="nav.call">Позвонить</span> · +371 28 251 366</span></a>
     </nav>
     <div class="top-right">
       <a class="top-tel" href="tel:+37128251366">+371 28 251 366</a>
@@ -147,7 +149,7 @@
 <section class="hero wrap">
   <div class="hero-in">
     <div>
-      <span class="eyebrow rise" data-i18n="hero.eyebrow">Массаж в Риге · студия и выезд</span>
+      <span class="eyebrow rise" data-i18n="hero.eyebrow">Максим · массаж в Риге, студия и выезд</span>
       <h1 class="rise d1" data-i18n-html="hero.h1">Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span></h1>
       <p class="lead rise d2" data-i18n="hero.lead">Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.</p>
       <div class="hero-cta rise d2">
@@ -497,8 +499,8 @@ const I18N = {
   ru: {
     'a.menu':'Меню','a.close':'Закрыть',
     'nav.services':'Услуги','nav.outcall':'Выезд','nav.first':'Первый визит','nav.studio':'Студия',
-    'nav.about':'О специалисте','nav.faq':'Вопросы','nav.contacts':'Контакты',
-    'hero.eyebrow':'Массаж в Риге · студия и выезд',
+    'nav.about':'О специалисте','nav.faq':'Вопросы','nav.contacts':'Контакты','nav.call':'Позвонить',
+    'hero.eyebrow':'Максим · массаж в Риге, студия и выезд',
     'hero.h1':'Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span>',
     'hero.lead':'Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.',
     'hero.wa':'Написать в WhatsApp','hero.book':'Или записаться на сайте',
@@ -570,8 +572,8 @@ const I18N = {
   lv: {
     'a.menu':'Izvēlne','a.close':'Aizvērt',
     'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.first':'Pirmā vizīte','nav.studio':'Studija',
-    'nav.about':'Par speciālistu','nav.faq':'Jautājumi','nav.contacts':'Kontakti',
-    'hero.eyebrow':'Masāža Rīgā · studija un izbraukums',
+    'nav.about':'Par speciālistu','nav.faq':'Jautājumi','nav.contacts':'Kontakti','nav.call':'Zvanīt',
+    'hero.eyebrow':'Maksims · masāža Rīgā, studija un izbraukums',
     'hero.h1':'Pirmā vizīte —<br><span class="price">€30</span><span class="old">parasti €50</span>',
     'hero.lead':'Iepazīšanās ar formātu un masāža, kas pielāgota jūsu ķermenim un vēlmēm. Pieņemšana studijā FIFTY vai izbraukums pie jums — mājās, viesnīcā vai birojā.',
     'hero.wa':'Rakstīt uz WhatsApp','hero.book':'Vai pieteikties mājaslapā',
@@ -643,8 +645,8 @@ const I18N = {
   en: {
     'a.menu':'Menu','a.close':'Close',
     'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio',
-    'nav.about':'About','nav.faq':'FAQ','nav.contacts':'Contacts',
-    'hero.eyebrow':'Massage in Riga · studio & outcall',
+    'nav.about':'About','nav.faq':'FAQ','nav.contacts':'Contacts','nav.call':'Call',
+    'hero.eyebrow':'Maksim · massage in Riga, studio & outcall',
     'hero.h1':'First visit —<br><span class="price">€30</span><span class="old">usually €50</span>',
     'hero.lead':'A first session to get to know the format, with massage tailored to your body and needs. At FIFTY studio or an outcall to you — home, hotel or office.',
     'hero.wa':'Message on WhatsApp','hero.book':'Or book on the site',
