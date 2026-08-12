@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MAXAGIST · панель</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root{
+    --bg:#0e1116; --card:rgba(255,255,255,.06); --line:rgba(255,255,255,.12);
+    --fg:#eef1f5; --mut:#9aa4b2; --acc:#c9a24b; --acc2:#6ea8fe; --ok:#4ade80; --bad:#f87171;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:12px 12px 40px;-webkit-tap-highlight-color:transparent}
+  h1{font-size:18px;margin:2px 0 2px}
+  .sub{color:var(--mut);font-size:12px;margin:0 0 14px}
+  .glass{background:var(--card);border:1px solid var(--line);border-radius:16px;backdrop-filter:blur(8px)}
+  .tabs{display:flex;gap:8px;margin:0 0 14px}
+  .tabs button{flex:1;padding:10px;border:1px solid var(--line);background:transparent;color:var(--fg);
+    border-radius:12px;font-weight:600;font-size:14px}
+  .tabs button.on{background:var(--acc);color:#1a1400;border-color:var(--acc)}
+  .range{display:flex;gap:6px;margin:0 0 12px}
+  .range button{padding:7px 12px;border:1px solid var(--line);background:transparent;color:var(--mut);border-radius:10px;font-size:13px}
+  .range button.on{color:var(--fg);border-color:var(--acc2)}
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 14px}
+  .kpi{padding:12px 14px}
+  .kpi b{display:block;font-size:24px;line-height:1.1}
+  .kpi span{color:var(--mut);font-size:12px}
+  .block{padding:14px;margin:0 0 12px}
+  .block h3{margin:0 0 10px;font-size:14px;color:var(--fg)}
+  .bar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px}
+  .bar .lb{flex:0 0 42%;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .tr{flex:1;background:rgba(255,255,255,.07);border-radius:6px;height:16px;position:relative;overflow:hidden}
+  .bar .fl{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--acc2),var(--acc));border-radius:6px}
+  .bar .vl{flex:0 0 auto;color:var(--fg);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+  th{color:var(--mut);font-weight:500}
+  td.n{text-align:right;font-variant-numeric:tabular-nums}
+  .muted{color:var(--mut);font-size:13px}
+  .field{padding:12px 14px;margin:0 0 12px}
+  .field .fh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 6px}
+  .field .fh b{font-size:14px}
+  .field .fh small{color:var(--mut);font-size:11px}
+  .field textarea{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--fg);
+    border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;resize:vertical;min-height:44px}
+  .field .lng{display:flex;align-items:center;gap:8px;margin:6px 0 0}
+  .field .lng .tag{flex:0 0 26px;color:var(--mut);font-size:11px;text-transform:uppercase}
+  .field .extra{display:none}
+  .field.open .extra{display:block}
+  .field .row2{display:flex;gap:8px;align-items:center;margin-top:8px}
+  .btn{padding:8px 14px;border:0;border-radius:10px;background:var(--acc);color:#1a1400;font-weight:600;font-size:13px}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--fg)}
+  .save-state{font-size:12px;color:var(--mut)}
+  .save-state.ok{color:var(--ok)} .save-state.bad{color:var(--bad)}
+  .center{text-align:center;padding:40px 16px;color:var(--mut)}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+  <div id="gate" class="center">Загрузка…</div>
+
+  <div id="app" class="hide">
+    <h1>Активность MAXAGIST</h1>
+    <p class="sub" id="who"></p>
+
+    <div class="tabs">
+      <button id="tab-dash" class="on">📊 Дашборд</button>
+      <button id="tab-edit" class="hide">✏️ Редактор сайта</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="view-dash">
+      <div class="range" id="range">
+        <button data-d="1">24 часа</button>
+        <button data-d="7" class="on">7 дней</button>
+        <button data-d="30">30 дней</button>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div id="dash-body"></div>
+    </section>
+
+    <!-- EDITOR -->
+    <section id="view-edit" class="hide">
+      <p class="muted" style="margin-top:0">Меняйте тексты сайта. Пусто — вернётся значение по умолчанию. RU обязателен, LV/EN — по желанию.</p>
+      <div id="fields"></div>
+    </section>
+  </div>
+
+<script>
+const SUPABASE_URL = 'https://xqwawjnvvmcydcbswous.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_2AMisP8HO4VAa4iLb7NQuA_q5hooyGT';
+const API = SUPABASE_URL + '/functions/v1/admin-api';
+
+// Редактируемые поля сайта (ключи совпадают с data-edit в index.html / vyezd.html)
+const FIELDS = [
+  { key:'hero.eyebrow', label:'Главная · надпись над заголовком', page:'index' },
+  { key:'hero.h1',      label:'Главная · заголовок H1', page:'index', html:true },
+  { key:'hero.lead',    label:'Главная · лид под заголовком', page:'index' },
+  { key:'svc.intro',    label:'Услуги · вступление', page:'index' },
+  { key:'sp.h',         label:'Как проходит · заголовок', page:'index' },
+  { key:'sp.p',         label:'Как проходит · описание', page:'index' },
+  { key:'offer.p',      label:'Оффер €30 · описание', page:'index' },
+  { key:'about.h',      label:'О мастере · заголовок', page:'index' },
+  { key:'about.p',      label:'О мастере · описание', page:'index' },
+  { key:'nudge.h',      label:'Финальный призыв · заголовок', page:'index' },
+  { key:'nudge.p',      label:'Финальный призыв · описание', page:'index' },
+  { key:'ov.h1',        label:'Страница выезда · заголовок H1', page:'vyezd', html:true },
+];
+
+const tg = window.Telegram && window.Telegram.WebApp;
+const $ = (s, r=document) => r.querySelector(s);
+const el = (t, c, txt) => { const e = document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; };
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+let INIT_DATA = '';
+try { INIT_DATA = tg ? tg.initData : ''; } catch(e){}
+
+async function api(action, extra){
+  const r = await fetch(API, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', apikey: SUPABASE_KEY, Authorization:'Bearer '+SUPABASE_KEY },
+    body: JSON.stringify(Object.assign({ action, initData: INIT_DATA }, extra||{}))
+  });
+  return r.json();
+}
+
+/* ---------- дашборд ---------- */
+function bars(items, labelFn, valueFn){
+  const wrap = el('div');
+  const max = Math.max(1, ...items.map(valueFn));
+  if(!items.length){ wrap.appendChild(el('p','muted','Пока нет данных за период.')); return wrap; }
+  items.forEach(it => {
+    const b = el('div','bar');
+    b.appendChild(el('span','lb', labelFn(it)));
+    const tr = el('div','tr'); const fl = el('div','fl'); fl.style.width = (valueFn(it)/max*100)+'%';
+    tr.appendChild(fl); b.appendChild(tr);
+    b.appendChild(el('span','vl', String(valueFn(it))));
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+function block(title, node){
+  const b = el('div','block glass'); b.appendChild(el('h3',null,title)); b.appendChild(node); return b;
+}
+function fmtSec(s){ s=Number(s||0); return s>=60 ? (s/60).toFixed(1)+' мин' : Math.round(s)+' с'; }
+
+function renderDash(st){
+  const k = st.totals||{};
+  const kpis = $('#kpis'); kpis.innerHTML='';
+  [['Посетители',k.visitors],['Сессии',k.sessions],['Просмотры',k.pageviews],['Событий',k.events]].forEach(([n,v])=>{
+    const c = el('div','kpi glass'); c.appendChild(el('b',null,String(v??0))); c.appendChild(el('span',null,n)); kpis.appendChild(c);
+  });
+
+  const body = $('#dash-body'); body.innerHTML='';
+
+  body.appendChild(block('Что и куда жмут',
+    bars(st.top_clicks||[], x=>x.label, x=>x.hits)));
+
+  // время на странице
+  const tt = el('table');
+  tt.innerHTML = '<tr><th>Страница</th><th class="n">Просм.</th><th class="n">Активно</th><th class="n">Всего</th></tr>' +
+    (st.time_on_page||[]).map(p=>`<tr><td>${esc(p.path)}</td><td class="n">${p.views}</td><td class="n">${fmtSec(p.avg_active_sec)}</td><td class="n">${fmtSec(p.avg_total_sec)}</td></tr>`).join('');
+  body.appendChild(block('Сколько времени проводят', (st.time_on_page||[]).length ? tt : el('p','muted','Нет данных.')));
+
+  body.appendChild(block('Секции, которые видят',
+    bars(st.sections||[], x=>x.section, x=>x.sessions)));
+
+  body.appendChild(block('Источники переходов',
+    bars(st.sources||[], x=>x.src, x=>x.sessions)));
+
+  // по дням
+  const dt = el('table');
+  dt.innerHTML = '<tr><th>Дата</th><th class="n">Посет.</th><th class="n">Сессии</th><th class="n">Просм.</th></tr>' +
+    (st.by_day||[]).map(d=>`<tr><td>${esc(d.d)}</td><td class="n">${d.visitors}</td><td class="n">${d.sessions}</td><td class="n">${d.pageviews}</td></tr>`).join('');
+  body.appendChild(block('По дням', (st.by_day||[]).length ? dt : el('p','muted','Нет данных.')));
+
+  // глубина скролла (агрегируем по вехам)
+  const sd = {}; (st.scroll||[]).forEach(s=>{ sd[s.depth]=(sd[s.depth]||0)+s.n; });
+  const sdArr = Object.keys(sd).map(d=>({depth:+d,n:sd[d]})).sort((a,b)=>a.depth-b.depth);
+  body.appendChild(block('Глубина прокрутки',
+    bars(sdArr, x=>x.depth+'%', x=>x.n)));
+}
+
+let curDays = 7;
+async function loadDash(){
+  $('#dash-body').innerHTML = '<p class="muted">Загрузка…</p>';
+  const res = await api('stats', { days: curDays });
+  if(!res.ok){ $('#dash-body').innerHTML = '<p class="muted">Ошибка: '+esc(res.error)+'</p>'; return; }
+  renderDash(res.stats||{});
+}
+
+/* ---------- редактор ---------- */
+function renderFields(content){
+  const map = {}; (content||[]).forEach(r=>{ map[r.key]=r.value||{}; });
+  const box = $('#fields'); box.innerHTML='';
+  FIELDS.forEach(f=>{
+    const v = map[f.key] || {};
+    const card = el('div','field glass');
+    const fh = el('div','fh');
+    fh.appendChild(el('b',null,f.label));
+    fh.appendChild(el('small',null,f.key + (f.html?' · html':'')));
+    card.appendChild(fh);
+
+    const ru = el('textarea'); ru.value = v.ru||''; ru.placeholder='RU (основной)'; ru.dataset.l='ru';
+    card.appendChild(ru);
+
+    const extra = el('div','extra');
+    ['lv','en'].forEach(l=>{
+      const row = el('div','lng'); row.appendChild(el('span','tag',l));
+      const ta = el('textarea'); ta.value = v[l]||''; ta.dataset.l=l; ta.placeholder=l.toUpperCase()+' (необязательно)';
+      row.appendChild(ta); extra.appendChild(row);
+    });
+    card.appendChild(extra);
+
+    const row2 = el('div','row2');
+    const toggle = el('button','btn ghost','LV / EN');
+    toggle.onclick = ()=> card.classList.toggle('open');
+    const save = el('button','btn','Сохранить');
+    const state = el('span','save-state','');
+    save.onclick = async ()=>{
+      state.className='save-state'; state.textContent='…';
+      const value = {};
+      card.querySelectorAll('textarea').forEach(t=>{ const val=t.value.trim(); if(val) value[t.dataset.l]=val; });
+      const res = await api('content_set', { key: f.key, value });
+      if(res.ok){ state.className='save-state ok'; state.textContent='сохранено'; if(tg&&tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
+      else { state.className='save-state bad'; state.textContent='ошибка: '+(res.error||''); }
+    };
+    row2.appendChild(toggle); row2.appendChild(save); row2.appendChild(state);
+    card.appendChild(row2);
+    box.appendChild(card);
+  });
+}
+async function loadEditor(){
+  const res = await api('content_get');
+  if(res.ok) renderFields(res.content||[]);
+}
+
+/* ---------- init ---------- */
+function switchTab(which){
+  $('#tab-dash').classList.toggle('on', which==='dash');
+  $('#tab-edit').classList.toggle('on', which==='edit');
+  $('#view-dash').classList.toggle('hide', which!=='dash');
+  $('#view-edit').classList.toggle('hide', which!=='edit');
+}
+
+(async function(){
+  try { if(tg){ tg.ready(); tg.expand(); } } catch(e){}
+  if(!INIT_DATA){
+    $('#gate').innerHTML = 'Откройте панель через Telegram-бота <b>@maxag_bot</b> (кнопка меню).';
+    return;
+  }
+  const me = await api('me');
+  if(!me.ok){
+    $('#gate').innerHTML = me.error==='forbidden'
+      ? 'Нет доступа. Ваш ID: <b>'+esc(me.id)+'</b> — попросите владельца добавить его.'
+      : 'Ошибка авторизации: '+esc(me.error||'');
+    return;
+  }
+  $('#gate').classList.add('hide');
+  $('#app').classList.remove('hide');
+  $('#who').textContent = (me.name||'') + ' · ' + (me.role==='admin'?'полный доступ':'просмотр');
+
+  if(me.role==='admin') $('#tab-edit').classList.remove('hide');
+
+  $('#tab-dash').onclick = ()=> switchTab('dash');
+  $('#tab-edit').onclick = ()=>{ switchTab('edit'); loadEditor(); };
+  $('#range').querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{ $('#range').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); curDays=+b.dataset.d; loadDash(); };
+  });
+
+  loadDash();
+})();
+</script>
+</body>
+</html>

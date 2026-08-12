@@ -1,25 +1,18 @@
-// Supabase Edge Function: приём событий трекера MAXAGIST.
-// Разворачивает пакет { ctx, events } в плоские строки таблицы public.site_events.
-//
-// Деплой (публичный приём, без JWT):
-//   supabase functions deploy track --no-verify-jwt
-//
-// SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY подставляются рантаймом Supabase
-// автоматически — в код и в репозиторий их класть не нужно.
-
+// MAXAGIST tracker ingest. Public (verify_jwt=false). Пишет в site_events service role'ом.
+// Deploy: supabase functions deploy track --no-verify-jwt
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'content-type',
+  'Access-Control-Allow-Headers': 'content-type, apikey, authorization',
 };
-const json = (data: unknown, status = 200) =>
-  new Response(JSON.stringify(data), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
+const json = (d: unknown, s = 200) =>
+  new Response(JSON.stringify(d), { status: s, headers: { ...cors, 'Content-Type': 'application/json' } });
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
-  if (req.method !== 'POST') return json({ ok: false, error: 'method not allowed' }, 405);
+  if (req.method !== 'POST') return json({ ok: false, error: 'method' }, 405);
 
   let body: any;
   try { body = await req.json(); } catch { return json({ ok: false, error: 'bad json' }, 400); }
@@ -29,9 +22,8 @@ Deno.serve(async (req) => {
   if (!events.length) return json({ ok: true, n: 0 });
 
   const country = req.headers.get('cf-ipcountry') || req.headers.get('x-country') || null;
-
   const rows = events.map((e) => ({
-    client_ts:  e?.ts ? new Date(e.ts).toISOString() : null,
+    client_ts:   e?.ts ? new Date(e.ts).toISOString() : null,
     site:        ctx.site ?? null,
     visitor_id:  ctx.uid ?? null,
     session_id:  ctx.sid ?? null,
@@ -65,6 +57,5 @@ Deno.serve(async (req) => {
   );
   const { error } = await supabase.from('site_events').insert(rows);
   if (error) return json({ ok: false, error: error.message }, 500);
-
   return json({ ok: true, n: rows.length });
 });
