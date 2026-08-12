@@ -110,6 +110,22 @@ const FIELDS = [
   { key:'ov.h1',        label:'Страница выезда · заголовок H1', page:'vyezd', html:true },
 ];
 
+// Текущие тексты сайта (из i18n) — показываются в редакторе по умолчанию.
+const DEFAULTS = {
+  "hero.eyebrow":{"ru":"Максим · массаж в Риге, студия и выезд","lv":"Maksims · masāža Rīgā, studija un izbraukums","en":"Maksim · massage in Riga, studio & outcall"},
+  "hero.h1":{"ru":"Первый визит —<br><span class=\"price\">€30</span><span class=\"old\">обычно €50</span>","lv":"Pirmā vizīte —<br><span class=\"price\">€30</span><span class=\"old\">parasti €50</span>","en":"First visit —<br><span class=\"price\">€30</span><span class=\"old\">usually €50</span>"},
+  "hero.lead":{"ru":"Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.","lv":"Iepazīšanās ar formātu un masāža, kas pielāgota jūsu ķermenim un vēlmēm. Pieņemšana studijā FIFTY vai izbraukums pie jums — mājās, viesnīcā vai birojā.","en":"A first session to get to know the format, with massage tailored to your body and needs. At FIFTY studio or an outcall to you — home, hotel or office."},
+  "svc.intro":{"ru":"Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.","lv":"Pilns studijas pakalpojumu saraksts ar ilgumu. Cenas nepublicējam — aktuālo cenrādi un PDF izvēlni atsūtīsim WhatsApp pāris minūtēs.","en":"The full list of studio services with durations. We don’t publish prices — we’ll send the current price list and PDF menu on WhatsApp in a couple of minutes."},
+  "sp.h":{"ru":"Как проходит массаж в студии","lv":"Kā notiek masāža studijā","en":"How a studio massage goes"},
+  "sp.p":{"ru":"Спокойный и понятный сценарий — без спешки и неловкости. Вот что происходит от вашего прихода до конца сеанса.","lv":"Mierīgs un saprotams scenārijs — bez steigas un neveiklības. Lūk, kas notiek no jūsu ierašanās līdz seansa beigām.","en":"A calm, predictable flow — no rush, no awkwardness. Here’s what happens from the moment you arrive to the end of the session."},
+  "offer.p":{"ru":"Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.","lv":"Pirmā vizīte studijā par īpašu cenu. Īsa saruna pirms seansa, lai saprastu vēlmes, un masāža atbilstoši jūsu stāvoklim.","en":"A first studio visit at a special price. A short talk before the session to understand your needs, and massage tuned to how you feel."},
+  "about.h":{"ru":"Максим Анохин — образование, которому можно доверять","lv":"Maksims Anohins — izglītība, kurai var uzticēties","en":"Maxim Anokhin — training you can trust"},
+  "about.p":{"ru":"Массаж — не хобби на выходных, а профессия с дипломом. Медицинское образование, диплом RISEBA, международная квалификация ITEC и ещё девять профильных сертификатов — от классического массажа до работы с фасцией.","lv":"Masāža nav brīvdienu hobijs, bet profesija ar diplomu. Medicīniskā izglītība, RISEBA diploms, starptautiskā ITEC kvalifikācija un vēl deviņi nozares sertifikāti — no klasiskās masāžas līdz darbam ar fasciju.","en":"Massage isn’t a weekend hobby but a profession with a diploma. Medical education, a RISEBA diploma, international ITEC qualification and nine more specialist certificates — from classic massage to fascia work."},
+  "nudge.h":{"ru":"Просто напишите — разберёмся вместе","lv":"Vienkārši uzrakstiet — noskaidrosim kopā","en":"Just write — we’ll figure it out together"},
+  "nudge.p":{"ru":"Не обязательно точно знать формат и время заранее. Расскажите, что беспокоит — предложим вариант.","lv":"Nav obligāti iepriekš precīzi zināt formātu un laiku. Pastāstiet, kas satrauc — piedāvāsim variantu.","en":"You don’t need to know the exact format and time in advance. Tell us what’s bothering you — we’ll suggest an option."},
+  "ov.h1":{"ru":"Нет времени на дорогу?<br><span class=\"price\">Спа приедет к вам</span>","lv":"Nav laika ceļam?<br><span class=\"price\">Spa atbrauks pie jums</span>","en":"No time to travel?<br><span class=\"price\">The spa comes to you</span>"}
+};
+
 const tg = window.Telegram && window.Telegram.WebApp;
 const $ = (s, r=document) => r.querySelector(s);
 const el = (t, c, txt) => { const e = document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; };
@@ -198,19 +214,21 @@ function renderFields(content){
   const box = $('#fields'); box.innerHTML='';
   FIELDS.forEach(f=>{
     const v = map[f.key] || {};
+    const d = DEFAULTS[f.key] || {};              // текущий текст сайта
     const card = el('div','field glass');
     const fh = el('div','fh');
     fh.appendChild(el('b',null,f.label));
     fh.appendChild(el('small',null,f.key + (f.html?' · html':'')));
     card.appendChild(fh);
 
-    const ru = el('textarea'); ru.value = v.ru||''; ru.placeholder='RU (основной)'; ru.dataset.l='ru';
+    // предзаполняем текущим текстом сайта (или ранее сохранённым изменением)
+    const ru = el('textarea'); ru.value = v.ru!=null?v.ru:(d.ru||''); ru.placeholder=d.ru||'RU (основной)'; ru.dataset.l='ru';
     card.appendChild(ru);
 
     const extra = el('div','extra');
     ['lv','en'].forEach(l=>{
       const row = el('div','lng'); row.appendChild(el('span','tag',l));
-      const ta = el('textarea'); ta.value = v[l]||''; ta.dataset.l=l; ta.placeholder=l.toUpperCase()+' (необязательно)';
+      const ta = el('textarea'); ta.value = v[l]!=null?v[l]:(d[l]||''); ta.dataset.l=l; ta.placeholder=d[l]||l.toUpperCase();
       row.appendChild(ta); extra.appendChild(row);
     });
     card.appendChild(extra);
@@ -218,17 +236,23 @@ function renderFields(content){
     const row2 = el('div','row2');
     const toggle = el('button','btn ghost','LV / EN');
     toggle.onclick = ()=> card.classList.toggle('open');
+    const reset = el('button','btn ghost','↺ как на сайте');
+    reset.onclick = ()=>{ card.querySelectorAll('textarea').forEach(t=>{ t.value = d[t.dataset.l]||''; }); };
     const save = el('button','btn','Сохранить');
     const state = el('span','save-state','');
     save.onclick = async ()=>{
       state.className='save-state'; state.textContent='…';
+      // в базу пишем только то, что отличается от текста сайта (совпадающее = «по умолчанию»)
       const value = {};
-      card.querySelectorAll('textarea').forEach(t=>{ const val=t.value.trim(); if(val) value[t.dataset.l]=val; });
+      card.querySelectorAll('textarea').forEach(t=>{
+        const val = t.value.trim(); const def = (d[t.dataset.l]||'').trim();
+        if(val && val!==def) value[t.dataset.l]=val;
+      });
       const res = await api('content_set', { key: f.key, value });
-      if(res.ok){ state.className='save-state ok'; state.textContent='сохранено'; if(tg&&tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
+      if(res.ok){ state.className='save-state ok'; state.textContent=Object.keys(value).length?'сохранено':'сброшено на сайт'; if(tg&&tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
       else { state.className='save-state bad'; state.textContent='ошибка: '+(res.error||''); }
     };
-    row2.appendChild(toggle); row2.appendChild(save); row2.appendChild(state);
+    row2.appendChild(toggle); row2.appendChild(reset); row2.appendChild(save); row2.appendChild(state);
     card.appendChild(row2);
     box.appendChild(card);
   });
