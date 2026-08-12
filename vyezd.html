@@ -62,6 +62,13 @@
   ]
 }
 </script>
+<script>
+  window.MX_TRACK_ENDPOINT = 'https://xqwawjnvvmcydcbswous.supabase.co/functions/v1/track';
+  window.MX_SUPABASE_URL   = 'https://xqwawjnvvmcydcbswous.supabase.co';
+  window.MX_SUPABASE_KEY   = 'sb_publishable_2AMisP8HO4VAa4iLb7NQuA_q5hooyGT';
+</script>
+<script src="tracker.js" defer></script>
+<script src="content.js" defer></script>
 </head>
 <body id="top">
 <div class="bg-base"></div>
@@ -118,7 +125,7 @@
   <div class="hero-in">
     <div>
       <span class="eyebrow rise" data-i18n="ov.eyebrow">Выезд по Риге и Юрмале</span>
-      <h1 class="rise d1" data-i18n-html="ov.h1">Нет времени на дорогу?<br><span class="price">Спа приедет к вам</span></h1>
+      <h1 class="rise d1" data-i18n-html="ov.h1" data-edit="ov.h1" data-edit-html>Нет времени на дорогу?<br><span class="price">Спа приедет к вам</span></h1>
       <p class="lead rise d2" data-i18n="ov.lead">Премиальный массаж дома, в отеле или офисе — в удобное для вас время. Всё оборудование привожу с собой, вам остаётся только расслабиться.</p>
       <div class="hero-cta rise d2">
         <a class="btn btn-wa" id="wa-hero" href="#" target="_blank" rel="noopener">
@@ -477,6 +484,7 @@ function applyLang(lang){
   document.querySelectorAll('#lang-switch button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
   try { localStorage.setItem('lang', lang); } catch (e) {}
   setWaLinks();
+  if (window.__applyContentOverrides) window.__applyContentOverrides();
 }
 
 document.getElementById('wa-fab').onclick = () => window.open(waLink(WA_MSG[LANG].fab), '_blank');

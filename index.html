@@ -93,6 +93,13 @@
   ]
 }
 </script>
+<script>
+  window.MX_TRACK_ENDPOINT = 'https://xqwawjnvvmcydcbswous.supabase.co/functions/v1/track';
+  window.MX_SUPABASE_URL   = 'https://xqwawjnvvmcydcbswous.supabase.co';
+  window.MX_SUPABASE_KEY   = 'sb_publishable_2AMisP8HO4VAa4iLb7NQuA_q5hooyGT';
+</script>
+<script src="tracker.js" defer></script>
+<script src="content.js" defer></script>
 </head>
 <body id="top">
 <div class="bg-base"></div>
@@ -149,9 +156,9 @@
 <section class="hero wrap">
   <div class="hero-in">
     <div>
-      <span class="eyebrow rise" data-i18n="hero.eyebrow">Максим · массаж в Риге, студия и выезд</span>
-      <h1 class="rise d1" data-i18n-html="hero.h1">Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span></h1>
-      <p class="lead rise d2" data-i18n="hero.lead">Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.</p>
+      <span class="eyebrow rise" data-i18n="hero.eyebrow" data-edit="hero.eyebrow">Максим · массаж в Риге, студия и выезд</span>
+      <h1 class="rise d1" data-i18n-html="hero.h1" data-edit="hero.h1" data-edit-html>Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span></h1>
+      <p class="lead rise d2" data-i18n="hero.lead" data-edit="hero.lead">Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.</p>
       <div class="hero-cta rise d2">
         <a class="btn btn-wa" id="wa-hero" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
@@ -206,7 +213,7 @@
   <div class="svc-intro">
     <span class="eyebrow" data-i18n="svc.eyebrow">Услуги студии</span>
     <h2 data-i18n="svc.title">Массаж под ваш запрос</h2>
-    <p data-i18n="svc.intro">Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.</p>
+    <p data-i18n="svc.intro" data-edit="svc.intro">Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.</p>
   </div>
   <div class="svc-groups">
     <div class="svc-cat glass">
@@ -256,8 +263,8 @@
   <div class="outcall-in glass">
     <div class="outcall-head">
       <span class="eyebrow" data-i18n="sp.eyebrow">В студии FIFTY</span>
-      <h2 data-i18n="sp.h">Как проходит массаж в студии</h2>
-      <p data-i18n="sp.p">Спокойный и понятный сценарий — без спешки и неловкости. Вот что происходит от вашего прихода до конца сеанса.</p>
+      <h2 data-i18n="sp.h" data-edit="sp.h">Как проходит массаж в студии</h2>
+      <p data-i18n="sp.p" data-edit="sp.p">Спокойный и понятный сценарий — без спешки и неловкости. Вот что происходит от вашего прихода до конца сеанса.</p>
     </div>
     <ol class="steps steps-4">
       <li class="step">
@@ -293,7 +300,7 @@
     <div class="offer-info">
       <span class="eyebrow" data-i18n="offer.eyebrow">Новым клиентам</span>
       <div class="offer-price">€30 <span class="old">€50</span></div>
-      <p data-i18n="offer.p">Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.</p>
+      <p data-i18n="offer.p" data-edit="offer.p">Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.</p>
       <ul>
         <li><i></i><span data-i18n="offer.li1">Цена €30 — за первый визит в студию</span></li>
         <li><i></i><span data-i18n="offer.li2">Подберём силу, темп и зоны под вас</span></li>
@@ -342,8 +349,8 @@
   <div class="about-in glass">
     <div class="about-txt">
       <span class="eyebrow" data-i18n="about.eyebrow">О специалисте</span>
-      <h2 data-i18n="about.h">Максим Анохин — образование, которому можно доверять</h2>
-      <p data-i18n="about.p">Массаж — не хобби на выходных, а профессия с дипломом. Медицинское образование, диплом RISEBA, международная квалификация ITEC и ещё девять профильных сертификатов — от классического массажа до работы с фасцией.</p>
+      <h2 data-i18n="about.h" data-edit="about.h">Максим Анохин — образование, которому можно доверять</h2>
+      <p data-i18n="about.p" data-edit="about.p">Массаж — не хобби на выходных, а профессия с дипломом. Медицинское образование, диплом RISEBA, международная квалификация ITEC и ещё девять профильных сертификатов — от классического массажа до работы с фасцией.</p>
       <ul class="creds">
         <li><i></i><span data-i18n="about.li1">Медицинское образование и сертификат «Сестринское дело»</span></li>
         <li><i></i><span data-i18n="about.li2">ITEC Level 3 (Великобритания) и SPA SPECIĀLISTS (Латвия)</span></li>
@@ -386,8 +393,8 @@
   <div class="nudge-in glass">
     <div>
       <span class="eyebrow" data-i18n="nudge.eyebrow">Не нашли ответ?</span>
-      <h3 data-i18n="nudge.h">Просто напишите — разберёмся вместе</h3>
-      <p data-i18n="nudge.p">Не обязательно точно знать формат и время заранее. Расскажите, что беспокоит — предложим вариант.</p>
+      <h3 data-i18n="nudge.h" data-edit="nudge.h">Просто напишите — разберёмся вместе</h3>
+      <p data-i18n="nudge.p" data-edit="nudge.p">Не обязательно точно знать формат и время заранее. Расскажите, что беспокоит — предложим вариант.</p>
     </div>
     <a class="btn btn-wa" id="wa-nudge" href="#" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
@@ -529,13 +536,6 @@ const I18N = {
     'sp.s2h':'Подбор под вас','sp.s2p':'Вместе выбираем технику, силу и темп под ваше состояние и цель визита.',
     'sp.s3h':'Сам сеанс','sp.s3p':'Массаж без спешки в тихой студии. Профессиональное укрытие, комфортная температура, музыка.',
     'sp.s4h':'После сеанса','sp.s4p':'Пара рекомендаций, вода и, при желании, согласуем следующий визит — без давления.',
-    'oc.eyebrow':'Выезд · команда и события','oc.h':'Как проходит выезд',
-    'oc.p':'Выезд и корпоративный формат считаются отдельно от студийного визита за €30 — цена зависит от адреса, формата и числа участников. Всё согласуем заранее, чтобы не было сюрпризов.',
-    'oc.s1h':'Обсуждение','oc.s1p':'Пишете запрос и адрес — согласуем формат, дату, время и стоимость под вашу ситуацию.',
-    'oc.s2h':'Инвойс','oc.s2p':'Присылаем счёт на согласованную сумму и бронируем время — визит зафиксирован.',
-    'oc.s3h':'Сеанс у вас','oc.s3p':'Приезжаем с оборудованием домой, в отель или офис — вам остаётся только расслабиться.',
-    'oc.wa':'Запросить выезд в WhatsApp','oc.form':'Оставить заявку на сайте',
-    'oc.note':'Цена €30 действует на первый визит в студию FIFTY. Выезд рассчитывается индивидуально.',
     'offer.eyebrow':'Новым клиентам',
     'offer.p':'Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.',
     'offer.li1':'Цена €30 — за первый визит в студию','offer.li2':'Подберём силу, темп и зоны под вас','offer.li3':'Свяжемся, чтобы согласовать время',
@@ -602,13 +602,6 @@ const I18N = {
     'sp.s2h':'Pielāgošana jums','sp.s2p':'Kopā izvēlamies tehniku, spēku un tempu atbilstoši jūsu stāvoklim un vizītes mērķim.',
     'sp.s3h':'Pats seanss','sp.s3p':'Masāža bez steigas klusā studijā. Profesionāls pārsegs, patīkama temperatūra, mūzika.',
     'sp.s4h':'Pēc seansa','sp.s4p':'Daži ieteikumi, ūdens un, ja vēlaties, saskaņojam nākamo vizīti — bez spiediena.',
-    'oc.eyebrow':'Izbraukums · komandas un pasākumi','oc.h':'Kā notiek izbraukums',
-    'oc.p':'Izbraukums un korporatīvais formāts tiek aprēķināts atsevišķi no studijas vizītes par €30 — cena atkarīga no adreses, formāta un dalībnieku skaita. Visu saskaņojam iepriekš, lai nebūtu pārsteigumu.',
-    'oc.s1h':'Pārrunas','oc.s1p':'Rakstāt pieprasījumu un adresi — saskaņojam formātu, datumu, laiku un cenu jūsu situācijai.',
-    'oc.s2h':'Rēķins','oc.s2p':'Nosūtām rēķinu par saskaņoto summu un rezervējam laiku — vizīte fiksēta.',
-    'oc.s3h':'Seanss pie jums','oc.s3p':'Atbraucam ar aprīkojumu mājās, viesnīcā vai birojā — jums atliek tikai atslābināties.',
-    'oc.wa':'Pieprasīt izbraukumu WhatsApp','oc.form':'Atstāt pieteikumu mājaslapā',
-    'oc.note':'Cena €30 attiecas uz pirmo vizīti studijā FIFTY. Izbraukums tiek aprēķināts individuāli.',
     'offer.eyebrow':'Jauniem klientiem',
     'offer.p':'Pirmā vizīte studijā par īpašu cenu. Īsa saruna pirms seansa, lai saprastu vēlmes, un masāža atbilstoši jūsu stāvoklim.',
     'offer.li1':'Cena €30 — par pirmo vizīti studijā','offer.li2':'Pielāgosim spēku, tempu un zonas jums','offer.li3':'Sazināsimies, lai saskaņotu laiku',
@@ -675,13 +668,6 @@ const I18N = {
     'sp.s2h':'Tailored to you','sp.s2p':'Together we choose the technique, pressure and pace to match your state and the goal of your visit.',
     'sp.s3h':'The session','sp.s3p':'Unhurried massage in a quiet studio. Professional draping, comfortable temperature, music.',
     'sp.s4h':'After the session','sp.s4p':'A few recommendations, water and — if you like — we agree a next visit, with no pressure.',
-    'oc.eyebrow':'Outcall · teams & events','oc.h':'How an outcall works',
-    'oc.p':'Outcall and corporate formats are priced separately from the €30 studio visit — the cost depends on the address, format and number of people. We agree everything in advance, so there are no surprises.',
-    'oc.s1h':'Discussion','oc.s1p':'You send your request and address — we agree the format, date, time and price for your situation.',
-    'oc.s2h':'Invoice','oc.s2p':'We send an invoice for the agreed amount and book the time — the visit is confirmed.',
-    'oc.s3h':'Session at yours','oc.s3p':'We arrive with equipment at your home, hotel or office — all you have to do is relax.',
-    'oc.wa':'Request an outcall on WhatsApp','oc.form':'Leave a request on the site',
-    'oc.note':'The €30 price applies to a first visit at FIFTY studio. Outcalls are quoted individually.',
     'offer.eyebrow':'For new clients',
     'offer.p':'A first studio visit at a special price. A short talk before the session to understand your needs, and massage tuned to how you feel.',
     'offer.li1':'€30 price — for a first studio visit','offer.li2':'We’ll tune pressure, pace and areas to you','offer.li3':'We’ll get in touch to agree a time',
@@ -777,6 +763,7 @@ function applyLang(lang){
   document.querySelectorAll('#lang-switch button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
   try { localStorage.setItem('lang', lang); } catch (e) {}
   setWaLinks();
+  if (window.__applyContentOverrides) window.__applyContentOverrides();
 }
 
 document.getElementById('wa-fab').onclick = () => window.open(waLink(WA_MSG[LANG].fab), '_blank');
