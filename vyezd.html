@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<script>try{if(localStorage.getItem('lang'))document.documentElement.classList.add('lang-set');}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#141210">
 <meta name="mobile-web-app-capable" content="yes">
@@ -95,6 +96,7 @@
       <a href="index.html#studio" data-i18n="nav.studio">Студия</a>
       <a href="#faq" data-i18n="nav.faq">Вопросы</a>
       <a href="index.html#contacts" data-i18n="nav.contacts">Контакты</a>
+      <a class="nav-tel" href="tel:+37128251366"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg><span><span data-i18n="nav.call">Позвонить</span> · +371 28 251 366</span></a>
     </nav>
     <div class="top-right">
       <a class="top-tel" href="tel:+37128251366">+371 28 251 366</a>
@@ -316,7 +318,7 @@ const TITLE = {
 };
 const I18N = {
   ru: {
-    'nav.services':'Услуги','nav.outcall':'Выезд','nav.first':'Первый визит','nav.studio':'Студия','nav.faq':'Вопросы','nav.contacts':'Контакты',
+    'nav.services':'Услуги','nav.outcall':'Выезд','nav.first':'Первый визит','nav.studio':'Студия','nav.faq':'Вопросы','nav.contacts':'Контакты','nav.call':'Позвонить',
     'a.menu':'Меню','a.close':'Закрыть',
     'ov.eyebrow':'Выезд по Риге и Юрмале',
     'ov.h1':'Нет времени на дорогу?<br><span class="price">Спа приедет к вам</span>',
@@ -354,7 +356,7 @@ const I18N = {
     'foot.copy':'© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.'
   },
   lv: {
-    'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.first':'Pirmā vizīte','nav.studio':'Studija','nav.faq':'Jautājumi','nav.contacts':'Kontakti',
+    'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.first':'Pirmā vizīte','nav.studio':'Studija','nav.faq':'Jautājumi','nav.contacts':'Kontakti','nav.call':'Zvanīt',
     'a.menu':'Izvēlne','a.close':'Aizvērt',
     'ov.eyebrow':'Izbraukums Rīgā un Jūrmalā',
     'ov.h1':'Nav laika ceļam?<br><span class="price">Spa atbrauks pie jums</span>',
@@ -392,7 +394,7 @@ const I18N = {
     'foot.copy':'© 2026 MAXAGIST · Masāža veicina atslābināšanos un labsajūtu, bet neaizstāj medicīnisko diagnostiku vai ārstēšanu.'
   },
   en: {
-    'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio','nav.faq':'FAQ','nav.contacts':'Contacts',
+    'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio','nav.faq':'FAQ','nav.contacts':'Contacts','nav.call':'Call',
     'a.menu':'Menu','a.close':'Close',
     'ov.eyebrow':'Outcall across Riga & Jurmala',
     'ov.h1':'No time to travel?<br><span class="price">The spa comes to you</span>',
