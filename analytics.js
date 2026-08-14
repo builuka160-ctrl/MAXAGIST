@@ -30,6 +30,17 @@
     } catch (e) { /* аналитика не должна мешать сайту */ }
   }
 
+  // Meta Pixel — стандартные (track) и кастомные (trackCustom) события.
+  // Пиксель копит данные/аудиторию заранее, чтобы будущая реклама в Meta
+  // сразу имела кому ретаргетить.
+  function fb(name, params, custom) {
+    try {
+      if (typeof window.fbq === 'function') {
+        window.fbq(custom ? 'trackCustom' : 'track', name, params || {});
+      }
+    } catch (e) { /* не мешаем сайту */ }
+  }
+
   // Куда ведёт ссылка/кнопка — нормализуем для матчинга
   function hrefOf(el) {
     var a = el.closest && el.closest('a[href]');
@@ -57,18 +68,22 @@
         link_url: href || 'wa:js',
         page_location: location.pathname
       });
+      fb('Lead', { content_name: 'whatsapp' });
       return;
     }
     if (/^tel:/i.test(href)) {
       send('phone_click', { link_url: href, page_location: location.pathname });
+      fb('Contact', { content_name: 'phone' });
       return;
     }
     if (/writereview|maps\.app\.goo|search\.google\.com\/local|goo\.gl\/maps/i.test(href)) {
       send('review_click', { link_url: href, page_location: location.pathname });
+      fb('ReviewClick', { link_url: href }, true);
       return;
     }
     if (/instagram\.com|t\.me|telegram/i.test(href)) {
       send('social_click', { link_url: href, page_location: location.pathname });
+      fb('SocialClick', { link_url: href }, true);
       return;
     }
   }, true); // capture — ловим даже если клик уводит со страницы
@@ -78,6 +93,7 @@
   if (form) {
     form.addEventListener('submit', function () {
       send('generate_lead', { method: 'form', page_location: location.pathname });
+      fb('Lead', { content_name: 'form' });
     });
   }
 })();
