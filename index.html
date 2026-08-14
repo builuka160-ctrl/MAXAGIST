@@ -144,6 +144,7 @@
       <a href="#offer" data-i18n="nav.first">Первый визит</a>
       <a href="#studio" data-i18n="nav.studio">Студия</a>
       <a href="#about" data-i18n="nav.about">О специалисте</a>
+      <a href="#reviews" data-i18n="reviews.eyebrow">Отзывы</a>
       <a href="#faq" data-i18n="nav.faq">Вопросы</a>
       <a href="#contacts" data-i18n="nav.contacts">Контакты</a>
       <a class="nav-tel" href="tel:+37128251366"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg><span><span data-i18n="nav.call">Позвонить</span> · +371 28 251 366</span></a>
@@ -383,6 +384,36 @@
 
 </section>
 
+<!-- REVIEWS -->
+<section id="reviews" class="reviews wrap">
+  <div class="rv-head">
+    <span class="eyebrow" data-i18n="reviews.eyebrow">Отзывы</span>
+    <h2 data-i18n="reviews.h">Что говорят клиенты</h2>
+    <p data-i18n="reviews.sub">Живые отзывы из Google и переписки — без прикрас.</p>
+  </div>
+  <div class="reviews-grid">
+    <article class="rv-card glass">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">«Этот день выдался поистине чудесным — я попала к настоящему волшебнику, Максиму. С самого начала порадовали тёплые нежные руки и приятная обстановка. Если бы попросили оценить по десятибалльной шкале, поставила бы 11 — не помню, когда в последний раз чувствовала себя так хорошо. Искренне рекомендую.»</p>
+      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n1">Клиентка</span><span class="rv-src">Google</span></div>
+    </article>
+    <article class="rv-card glass">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">«Человека настолько присутствующего в моменте и синхронизированного со своим делом я ещё не встречала. Феноменальная эмпатия соединяется с глубочайшей экспертностью. Одна проблема — тебе невозможно найти замену. 🙏❤️»</p>
+      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n2">Клиентка</span><span class="rv-src">WhatsApp</span></div>
+    </article>
+    <article class="rv-card glass">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">«После твоего массажа резко улучшились подтягивания — первые 6 вообще не чувствовал усилия, делал будто вешу 60 кг. Спасибо! ❤️»</p>
+      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n3">Клиент</span><span class="rv-src">WhatsApp</span></div>
+    </article>
+  </div>
+  <div class="reviews-cta">
+    <a class="btn btn-gold" href="https://search.google.com/local/reviews?placeid=ChIJy_BVAu5xg4QRtBVVZGAD5xs" target="_blank" rel="noopener" data-i18n="reviews.google">★ Смотреть отзывы в Google</a>
+    <a class="btn btn-line" href="https://www.instagram.com/maxagist" target="_blank" rel="noopener" data-i18n="reviews.video">Видео-отзывы в Instagram ↗</a>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section id="faq" class="faq wrap">
   <div class="faq-head">
@@ -457,6 +488,8 @@
       <div>
         <b data-i18n="foot.sections">Разделы</b>
         <a href="#services" data-i18n="nav.services">Услуги</a>
+        <a href="sportivnyj-massazh-riga.html">Спортивный массаж в Риге</a>
+        <a href="massazh-spiny-shei-riga.html">Массаж спины и шеи в Риге</a>
         <a href="#offer" data-i18n="foot.first">Первый визит €30</a>
         <a href="#studio" data-i18n="nav.studio">Студия</a>
         <a href="#about" data-i18n="nav.about">О специалисте</a>
@@ -519,6 +552,7 @@ const TITLE = {
 const I18N = {
   ru: {
     'a.menu':'Меню','a.close':'Закрыть',
+    'reviews.eyebrow':'Отзывы','reviews.h':'Что говорят клиенты','reviews.sub':'Живые отзывы из Google и переписки — без прикрас.','reviews.n1':'Клиентка','reviews.n2':'Клиентка','reviews.n3':'Клиент','reviews.google':'★ Смотреть отзывы в Google','reviews.video':'Видео-отзывы в Instagram ↗',
     'nav.services':'Услуги','nav.outcall':'Выезд','nav.first':'Первый визит','nav.studio':'Студия',
     'nav.about':'О специалисте','nav.faq':'Вопросы','nav.contacts':'Контакты','nav.call':'Позвонить',
     'hero.eyebrow':'Максим · массаж в Риге, студия и выезд',
@@ -585,6 +619,7 @@ const I18N = {
   },
   lv: {
     'a.menu':'Izvēlne','a.close':'Aizvērt',
+    'reviews.eyebrow':'Atsauksmes','reviews.h':'Ko saka klienti','reviews.sub':'Īstas atsauksmes no Google un sarakstes — bez izskaistinājumiem.','reviews.n1':'Kliente','reviews.n2':'Kliente','reviews.n3':'Klients','reviews.google':'★ Skatīt atsauksmes Google','reviews.video':'Video atsauksmes Instagram ↗',
     'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.first':'Pirmā vizīte','nav.studio':'Studija',
     'nav.about':'Par speciālistu','nav.faq':'Jautājumi','nav.contacts':'Kontakti','nav.call':'Zvanīt',
     'hero.eyebrow':'Maksims · masāža Rīgā, studija un izbraukums',
@@ -651,6 +686,7 @@ const I18N = {
   },
   en: {
     'a.menu':'Menu','a.close':'Close',
+    'reviews.eyebrow':'Reviews','reviews.h':'What clients say','reviews.sub':'Real reviews from Google and chats — unedited.','reviews.n1':'Client','reviews.n2':'Client','reviews.n3':'Client','reviews.google':'★ See reviews on Google','reviews.video':'Video reviews on Instagram ↗',
     'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio',
     'nav.about':'About','nav.faq':'FAQ','nav.contacts':'Contacts','nav.call':'Call',
     'hero.eyebrow':'Maksim · massage in Riga, studio & outcall',
