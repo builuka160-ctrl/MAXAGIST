@@ -522,5 +522,6 @@ const bubble = document.getElementById('wa-bubble');
 if (!sessionStorage.getItem('wa-hidden')) setTimeout(() => bubble.classList.add('show'), 4000);
 document.getElementById('wa-x').onclick = () => { bubble.classList.remove('show'); sessionStorage.setItem('wa-hidden', '1'); };
 </script>
+  <script defer src="analytics.js"></script>
 </body>
 </html>

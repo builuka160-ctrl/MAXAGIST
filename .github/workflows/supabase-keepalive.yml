@@ -1,0 +1,46 @@
+name: Supabase keepalive
+
+# Бесплатный проект Supabase уходит в автопаузу после 7 дней без активности.
+# Пауза ломает интеграции (Meta Pixel / реклама зависят от живой базы).
+# Этот воркфлоу раз в 2 дня шлёт лёгкий keepalive-запрос в публичную
+# Edge Function `track` — она делает INSERT в БД, что и есть «активность».
+#
+# Секреты не нужны: функция задеплоена с --no-verify-jwt (публичная),
+# ровно как её дёргает браузерный трекер. Строки помечены site='__keepalive'
+# и event_type='keepalive' — дашборд их отфильтровывает (migration 0002).
+
+on:
+  schedule:
+    - cron: '17 6 */2 * *'   # каждые 2 дня, 06:17 UTC
+  workflow_dispatch:          # можно запустить вручную из вкладки Actions
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase track function
+        run: |
+          set -euo pipefail
+          URL="https://xqwawjnvvmcydcbswous.supabase.co/functions/v1/track"
+          TS=$(date +%s000)
+          PAYLOAD=$(cat <<JSON
+          {
+            "ctx": { "site": "__keepalive", "uid": "gh-keepalive", "sid": "gh-keepalive", "path": "/__keepalive" },
+            "events": [ { "t": "keepalive", "ts": ${TS}, "label": "github-actions-cron" } ]
+          }
+          JSON
+          )
+          code=$(curl -sS -o /tmp/resp.txt -w '%{http_code}' \
+            -X POST "$URL" \
+            -H 'Content-Type: application/json' \
+            --data "$PAYLOAD" \
+            --retry 4 --retry-delay 5 --retry-all-errors --max-time 30)
+          echo "HTTP $code"
+          cat /tmp/resp.txt
+          # 200 = записали keepalive. Любой ответ от проекта уже = активность,
+          # но зелёный статус хотим только на успешном инжесте.
+          test "$code" = "200"
