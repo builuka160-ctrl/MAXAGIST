@@ -469,6 +469,6 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
 .rv-src{margin-left:auto;opacity:.55;font-size:12px}
 .reviews-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .rv-links-label{text-align:center;font-size:13px;opacity:.6;margin:2px 0 12px}
-.rv-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 22px}
-.rv-link{padding:9px 14px;border-radius:12px;font-size:13px;font-weight:500;color:#e5c08a;text-decoration:none;white-space:nowrap;transition:transform .15s ease,border-color .15s ease}
-.rv-link:hover{transform:translateY(-2px);border-color:rgba(199,161,122,.5)}
+.rv-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;max-width:520px;margin:0 auto 22px}
+.rv-link{box-sizing:border-box;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border-radius:999px;font-size:13px;font-weight:500;color:#e5c08a;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:rgba(199,161,122,.10);border:1px solid rgba(199,161,122,.28);transition:transform .15s ease,border-color .15s ease,background .15s ease}
+.rv-link:hover{transform:translateY(-2px);border-color:rgba(199,161,122,.5);background:rgba(199,161,122,.16)}
