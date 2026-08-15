@@ -13,9 +13,23 @@
  *   phone_click    — клик по номеру телефона
  *   review_click   — переход к отзывам (Google Maps / оставить отзыв)
  *   social_click   — переход в Instagram и т.п.
+ *
+ * Google Ads (AW-18386499497): базовый тег подключён в <head> каждой страницы
+ * (ремаркетинг + сбор данных). Ниже — отправка конверсий в Ads. Чтобы конверсия
+ * заработала, вставьте её conversion label в AW_LABELS: возьмите его в Google Ads
+ * → Цели → Конверсии → нужное действие, часть после слэша в send_to
+ * ('AW-18386499497/XXXXXXX' → 'XXXXXXX'). Пока label пуст — событие в Ads молча
+ * не шлётся, GA4 и остальное работают как обычно.
  */
 (function () {
   'use strict';
+
+  // Google Ads conversion labels. Заполните из кабинета Ads (Цели → Конверсии).
+  var AW_ID = 'AW-18386499497';
+  var AW_LABELS = {
+    lead: '', // главная цель: обращение в WhatsApp / отправка формы лида
+    phone: '' // (опционально) звонок по номеру телефона
+  };
 
   function send(name, params) {
     params = params || {};
@@ -28,6 +42,20 @@
         );
       }
     } catch (e) { /* аналитика не должна мешать сайту */ }
+  }
+
+  // Конверсия в Google Ads. Шлём только если для действия задан label —
+  // иначе Ads ругается на пустой send_to, поэтому тихо пропускаем.
+  function adConversion(key, params) {
+    var label = AW_LABELS[key];
+    if (!label) return;
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'conversion', Object.assign(
+          { send_to: AW_ID + '/' + label }, params || {}
+        ));
+      }
+    } catch (e) { /* не мешаем сайту */ }
   }
 
   // Meta Pixel — стандартные (track) и кастомные (trackCustom) события.
@@ -68,11 +96,13 @@
         link_url: href || 'wa:js',
         page_location: location.pathname
       });
+      adConversion('lead', { value: 1.0, currency: 'EUR' });
       fb('Lead', { content_name: 'whatsapp' });
       return;
     }
     if (/^tel:/i.test(href)) {
       send('phone_click', { link_url: href, page_location: location.pathname });
+      adConversion('phone', { value: 1.0, currency: 'EUR' });
       fb('Contact', { content_name: 'phone' });
       return;
     }
@@ -93,6 +123,7 @@
   if (form) {
     form.addEventListener('submit', function () {
       send('generate_lead', { method: 'form', page_location: location.pathname });
+      adConversion('lead', { value: 1.0, currency: 'EUR' });
       fb('Lead', { content_name: 'form' });
     });
   }
