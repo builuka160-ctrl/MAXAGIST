@@ -8,7 +8,8 @@
 | Компонент | Где |
 |---|---|
 | Таблицы `site_events`, `site_content`, `app_admins` + функция `tracker_dashboard()` | миграция `migrations/0001_tracker_admin.sql` (применена) |
-| Edge Function `track` — приём событий | `functions/track/` · `…/functions/v1/track` (verify_jwt=off) |
+| Таблица `leads` — заявки формы-анкеты (PII) | миграция `migrations/0003_leads.sql` (применена) |
+| Edge Function `track` — приём событий + заявок формы (`body.lead`) | `functions/track/` · `…/functions/v1/track` (verify_jwt=off) |
 | Edge Function `admin-api` — дашборд + редактор | `functions/admin-api/` · `…/functions/v1/admin-api` (verify_jwt=off) |
 | Клиент-трекер | `../tracker.js` (подключён в `index.html`, `vyezd.html`) |
 | Подстановка контента (мини-CMS) | `../content.js` |
@@ -23,6 +24,21 @@ Endpoint трекера прописан в `<head>` сайта через `wind
 читаемые: `whatsapp:hero`, `booking:altegio`, `call:phone`, `lang:en`, `format:vyezd`…
 Приватность: без PII, first-party анонимные id, уважает Do Not Track/GPC,
 opt-out через `?mxtrack=off`.
+
+## Заявки формы-анкеты (лиды)
+
+Форма на `index.html` (имя, телефон, email, сообщение) отправляется POST'ом в
+`…/functions/v1/track` как `{ "lead": { name, phone, email, message, source, path, referrer, utm } }`.
+Функция пишет их service role'ом в таблицу `leads` (name + phone обязательны).
+PII: RLS без политик — читать/писать напрямую нельзя, только через Edge Functions.
+
+В Telegram-панели заявки видны на вкладке **«📇 Заявки»** (действие `admin-api`
+`leads`, доступно admin и viewer). Телефон кликабелен (звонок + WhatsApp).
+
+```sql
+-- последние заявки
+select received_at, name, phone, email, source from leads order by received_at desc limit 50;
+```
 
 ## Секрет бота (обязательно один раз)
 

@@ -56,6 +56,14 @@
   .save-state{font-size:12px;color:var(--mut)}
   .save-state.ok{color:var(--ok)} .save-state.bad{color:var(--bad)}
   .center{text-align:center;padding:40px 16px;color:var(--mut)}
+  .lead{padding:12px 14px;margin:0 0 10px}
+  .lead-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .lead-top b{font-size:15px}
+  .lead-date{color:var(--mut);font-size:12px;white-space:nowrap}
+  .lead-row{margin:6px 0 0;display:flex;gap:14px;flex-wrap:wrap}
+  .lead-link{color:var(--acc2);text-decoration:none;font-size:13px}
+  .lead-msg{margin:8px 0 0;padding:8px 10px;background:rgba(0,0,0,.22);border-radius:8px;font-size:13px;white-space:pre-wrap;word-break:break-word}
+  .lead-meta{margin:8px 0 0;color:var(--mut);font-size:11px}
   .hide{display:none!important}
 </style>
 </head>
@@ -68,6 +76,7 @@
 
     <div class="tabs">
       <button id="tab-dash" class="on">📊 Дашборд</button>
+      <button id="tab-leads">📇 Заявки</button>
       <button id="tab-edit" class="hide">✏️ Редактор сайта</button>
     </div>
 
@@ -80,6 +89,12 @@
       </div>
       <div class="kpis" id="kpis"></div>
       <div id="dash-body"></div>
+    </section>
+
+    <!-- LEADS -->
+    <section id="view-leads" class="hide">
+      <p class="muted" style="margin-top:0">Кто заполнил форму-анкету на сайте. Данные видны только вам — на сайте они не публикуются.</p>
+      <div id="leads-body"></div>
     </section>
 
     <!-- EDITOR -->
@@ -208,6 +223,51 @@ async function loadDash(){
   renderDash(res.stats||{});
 }
 
+/* ---------- заявки (лиды) ---------- */
+function fmtDate(iso){
+  const dt = new Date(iso);
+  if (isNaN(dt)) return esc(iso||'');
+  return dt.toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+function leadWa(phone){ const d = String(phone||'').replace(/[^\d]/g,''); return d ? 'https://wa.me/'+d : null; }
+
+function renderLeads(list, total){
+  const body = $('#leads-body'); body.innerHTML='';
+  body.appendChild(el('p','muted','Всего заявок: '+total));
+  if(!list.length){ body.appendChild(el('p','center','Пока никто не заполнял форму на сайте.')); return; }
+  list.forEach(l=>{
+    const c = el('div','lead glass');
+    const top = el('div','lead-top');
+    top.appendChild(el('b',null, l.name||'—'));
+    top.appendChild(el('span','lead-date', fmtDate(l.received_at)));
+    c.appendChild(top);
+
+    if(l.phone){
+      const row = el('div','lead-row');
+      const tel = el('a','lead-link'); tel.href='tel:'+String(l.phone).replace(/\s/g,''); tel.textContent='📞 '+l.phone;
+      row.appendChild(tel);
+      const wa = leadWa(l.phone);
+      if(wa){ const a = el('a','lead-link'); a.href=wa; a.target='_blank'; a.rel='noopener'; a.textContent='WhatsApp ↗'; row.appendChild(a); }
+      c.appendChild(row);
+    }
+    if(l.email){
+      const row = el('div','lead-row');
+      const a = el('a','lead-link'); a.href='mailto:'+l.email; a.textContent='✉️ '+l.email;
+      row.appendChild(a); c.appendChild(row);
+    }
+    if(l.message) c.appendChild(el('div','lead-msg', l.message));
+    const meta = [l.source && ('источник: '+l.source), l.path].filter(Boolean).join('  ·  ');
+    if(meta) c.appendChild(el('div','lead-meta', meta));
+    body.appendChild(c);
+  });
+}
+async function loadLeads(){
+  $('#leads-body').innerHTML = '<p class="muted">Загрузка…</p>';
+  const res = await api('leads', { limit: 200 });
+  if(!res.ok){ $('#leads-body').innerHTML = '<p class="muted">Ошибка: '+esc(res.error)+'</p>'; return; }
+  renderLeads(res.leads||[], res.total||0);
+}
+
 /* ---------- редактор ---------- */
 function renderFields(content){
   const map = {}; (content||[]).forEach(r=>{ map[r.key]=r.value||{}; });
@@ -264,10 +324,10 @@ async function loadEditor(){
 
 /* ---------- init ---------- */
 function switchTab(which){
-  $('#tab-dash').classList.toggle('on', which==='dash');
-  $('#tab-edit').classList.toggle('on', which==='edit');
-  $('#view-dash').classList.toggle('hide', which!=='dash');
-  $('#view-edit').classList.toggle('hide', which!=='edit');
+  ['dash','leads','edit'].forEach(t=>{
+    $('#tab-'+t).classList.toggle('on', which===t);
+    $('#view-'+t).classList.toggle('hide', which!==t);
+  });
 }
 
 (async function(){
@@ -290,6 +350,7 @@ function switchTab(which){
   if(me.role==='admin') $('#tab-edit').classList.remove('hide');
 
   $('#tab-dash').onclick = ()=> switchTab('dash');
+  $('#tab-leads').onclick = ()=>{ switchTab('leads'); loadLeads(); };
   $('#tab-edit').onclick = ()=>{ switchTab('edit'); loadEditor(); };
   $('#range').querySelectorAll('button').forEach(b=>{
     b.onclick = ()=>{ $('#range').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); curDays=+b.dataset.d; loadDash(); };
