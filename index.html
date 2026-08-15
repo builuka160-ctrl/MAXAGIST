@@ -552,12 +552,11 @@ fbq('track','PageView');
 </div>
 
 <script>
-/* ===== CONFIG — впиши свои значения ===== */
-const SUPABASE_URL      = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
-const LEADS_TABLE       = 'leads';
-const WA_PHONE          = '37128251366';
-/* ======================================== */
+/* ===== CONFIG ===== */
+// Заявки формы уходят в тот же Supabase Edge Function, что и трекер (endpoint в <head>).
+const LEAD_ENDPOINT = window.MX_TRACK_ENDPOINT || '';
+const WA_PHONE      = '37128251366';
+/* ================== */
 
 const waLink = t => `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(t)}`;
 
@@ -873,26 +872,27 @@ form.addEventListener('submit', async e => {
   if (!d.name || !d.phone || !form.querySelector('[type=checkbox]').checked) {
     statusEl.textContent = T['st.fill']; statusEl.classList.add('err'); return;
   }
+  const utm = {}; new URLSearchParams(location.search).forEach((v,k)=>{ if(/^utm_|^(gclid|fbclid)$/.test(k)) utm[k.replace('utm_','')] = v.slice(0,120); });
   const payload = { name:d.name.trim(), phone:d.phone.trim(),
-    email:(d.email||'').trim()||null, message:(d.message||'').trim()||null, source:'landing' };
+    email:(d.email||'').trim()||null, message:(d.message||'').trim()||null, source:'landing',
+    path: location.pathname, referrer: document.referrer||'', utm };
   const waText = `${L.lead}\n${L.name}: ${payload.name}\n${L.phone}: ${payload.phone}` +
     (payload.email?`\n${L.email}: ${payload.email}`:'') + (payload.message?`\n${L.message}: ${payload.message}`:'');
   waFallback.href = waLink(waText);
 
-  const configured = !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR_');
-  if (!configured) {
+  if (!LEAD_ENDPOINT) {
     statusEl.textContent = T['st.dev'];
     statusEl.classList.add('err'); waFallback.classList.add('show'); return;
   }
   submitBtn.disabled = true; statusEl.textContent = T['st.sending'];
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${LEADS_TABLE}`, {
+    const res = await fetch(LEAD_ENDPOINT, {
       method:'POST',
-      headers:{ 'Content-Type':'application/json', 'apikey':SUPABASE_ANON_KEY,
-        'Authorization':`Bearer ${SUPABASE_ANON_KEY}`, 'Prefer':'return=minimal' },
-      body: JSON.stringify(payload)
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ lead: payload })
     });
-    if (!res.ok) throw new Error(await res.text());
+    const out = await res.json().catch(()=>({}));
+    if (!res.ok || !out.ok) throw new Error(out.error || ('HTTP '+res.status));
     form.reset();
     statusEl.textContent = T['st.ok'];
     statusEl.classList.add('ok');

@@ -68,6 +68,17 @@ Deno.serve(async (req) => {
     return json({ ok: true, role, stats: data });
   }
 
+  if (action === 'leads') {
+    const limit = Math.min(500, Math.max(1, Number(body?.limit) || 200));
+    const { data, error } = await supabase.from('leads')
+      .select('id,received_at,name,phone,email,message,source,path')
+      .order('received_at', { ascending: false })
+      .limit(limit);
+    if (error) return json({ ok: false, error: error.message }, 500);
+    const { count } = await supabase.from('leads').select('id', { count: 'exact', head: true });
+    return json({ ok: true, role, leads: data, total: count ?? (data?.length ?? 0) });
+  }
+
   if (action === 'content_get') {
     const { data, error } = await supabase.from('site_content').select('key,value,updated_at');
     if (error) return json({ ok: false, error: error.message }, 500);
