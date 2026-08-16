@@ -118,13 +118,13 @@
     }
   }, true); // capture — ловим даже если клик уводит со страницы
 
-  // Отправка формы лида → тоже конверсия
-  var form = document.getElementById('lead-form');
-  if (form) {
-    form.addEventListener('submit', function () {
-      send('generate_lead', { method: 'form', page_location: location.pathname });
-      adConversion('lead', { value: 1.0, currency: 'EUR' });
-      fb('Lead', { content_name: 'form' });
-    });
-  }
+  // Отправка формы лида → конверсия ТОЛЬКО после успешного сохранения на сервере.
+  // Обработчик формы (index.html) шлёт кастомное событие 'lead:success', когда
+  // заявка реально принята. Раньше слушали 'submit' — и конверсия засчитывалась
+  // даже при ошибке валидации или сбое сети, раздувая статистику Ads/Meta.
+  document.addEventListener('lead:success', function () {
+    send('generate_lead', { method: 'form', page_location: location.pathname });
+    adConversion('lead', { value: 1.0, currency: 'EUR' });
+    fb('Lead', { content_name: 'form' });
+  });
 })();

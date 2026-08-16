@@ -885,21 +885,28 @@ form.addEventListener('submit', async e => {
     statusEl.classList.add('err'); waFallback.classList.add('show'); return;
   }
   submitBtn.disabled = true; statusEl.textContent = T['st.sending'];
+  // Тайм-аут: если сеть подвисла (мобильный / холодный старт функции) — не оставляем
+  // кнопку заблокированной навсегда, а показываем ошибку и WhatsApp-фолбэк.
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 20000);
   try {
     const res = await fetch(LEAD_ENDPOINT, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ lead: payload })
+      body: JSON.stringify({ lead: payload }),
+      signal: ctrl.signal
     });
     const out = await res.json().catch(()=>({}));
     if (!res.ok || !out.ok) throw new Error(out.error || ('HTTP '+res.status));
     form.reset();
     statusEl.textContent = T['st.ok'];
     statusEl.classList.add('ok');
+    // Заявка реально сохранена — только теперь считаем конверсию (см. analytics.js).
+    document.dispatchEvent(new CustomEvent('lead:success', { detail:{ method:'form' } }));
   } catch (err) {
     statusEl.textContent = T['st.err'];
     statusEl.classList.add('err'); waFallback.classList.add('show');
-  } finally { submitBtn.disabled = false; }
+  } finally { clearTimeout(timer); submitBtn.disabled = false; }
 });
 
 /* ===== certificate lightbox ===== */
