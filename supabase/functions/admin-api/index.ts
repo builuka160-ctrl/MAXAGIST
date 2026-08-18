@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
   if (action === 'leads') {
     const limit = Math.min(500, Math.max(1, Number(body?.limit) || 200));
     const { data, error } = await supabase.from('leads')
-      .select('id,received_at,name,phone,email,message,source,path')
+      .select('id,received_at,name,phone,email,message,source,path,user_agent')
       .order('received_at', { ascending: false })
       .limit(limit);
     if (error) return json({ ok: false, error: error.message }, 500);

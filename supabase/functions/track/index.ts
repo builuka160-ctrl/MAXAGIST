@@ -14,6 +14,58 @@ const json = (d: unknown, s = 200) =>
 const str = (v: unknown, n: number) =>
   typeof v === 'string' && v.trim() ? v.trim().slice(0, n) : null;
 
+// Понятное описание устройства из User-Agent: «📱 iPhone · Safari» и т.п.
+function deviceFromUA(ua: string): string {
+  ua = String(ua || '');
+  if (!ua) return 'неизвестно';
+  let os = '';
+  if (/iPhone/i.test(ua)) os = 'iPhone';
+  else if (/iPad/i.test(ua)) os = 'iPad';
+  else if (/Android/i.test(ua)) { const m = ua.match(/Android[ ;]([\d.]+)/i); os = 'Android' + (m ? ' ' + m[1] : ''); }
+  else if (/Windows NT/i.test(ua)) os = 'Windows';
+  else if (/Mac OS X/i.test(ua)) os = 'Mac';
+  else if (/CrOS/i.test(ua)) os = 'ChromeOS';
+  else if (/Linux/i.test(ua)) os = 'Linux';
+  let br = '';
+  if (/Edg\//i.test(ua)) br = 'Edge';
+  else if (/OPR\//i.test(ua) || /Opera/i.test(ua)) br = 'Opera';
+  else if (/CriOS/i.test(ua)) br = 'Chrome';
+  else if (/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) br = 'Chrome';
+  else if (/FxiOS/i.test(ua) || /Firefox\//i.test(ua)) br = 'Firefox';
+  else if (/Version\//i.test(ua) && /Safari/i.test(ua)) br = 'Safari';
+  const mobile = /Mobi|Android|iPhone|iPad/i.test(ua);
+  const label = [os, br].filter(Boolean).join(' · ') || 'неизвестно';
+  return (mobile ? '📱 ' : '💻 ') + label;
+}
+
+// Уведомление админам в Telegram о новой заявке (best-effort, не блокирует ответ).
+async function notifyAdmins(supabase: any, lead: Record<string, unknown>, device: string) {
+  const token = Deno.env.get('BOT_TOKEN');
+  if (!token) return;
+  const { data: admins } = await supabase.from('app_admins').select('tg_id');
+  if (!admins?.length) return;
+  const esc = (s: unknown) =>
+    String(s ?? '').replace(/[<>&]/g, (m: string) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[m]!));
+  const lines = [
+    '🔔 <b>Новая заявка с сайта</b>',
+    '',
+    `👤 <b>${esc(lead.name)}</b>`,
+    `📞 ${esc(lead.phone)}`,
+    lead.email ? `✉️ ${esc(lead.email)}` : '',
+    lead.message ? `\n💬 ${esc(lead.message)}` : '',
+    lead.path ? `\n🔗 ${esc(lead.path)}` : '',
+    `\n${esc(device)}`,
+  ].filter(Boolean);
+  const text = lines.join('\n');
+  await Promise.all((admins as Array<{ tg_id: number }>).map((a) =>
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: a.tg_id, text, parse_mode: 'HTML', disable_web_page_preview: true }),
+    }).catch(() => {}),
+  ));
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   if (req.method !== 'POST') return json({ ok: false, error: 'method' }, 405);
@@ -37,7 +89,8 @@ Deno.serve(async (req) => {
     const name = str(leadIn.name, 120);
     const phone = str(leadIn.phone, 40);
     if (name && phone) {
-      const { error: lerr } = await supabase.from('leads').insert({
+      const userAgent = (req.headers.get('user-agent') || '').slice(0, 300) || null;
+      const lead = {
         name,
         phone,
         email:      str(leadIn.email, 160),
@@ -49,10 +102,13 @@ Deno.serve(async (req) => {
         country,
         visitor_id: str(leadIn.uid, 80) ?? (ctx.uid ?? null),
         session_id: str(leadIn.sid, 80) ?? (ctx.sid ?? null),
-        user_agent: (req.headers.get('user-agent') || '').slice(0, 300) || null,
-      });
+        user_agent: userAgent,
+      };
+      const { error: lerr } = await supabase.from('leads').insert(lead);
       if (lerr) return json({ ok: false, error: lerr.message }, 500);
       leadSaved = 1;
+      // Уведомляем админов в Telegram (не блокируем ответ сайту при ошибке).
+      try { await notifyAdmins(supabase, lead, deviceFromUA(userAgent || '')); } catch (_e) { /* best-effort */ }
     }
   }
 
