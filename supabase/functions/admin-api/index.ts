@@ -55,6 +55,27 @@ async function verifyInitData(initData: string): Promise<AuthResult> {
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
+
+  // Диагностика: какому боту принадлежит секрет BOT_TOKEN (getMe со стороны
+  // Supabase). Токен не раскрывается — только публичное имя бота. Открывается
+  // в браузере: <fn-url>/admin-api?diag=1. Можно удалить после починки.
+  if (req.method === 'GET') {
+    const url = new URL(req.url);
+    if (url.searchParams.get('diag') === '1') {
+      const hasToken = !!BOT_TOKEN;
+      let tgOk = false; let bot: string | null = null; let botId: number | null = null;
+      if (hasToken) {
+        try {
+          const r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getMe`);
+          const j = await r.json();
+          tgOk = !!j?.ok; bot = j?.result?.username ?? null; botId = j?.result?.id ?? null;
+        } catch (_e) { /* ignore */ }
+      }
+      return json({ ok: true, diag: { has_token: hasToken, tg_ok: tgOk, bot_username: bot, bot_id: botId } });
+    }
+    return json({ ok: false, error: 'method' }, 405);
+  }
+
   if (req.method !== 'POST') return json({ ok: false, error: 'method' }, 405);
 
   let body: any;
