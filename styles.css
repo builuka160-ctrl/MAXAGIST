@@ -274,6 +274,12 @@ form .btn-gold{width:100%;justify-content:center;margin-top:6px}
   font-style:italic;line-height:1.35}
 
 /* about specialist */
+.approach{padding:48px 0}
+.approach-in{padding:52px 46px;border-radius:var(--r-lg)}
+.approach-in h2{font-size:clamp(2rem,4.2vw,3rem);margin-top:16px}
+.approach-in p{color:var(--muted);margin-top:18px;max-width:760px;line-height:1.7}
+@media(max-width:760px){.approach-in{padding:26px 22px}}
+
 .about{padding:48px 0}
 .about-in{display:grid;grid-template-columns:1.05fr .95fr;gap:0;border-radius:var(--r-lg);overflow:hidden}
 .about-txt{padding:52px 46px}
