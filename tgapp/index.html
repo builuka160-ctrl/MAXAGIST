@@ -250,11 +250,6 @@ function renderLeads(list, total){
       if(wa){ const a = el('a','lead-link'); a.href=wa; a.target='_blank'; a.rel='noopener'; a.textContent='WhatsApp ↗'; row.appendChild(a); }
       c.appendChild(row);
     }
-    if(l.email){
-      const row = el('div','lead-row');
-      const a = el('a','lead-link'); a.href='mailto:'+l.email; a.textContent='✉️ '+l.email;
-      row.appendChild(a); c.appendChild(row);
-    }
     if(l.message) c.appendChild(el('div','lead-msg', l.message));
     const meta = [l.source && ('источник: '+l.source), l.path].filter(Boolean).join('  ·  ');
     if(meta) c.appendChild(el('div','lead-meta', meta));

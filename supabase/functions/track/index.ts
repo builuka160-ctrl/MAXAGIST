@@ -40,7 +40,6 @@ Deno.serve(async (req) => {
       const { error: lerr } = await supabase.from('leads').insert({
         name,
         phone,
-        email:      str(leadIn.email, 160),
         message:    str(leadIn.message, 2000),
         source:     str(leadIn.source, 40) || 'site',
         path:       str(leadIn.path, 300) ?? (ctx.path ?? null),

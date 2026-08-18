@@ -27,8 +27,8 @@ opt-out через `?mxtrack=off`.
 
 ## Заявки формы-анкеты (лиды)
 
-Форма на `index.html` (имя, телефон, email, сообщение) отправляется POST'ом в
-`…/functions/v1/track` как `{ "lead": { name, phone, email, message, source, path, referrer, utm } }`.
+Форма на `index.html` (имя, телефон, сообщение) отправляется POST'ом в
+`…/functions/v1/track` как `{ "lead": { name, phone, message, source, path, referrer, utm } }`.
 Функция пишет их service role'ом в таблицу `leads` (name + phone обязательны).
 PII: RLS без политик — читать/писать напрямую нельзя, только через Edge Functions.
 
@@ -37,7 +37,7 @@ PII: RLS без политик — читать/писать напрямую н
 
 ```sql
 -- последние заявки
-select received_at, name, phone, email, source from leads order by received_at desc limit 50;
+select received_at, name, phone, source from leads order by received_at desc limit 50;
 ```
 
 ## Секрет бота (обязательно один раз)
