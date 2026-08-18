@@ -147,16 +147,38 @@ const $ = (s, r=document) => r.querySelector(s);
 const el = (t, c, txt) => { const e = document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; };
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 
-let INIT_DATA = '';
-try { INIT_DATA = tg ? tg.initData : ''; } catch(e){}
+// initData читаем на каждый запрос: Telegram может обновить его после переоткрытия,
+// а значение, снятое один раз при загрузке, к тому времени уже устареет.
+function currentInitData(){ try { return (tg && tg.initData) || ''; } catch(e){ return ''; } }
+let INIT_DATA = currentInitData();
+
+// Сессия протухла / не подтверждена — показываем понятный экран вместо «unauthorized».
+let sessionDead = false;
+function showSessionExpired(kind){
+  if(sessionDead) return; sessionDead = true;
+  $('#app').classList.add('hide');
+  const g = $('#gate'); g.classList.remove('hide');
+  g.innerHTML =
+    (kind==='stale' ? 'Сессия Telegram устарела. ' : 'Не удалось подтвердить доступ. ') +
+    'Полностью закройте панель и откройте её заново из меню бота <b>@maxag_bot</b>.' +
+    '<br><br><button class="btn" id="reopen-btn">Обновить</button>';
+  const b = document.getElementById('reopen-btn');
+  if(b) b.onclick = ()=>{ try{ if(tg&&tg.close) return tg.close(); }catch(e){} location.reload(); };
+}
 
 async function api(action, extra){
-  const r = await fetch(API, {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json', apikey: SUPABASE_KEY, Authorization:'Bearer '+SUPABASE_KEY },
-    body: JSON.stringify(Object.assign({ action, initData: INIT_DATA }, extra||{}))
-  });
-  return r.json();
+  INIT_DATA = currentInitData() || INIT_DATA;
+  let r;
+  try {
+    r = await fetch(API, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', apikey: SUPABASE_KEY, Authorization:'Bearer '+SUPABASE_KEY },
+      body: JSON.stringify(Object.assign({ action, initData: INIT_DATA }, extra||{}))
+    });
+  } catch(e){ return { ok:false, error:'network' }; }
+  const out = await r.json().catch(()=>({ ok:false, error:'bad response' }));
+  if(!out.ok && (out.error==='stale' || out.error==='unauthorized')) showSessionExpired(out.error);
+  return out;
 }
 
 /* ---------- дашборд ---------- */
@@ -344,8 +366,10 @@ function renderFields(content){
   });
 }
 async function loadEditor(){
+  $('#fields').innerHTML = '<p class="muted">Загрузка…</p>';
   const res = await api('content_get');
   if(res.ok) renderFields(res.content||[]);
+  else $('#fields').innerHTML = '<p class="muted">Ошибка: '+esc(res.error)+'</p>';
 }
 
 /* ---------- init ---------- */
@@ -364,9 +388,11 @@ function switchTab(which){
   }
   const me = await api('me');
   if(!me.ok){
-    $('#gate').innerHTML = me.error==='forbidden'
-      ? 'Нет доступа. Ваш ID: <b>'+esc(me.id)+'</b> — попросите владельца добавить его.'
-      : 'Ошибка авторизации: '+esc(me.error||'');
+    // stale/unauthorized уже показал showSessionExpired — не перетираем его сообщение.
+    if(me.error!=='stale' && me.error!=='unauthorized')
+      $('#gate').innerHTML = me.error==='forbidden'
+        ? 'Нет доступа. Ваш ID: <b>'+esc(me.id)+'</b> — попросите владельца добавить его.'
+        : 'Ошибка: '+esc(me.error||'');
     return;
   }
   $('#gate').classList.add('hide');

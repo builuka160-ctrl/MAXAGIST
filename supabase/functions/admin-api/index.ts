@@ -23,19 +23,30 @@ async function hmac(keyBytes: Uint8Array, msg: string): Promise<Uint8Array> {
 }
 const hex = (b: Uint8Array) => [...b].map((x) => x.toString(16).padStart(2, '0')).join('');
 
-async function verifyInitData(initData: string): Promise<any | null> {
-  if (!initData) return null;
+// Окно свежести initData. Настоящая проверка доступа — HMAC(BOT_TOKEN) + allowlist
+// app_admins; auth_date лишь ограничивает переигрывание. Мобильный Telegram при
+// переоткрытии Mini App нередко отдаёт закешированный initData со старым auth_date,
+// поэтому окно широкое (30 дней), а по истечении клиенту возвращается код 'stale',
+// чтобы он попросил переоткрыть панель, а не показывал «unauthorized».
+const INITDATA_MAX_AGE = 30 * 86400;
+
+type AuthResult = { user: any } | { error: 'invalid' | 'stale' };
+async function verifyInitData(initData: string): Promise<AuthResult> {
+  if (!initData) return { error: 'invalid' };
   const params = new URLSearchParams(initData);
   const hash = params.get('hash');
-  if (!hash) return null;
+  if (!hash) return { error: 'invalid' };
   params.delete('hash');
   const dcs = [...params.entries()].map(([k, v]) => `${k}=${v}`).sort().join('\n');
   const secret = await hmac(enc.encode('WebAppData'), BOT_TOKEN);
   const calc = hex(await hmac(secret, dcs));
-  if (calc !== hash) return null;
+  if (calc !== hash) return { error: 'invalid' };
   const authDate = Number(params.get('auth_date') || '0');
-  if (!authDate || (Date.now() / 1000 - authDate) > 86400) return null; // свежесть 24ч
-  try { return JSON.parse(params.get('user') || 'null'); } catch { return null; }
+  if (!authDate || (Date.now() / 1000 - authDate) > INITDATA_MAX_AGE) return { error: 'stale' };
+  try {
+    const user = JSON.parse(params.get('user') || 'null');
+    return user?.id ? { user } : { error: 'invalid' };
+  } catch { return { error: 'invalid' }; }
 }
 
 Deno.serve(async (req) => {
@@ -45,8 +56,11 @@ Deno.serve(async (req) => {
   let body: any;
   try { body = await req.json(); } catch { return json({ ok: false, error: 'bad json' }, 400); }
 
-  const user = await verifyInitData(body?.initData || '');
-  if (!user?.id) return json({ ok: false, error: 'unauthorized' }, 401);
+  const auth = await verifyInitData(body?.initData || '');
+  if ('error' in auth) {
+    return json({ ok: false, error: auth.error === 'stale' ? 'stale' : 'unauthorized' }, 401);
+  }
+  const user = auth.user;
 
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
