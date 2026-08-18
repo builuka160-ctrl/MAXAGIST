@@ -152,16 +152,27 @@ const esc = s => String(s==null?'':s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':
 function currentInitData(){ try { return (tg && tg.initData) || ''; } catch(e){ return ''; } }
 let INIT_DATA = currentInitData();
 
-// Сессия протухла / не подтверждена — показываем понятный экран вместо «unauthorized».
+// Коды авторизации от admin-api, при которых показываем экран-объяснение.
+const AUTH_ERRORS = ['stale','unauthorized','no_initdata','no_hash','bad_signature','no_user','no_token'];
 let sessionDead = false;
 function showSessionExpired(kind){
   if(sessionDead) return; sessionDead = true;
   $('#app').classList.add('hide');
   const g = $('#gate'); g.classList.remove('hide');
-  g.innerHTML =
-    (kind==='stale' ? 'Сессия Telegram устарела. ' : 'Не удалось подтвердить доступ. ') +
-    'Полностью закройте панель и откройте её заново из меню бота <b>@maxag_bot</b>.' +
-    '<br><br><button class="btn" id="reopen-btn">Обновить</button>';
+  let msg;
+  if(kind==='bad_signature')
+    msg = 'Подпись Telegram не совпала с ботом. Похоже, панель открыта из другого бота, '
+        + 'чем настроен на сервере (<code>BOT_TOKEN</code>). Открывайте её через того же бота.';
+  else if(kind==='no_initdata' || kind==='no_hash')
+    msg = 'Панель нужно открывать <b>внутри Telegram</b> — кнопкой «Панель» в меню бота, а не по прямой ссылке.';
+  else if(kind==='no_token')
+    msg = 'На сервере не задан <code>BOT_TOKEN</code>. Задайте секрет бота в Supabase.';
+  else if(kind==='stale')
+    msg = 'Сессия Telegram устарела. Полностью закройте панель и откройте её заново из меню бота.';
+  else
+    msg = 'Не удалось подтвердить доступ. Закройте панель и откройте её заново из меню бота.';
+  g.innerHTML = msg + '<br><br><button class="btn" id="reopen-btn">Обновить</button>'
+    + '<div class="muted" style="margin-top:10px">код: '+esc(kind)+'</div>';
   const b = document.getElementById('reopen-btn');
   if(b) b.onclick = ()=>{ try{ if(tg&&tg.close) return tg.close(); }catch(e){} location.reload(); };
 }
@@ -177,7 +188,7 @@ async function api(action, extra){
     });
   } catch(e){ return { ok:false, error:'network' }; }
   const out = await r.json().catch(()=>({ ok:false, error:'bad response' }));
-  if(!out.ok && (out.error==='stale' || out.error==='unauthorized')) showSessionExpired(out.error);
+  if(!out.ok && AUTH_ERRORS.indexOf(out.error) !== -1) showSessionExpired(out.error);
   return out;
 }
 
@@ -388,8 +399,8 @@ function switchTab(which){
   }
   const me = await api('me');
   if(!me.ok){
-    // stale/unauthorized уже показал showSessionExpired — не перетираем его сообщение.
-    if(me.error!=='stale' && me.error!=='unauthorized')
+    // Ошибки авторизации уже показал showSessionExpired — не перетираем сообщение.
+    if(AUTH_ERRORS.indexOf(me.error) === -1)
       $('#gate').innerHTML = me.error==='forbidden'
         ? 'Нет доступа. Ваш ID: <b>'+esc(me.id)+'</b> — попросите владельца добавить его.'
         : 'Ошибка: '+esc(me.error||'');
