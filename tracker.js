@@ -106,7 +106,9 @@
     var body = JSON.stringify(payload);
     try {
       if (useBeacon && navigator.sendBeacon) {
-        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: 'application/json' }));
+        // text/plain — CORS-safelisted: без preflight (надёжно при выгрузке),
+        // сервер парсит тело как JSON независимо от типа.
+        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: 'text/plain' }));
         return;
       }
     } catch (e) {}

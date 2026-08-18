@@ -64,6 +64,7 @@
   .lead-link{color:var(--acc2);text-decoration:none;font-size:13px}
   .lead-msg{margin:8px 0 0;padding:8px 10px;background:rgba(0,0,0,.22);border-radius:8px;font-size:13px;white-space:pre-wrap;word-break:break-word}
   .lead-meta{margin:8px 0 0;color:var(--mut);font-size:11px}
+  .lead-device{margin:6px 0 0;padding-top:6px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}
   .hide{display:none!important}
 </style>
 </head>
@@ -146,16 +147,49 @@ const $ = (s, r=document) => r.querySelector(s);
 const el = (t, c, txt) => { const e = document.createElement(t); if(c) e.className=c; if(txt!=null) e.textContent=txt; return e; };
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 
-let INIT_DATA = '';
-try { INIT_DATA = tg ? tg.initData : ''; } catch(e){}
+// initData читаем на каждый запрос: Telegram может обновить его после переоткрытия,
+// а значение, снятое один раз при загрузке, к тому времени уже устареет.
+function currentInitData(){ try { return (tg && tg.initData) || ''; } catch(e){ return ''; } }
+let INIT_DATA = currentInitData();
+
+// Коды авторизации от admin-api, при которых показываем экран-объяснение.
+const AUTH_ERRORS = ['stale','unauthorized','no_initdata','no_hash','bad_signature','no_user','no_token'];
+let sessionDead = false;
+function showSessionExpired(kind){
+  if(sessionDead) return; sessionDead = true;
+  $('#app').classList.add('hide');
+  const g = $('#gate'); g.classList.remove('hide');
+  let msg;
+  if(kind==='bad_signature')
+    msg = 'Подпись Telegram не совпала с ботом. Похоже, панель открыта из другого бота, '
+        + 'чем настроен на сервере (<code>BOT_TOKEN</code>). Открывайте её через того же бота.';
+  else if(kind==='no_initdata' || kind==='no_hash')
+    msg = 'Панель нужно открывать <b>внутри Telegram</b> — кнопкой «Панель» в меню бота, а не по прямой ссылке.';
+  else if(kind==='no_token')
+    msg = 'На сервере не задан <code>BOT_TOKEN</code>. Задайте секрет бота в Supabase.';
+  else if(kind==='stale')
+    msg = 'Сессия Telegram устарела. Полностью закройте панель и откройте её заново из меню бота.';
+  else
+    msg = 'Не удалось подтвердить доступ. Закройте панель и откройте её заново из меню бота.';
+  g.innerHTML = msg + '<br><br><button class="btn" id="reopen-btn">Обновить</button>'
+    + '<div class="muted" style="margin-top:10px">код: '+esc(kind)+'</div>';
+  const b = document.getElementById('reopen-btn');
+  if(b) b.onclick = ()=>{ try{ if(tg&&tg.close) return tg.close(); }catch(e){} location.reload(); };
+}
 
 async function api(action, extra){
-  const r = await fetch(API, {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json', apikey: SUPABASE_KEY, Authorization:'Bearer '+SUPABASE_KEY },
-    body: JSON.stringify(Object.assign({ action, initData: INIT_DATA }, extra||{}))
-  });
-  return r.json();
+  INIT_DATA = currentInitData() || INIT_DATA;
+  let r;
+  try {
+    r = await fetch(API, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', apikey: SUPABASE_KEY, Authorization:'Bearer '+SUPABASE_KEY },
+      body: JSON.stringify(Object.assign({ action, initData: INIT_DATA }, extra||{}))
+    });
+  } catch(e){ return { ok:false, error:'network' }; }
+  const out = await r.json().catch(()=>({ ok:false, error:'bad response' }));
+  if(!out.ok && AUTH_ERRORS.indexOf(out.error) !== -1) showSessionExpired(out.error);
+  return out;
 }
 
 /* ---------- дашборд ---------- */
@@ -230,6 +264,29 @@ function fmtDate(iso){
   return dt.toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
 }
 function leadWa(phone){ const d = String(phone||'').replace(/[^\d]/g,''); return d ? 'https://wa.me/'+d : null; }
+// Понятное описание устройства из User-Agent: «📱 iPhone · Safari» и т.п.
+function deviceFromUA(ua){
+  ua = String(ua||'');
+  if(!ua) return null;
+  let os='';
+  if(/iPhone/i.test(ua)) os='iPhone';
+  else if(/iPad/i.test(ua)) os='iPad';
+  else if(/Android/i.test(ua)){ const m=ua.match(/Android[ ;]([\d.]+)/i); os='Android'+(m?' '+m[1]:''); }
+  else if(/Windows NT/i.test(ua)) os='Windows';
+  else if(/Mac OS X/i.test(ua)) os='Mac';
+  else if(/CrOS/i.test(ua)) os='ChromeOS';
+  else if(/Linux/i.test(ua)) os='Linux';
+  let br='';
+  if(/Edg\//i.test(ua)) br='Edge';
+  else if(/OPR\//i.test(ua)||/Opera/i.test(ua)) br='Opera';
+  else if(/CriOS/i.test(ua)) br='Chrome';
+  else if(/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) br='Chrome';
+  else if(/FxiOS/i.test(ua)||/Firefox\//i.test(ua)) br='Firefox';
+  else if(/Version\//i.test(ua) && /Safari/i.test(ua)) br='Safari';
+  const mobile=/Mobi|Android|iPhone|iPad/i.test(ua);
+  const label=[os,br].filter(Boolean).join(' · ')||'неизвестно';
+  return (mobile?'📱 ':'💻 ')+label;
+}
 
 function renderLeads(list, total){
   const body = $('#leads-body'); body.innerHTML='';
@@ -253,6 +310,8 @@ function renderLeads(list, total){
     if(l.message) c.appendChild(el('div','lead-msg', l.message));
     const meta = [l.source && ('источник: '+l.source), l.path].filter(Boolean).join('  ·  ');
     if(meta) c.appendChild(el('div','lead-meta', meta));
+    const device = deviceFromUA(l.user_agent);
+    if(device) c.appendChild(el('div','lead-device', 'Устройство: '+device));
     body.appendChild(c);
   });
 }
@@ -313,8 +372,10 @@ function renderFields(content){
   });
 }
 async function loadEditor(){
+  $('#fields').innerHTML = '<p class="muted">Загрузка…</p>';
   const res = await api('content_get');
   if(res.ok) renderFields(res.content||[]);
+  else $('#fields').innerHTML = '<p class="muted">Ошибка: '+esc(res.error)+'</p>';
 }
 
 /* ---------- init ---------- */
@@ -333,9 +394,11 @@ function switchTab(which){
   }
   const me = await api('me');
   if(!me.ok){
-    $('#gate').innerHTML = me.error==='forbidden'
-      ? 'Нет доступа. Ваш ID: <b>'+esc(me.id)+'</b> — попросите владельца добавить его.'
-      : 'Ошибка авторизации: '+esc(me.error||'');
+    // Ошибки авторизации уже показал showSessionExpired — не перетираем сообщение.
+    if(AUTH_ERRORS.indexOf(me.error) === -1)
+      $('#gate').innerHTML = me.error==='forbidden'
+        ? 'Нет доступа. Ваш ID: <b>'+esc(me.id)+'</b> — попросите владельца добавить его.'
+        : 'Ошибка: '+esc(me.error||'');
     return;
   }
   $('#gate').classList.add('hide');
