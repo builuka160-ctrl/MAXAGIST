@@ -81,11 +81,13 @@ section{scroll-margin-top:100px}
   background:rgba(20,18,16,.56);border-bottom:1px solid var(--glass-border);
   box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
 .top-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:74px}
+/* header needs more room than the 1160px page body — the longer RU/LV nav labels + phone don't fit otherwise */
+.top .top-in{max-width:1320px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand img{height:34px;width:auto}
 .brand .wm{font-family:var(--serif);font-size:1.32rem;letter-spacing:.42em;padding-left:.42em;color:var(--cream)}
 .top .brand .wm{letter-spacing:.2em;padding-left:.2em;font-size:1.2rem}
-.nav{display:flex;gap:20px;font-size:.85rem;letter-spacing:.03em}
+.nav{display:flex;gap:16px;font-size:.85rem;letter-spacing:.03em}
 .nav a{padding:6px 0;color:var(--muted);transition:color .18s;position:relative;white-space:nowrap}
 .nav a:hover{color:var(--cream)}
 .nav-tel{display:none;align-items:center;gap:8px;color:var(--gold)!important;font-weight:600}
