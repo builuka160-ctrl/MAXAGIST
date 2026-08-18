@@ -30,23 +30,27 @@ const hex = (b: Uint8Array) => [...b].map((x) => x.toString(16).padStart(2, '0')
 // чтобы он попросил переоткрыть панель, а не показывал «unauthorized».
 const INITDATA_MAX_AGE = 30 * 86400;
 
-type AuthResult = { user: any } | { error: 'invalid' | 'stale' };
+// reason помогает отличить причину отказа: no_token/no_initdata/no_hash/
+// bad_signature (→ BOT_TOKEN не совпадает с ботом)/no_user/stale.
+type AuthReason = 'no_token' | 'no_initdata' | 'no_hash' | 'bad_signature' | 'no_user' | 'stale';
+type AuthResult = { user: any } | { reason: AuthReason };
 async function verifyInitData(initData: string): Promise<AuthResult> {
-  if (!initData) return { error: 'invalid' };
+  if (!BOT_TOKEN) return { reason: 'no_token' };
+  if (!initData) return { reason: 'no_initdata' };
   const params = new URLSearchParams(initData);
   const hash = params.get('hash');
-  if (!hash) return { error: 'invalid' };
+  if (!hash) return { reason: 'no_hash' };
   params.delete('hash');
   const dcs = [...params.entries()].map(([k, v]) => `${k}=${v}`).sort().join('\n');
   const secret = await hmac(enc.encode('WebAppData'), BOT_TOKEN);
   const calc = hex(await hmac(secret, dcs));
-  if (calc !== hash) return { error: 'invalid' };
+  if (calc !== hash) return { reason: 'bad_signature' };
   const authDate = Number(params.get('auth_date') || '0');
-  if (!authDate || (Date.now() / 1000 - authDate) > INITDATA_MAX_AGE) return { error: 'stale' };
+  if (!authDate || (Date.now() / 1000 - authDate) > INITDATA_MAX_AGE) return { reason: 'stale' };
   try {
     const user = JSON.parse(params.get('user') || 'null');
-    return user?.id ? { user } : { error: 'invalid' };
-  } catch { return { error: 'invalid' }; }
+    return user?.id ? { user } : { reason: 'no_user' };
+  } catch { return { reason: 'no_user' }; }
 }
 
 Deno.serve(async (req) => {
@@ -57,8 +61,10 @@ Deno.serve(async (req) => {
   try { body = await req.json(); } catch { return json({ ok: false, error: 'bad json' }, 400); }
 
   const auth = await verifyInitData(body?.initData || '');
-  if ('error' in auth) {
-    return json({ ok: false, error: auth.error === 'stale' ? 'stale' : 'unauthorized' }, 401);
+  if ('reason' in auth) {
+    // reason виден клиенту: stale (переоткрыть), bad_signature (BOT_TOKEN не от этого
+    // бота), no_initdata (открыто не через Telegram) и т.п.
+    return json({ ok: false, error: auth.reason }, auth.reason === 'no_token' ? 500 : 401);
   }
   const user = auth.user;
 
