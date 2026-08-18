@@ -60,7 +60,6 @@ async function notifyAdmins(supabase: any, lead: Record<string, unknown>, device
     '',
     `👤 <b>${esc(lead.name)}</b>`,
     `📞 ${esc(lead.phone)}`,
-    lead.email ? `✉️ ${esc(lead.email)}` : '',
     lead.message ? `\n💬 ${esc(lead.message)}` : '',
     lead.path ? `\n🔗 ${esc(lead.path)}` : '',
     `\n${esc(device)}`,
@@ -103,7 +102,6 @@ Deno.serve(async (req) => {
       const lead = {
         name,
         phone,
-        email:      str(leadIn.email, 160),
         message:    str(leadIn.message, 2000),
         source:     str(leadIn.source, 40) || 'site',
         path:       str(leadIn.path, 300) ?? (ctx.path ?? null),

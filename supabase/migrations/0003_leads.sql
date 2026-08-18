@@ -4,7 +4,7 @@ create table if not exists public.leads (
   received_at  timestamptz not null default now(),
   name         text,
   phone        text,
-  email        text,
+  email        text,  -- legacy: форма больше не собирает email (оставлено для исторических записей)
   message      text,
   source       text,
   path         text,

@@ -332,8 +332,6 @@ fbq('track','PageView');
       <form id="lead-form" novalidate>
         <label><span data-i18n="form.name">Имя</span><input name="name" required autocomplete="name" placeholder="Как к вам обращаться" data-i18n-ph="form.name.ph"></label>
         <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required autocomplete="tel" placeholder="+371 …"></label>
-        <label><span data-i18n="form.email">Email</span><input type="email" name="email" autocomplete="email" placeholder="для подтверждения, по желанию" data-i18n-ph="form.email.ph"></label>
-        <label><span data-i18n="form.msg">Сообщение</span><textarea name="message" rows="2" placeholder="Удобные дни, время, пожелания" data-i18n-ph="form.msg.ph"></textarea></label>
         <label class="consent"><input type="checkbox" required>
           <span data-i18n-html="form.consent">Согласен(-на) на обработку данных для ответа на запрос. <a href="#terms">Условия</a>.</span></label>
         <button class="btn btn-gold" type="submit" id="submit-btn" data-i18n="form.submit">Оставить заявку</button>
@@ -515,7 +513,7 @@ fbq('track','PageView');
       </div>
       <div>
         <b data-i18n="foot.gdprhead">Данные и GDPR</b>
-        <p class="gdpr" data-i18n="foot.gdpr">Форма собирает имя, телефон и email только для ответа на запрос и организации визита. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.</p>
+        <p class="gdpr" data-i18n="foot.gdpr">Форма собирает только имя и телефон, чтобы мы могли связаться с вами и согласовать визит. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.</p>
       </div>
     </div>
     <div class="copy" data-i18n="foot.copy">© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.</div>
@@ -605,7 +603,6 @@ const I18N = {
     'offer.p':'Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.',
     'offer.li1':'Цена €30 — за первый визит в студию','offer.li2':'Подберём силу, темп и зоны под вас','offer.li3':'Свяжемся, чтобы согласовать время',
     'form.name':'Имя','form.name.ph':'Как к вам обращаться','form.phone':'Телефон',
-    'form.email':'Email','form.email.ph':'для подтверждения, по желанию','form.msg':'Сообщение','form.msg.ph':'Удобные дни, время, пожелания',
     'form.consent':'Согласен(-на) на обработку данных для ответа на запрос. <a href="#terms">Условия</a>.',
     'form.submit':'Оставить заявку','form.wafallback':'Отправить в WhatsApp',
     'studio.eyebrow':'Студия FIFTY','studio.h':'Место, где можно выдохнуть',
@@ -628,7 +625,7 @@ const I18N = {
     'contact.wa.s':'Ответим за пару минут','contact.call.b':'Позвонить',
     'contact.online.b':'Онлайн-запись','contact.online.s':'Свободные слоты в Altegio','contact.map.b':'Карта студии','contact.map.s':'FIFTY Beauty Studio, Рига','contact.reviews.b':'Отзывы в Google','contact.reviews.s':'Оценки клиентов на Картах',
     'foot.about':'Массаж в Риге: студия FIFTY и выезд на дом, в отель, офис.','foot.sections':'Разделы','foot.first':'Первый визит €30','foot.gdprhead':'Данные и GDPR',
-    'foot.gdpr':'Форма собирает имя, телефон и email только для ответа на запрос и организации визита. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.',
+    'foot.gdpr':'Форма собирает только имя и телефон, чтобы мы могли связаться с вами и согласовать визит. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.',
     'foot.copy':'© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.',
     'bubble.b':'Не знаете, что выбрать?','bubble.text':'Напишите в <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — подскажем формат и время за пару минут.',
     'st.fill':'Заполните имя, телефон и отметьте согласие.','st.dev':'Supabase не подключён (dev). Можно отправить заявку в WhatsApp:',
@@ -672,7 +669,6 @@ const I18N = {
     'offer.p':'Pirmā vizīte studijā par īpašu cenu. Īsa saruna pirms seansa, lai saprastu vēlmes, un masāža atbilstoši jūsu stāvoklim.',
     'offer.li1':'Cena €30 — par pirmo vizīti studijā','offer.li2':'Pielāgosim spēku, tempu un zonas jums','offer.li3':'Sazināsimies, lai saskaņotu laiku',
     'form.name':'Vārds','form.name.ph':'Kā jūs uzrunāt','form.phone':'Tālrunis',
-    'form.email':'E-pasts','form.email.ph':'apstiprinājumam, pēc izvēles','form.msg':'Ziņa','form.msg.ph':'Ērtas dienas, laiks, vēlmes',
     'form.consent':'Piekrītu datu apstrādei, lai atbildētu uz pieprasījumu. <a href="#terms">Noteikumi</a>.',
     'form.submit':'Atstāt pieteikumu','form.wafallback':'Nosūtīt uz WhatsApp',
     'studio.eyebrow':'Studija FIFTY','studio.h':'Vieta, kur atvilkt elpu',
@@ -695,7 +691,7 @@ const I18N = {
     'contact.wa.s':'Atbildēsim pāris minūtēs','contact.call.b':'Zvanīt',
     'contact.online.b':'Pieraksts tiešsaistē','contact.online.s':'Brīvie laiki Altegio','contact.map.b':'Studijas karte','contact.map.s':'FIFTY Beauty Studio, Rīga','contact.reviews.b':'Atsauksmes Google','contact.reviews.s':'Klientu vērtējumi kartēs',
     'foot.about':'Masāža Rīgā: studija FIFTY un izbraukums uz mājām, viesnīcu, biroju.','foot.sections':'Sadaļas','foot.first':'Pirmā vizīte €30','foot.gdprhead':'Dati un GDPR',
-    'foot.gdpr':'Forma vāc vārdu, tālruni un e-pastu tikai, lai atbildētu uz pieprasījumu un organizētu vizīti. Juridiskie rekvizīti, glabāšanas termiņš un datu pārziņa kontakti jāapstiprina pirms publiskās palaišanas.',
+    'foot.gdpr':'Forma vāc tikai vārdu un tālruni, lai mēs varētu ar jums sazināties un saskaņot vizīti. Juridiskie rekvizīti, glabāšanas termiņš un datu pārziņa kontakti jāapstiprina pirms publiskās palaišanas.',
     'foot.copy':'© 2026 MAXAGIST · Masāža veicina atslābināšanos un labsajūtu, bet neaizstāj medicīnisku diagnostiku vai ārstēšanu.',
     'bubble.b':'Nezināt, ko izvēlēties?','bubble.text':'Rakstiet uz <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — ieteiksim formātu un laiku pāris minūtēs.',
     'st.fill':'Aizpildiet vārdu, tālruni un atzīmējiet piekrišanu.','st.dev':'Supabase nav pievienots (dev). Pieteikumu var nosūtīt WhatsApp:',
@@ -739,7 +735,6 @@ const I18N = {
     'offer.p':'A first studio visit at a special price. A short talk before the session to understand your needs, and massage tuned to how you feel.',
     'offer.li1':'€30 price — for a first studio visit','offer.li2':'We’ll tune pressure, pace and areas to you','offer.li3':'We’ll get in touch to agree a time',
     'form.name':'Name','form.name.ph':'How should we address you','form.phone':'Phone',
-    'form.email':'Email','form.email.ph':'for confirmation, optional','form.msg':'Message','form.msg.ph':'Convenient days, time, wishes',
     'form.consent':'I agree to my data being processed to answer my request. <a href="#terms">Terms</a>.',
     'form.submit':'Leave a request','form.wafallback':'Send via WhatsApp',
     'studio.eyebrow':'FIFTY studio','studio.h':'A place to breathe out',
@@ -762,7 +757,7 @@ const I18N = {
     'contact.wa.s':'We reply within a couple of minutes','contact.call.b':'Call',
     'contact.online.b':'Online booking','contact.online.s':'Free slots in Altegio','contact.map.b':'Studio map','contact.map.s':'FIFTY Beauty Studio, Riga','contact.reviews.b':'Google reviews','contact.reviews.s':'Client ratings on Maps',
     'foot.about':'Massage in Riga: FIFTY studio and outcall to your home, hotel or office.','foot.sections':'Sections','foot.first':'First visit €30','foot.gdprhead':'Data & GDPR',
-    'foot.gdpr':'The form collects your name, phone and email only to answer your request and arrange a visit. Legal details, retention period and data controller contacts must be confirmed before public launch.',
+    'foot.gdpr':'The form collects only your name and phone so we can get in touch and arrange a visit. Legal details, retention period and data controller contacts must be confirmed before public launch.',
     'foot.copy':'© 2026 MAXAGIST · Massage supports relaxation and wellbeing but does not replace medical diagnosis or treatment.',
     'bubble.b':'Not sure what to choose?','bubble.text':'Message us on <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — we’ll suggest a format and time in a couple of minutes.',
     'st.fill':'Fill in your name, phone and tick the consent box.','st.dev':'Supabase isn’t connected (dev). You can send the request on WhatsApp:',
@@ -802,9 +797,9 @@ const WA_MSG = {
   }
 };
 const WA_LBL = {
-  ru: { lead:'Здравствуйте! Заявка с сайта на первый визит €30.', name:'Имя', phone:'Телефон', email:'Email', message:'Сообщение' },
-  lv: { lead:'Sveiki! Pieteikums no mājaslapas pirmajai vizītei €30.', name:'Vārds', phone:'Tālrunis', email:'E-pasts', message:'Ziņa' },
-  en: { lead:'Hello! A request from the website for a first visit €30.', name:'Name', phone:'Phone', email:'Email', message:'Message' }
+  ru: { lead:'Здравствуйте! Заявка с сайта на первый визит €30.', name:'Имя', phone:'Телефон' },
+  lv: { lead:'Sveiki! Pieteikums no mājaslapas pirmajai vizītei €30.', name:'Vārds', phone:'Tālrunis' },
+  en: { lead:'Hello! A request from the website for a first visit €30.', name:'Name', phone:'Phone' }
 };
 
 let LANG = 'ru';
@@ -873,11 +868,9 @@ form.addEventListener('submit', async e => {
     statusEl.textContent = T['st.fill']; statusEl.classList.add('err'); return;
   }
   const utm = {}; new URLSearchParams(location.search).forEach((v,k)=>{ if(/^utm_|^(gclid|fbclid)$/.test(k)) utm[k.replace('utm_','')] = v.slice(0,120); });
-  const payload = { name:d.name.trim(), phone:d.phone.trim(),
-    email:(d.email||'').trim()||null, message:(d.message||'').trim()||null, source:'landing',
+  const payload = { name:d.name.trim(), phone:d.phone.trim(), source:'landing',
     path: location.pathname, referrer: document.referrer||'', utm };
-  const waText = `${L.lead}\n${L.name}: ${payload.name}\n${L.phone}: ${payload.phone}` +
-    (payload.email?`\n${L.email}: ${payload.email}`:'') + (payload.message?`\n${L.message}: ${payload.message}`:'');
+  const waText = `${L.lead}\n${L.name}: ${payload.name}\n${L.phone}: ${payload.phone}`;
   waFallback.href = waLink(waText);
 
   if (!LEAD_ENDPOINT) {
