@@ -3,12 +3,21 @@
 // Deploy: supabase functions deploy track --no-verify-jwt
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const cors = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'content-type, apikey, authorization',
-};
-const json = (d: unknown, s = 200) =>
+// Отражаем Origin запроса (а не '*') и разрешаем credentials — иначе
+// navigator.sendBeacon (кредентальный запрос при выгрузке страницы) браузер
+// блокирует: для credentials ACAO не может быть '*'.
+function mkCors(req: Request): Record<string, string> {
+  const origin = req.headers.get('origin');
+  return {
+    'Access-Control-Allow-Origin': origin || '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'content-type, apikey, authorization',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin',
+  };
+}
+const json = (d: unknown, s = 200, cors: Record<string, string> = {}) =>
   new Response(JSON.stringify(d), { status: s, headers: { ...cors, 'Content-Type': 'application/json' } });
 
 const str = (v: unknown, n: number) =>
@@ -67,11 +76,12 @@ async function notifyAdmins(supabase: any, lead: Record<string, unknown>, device
 }
 
 Deno.serve(async (req) => {
+  const cors = mkCors(req);
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
-  if (req.method !== 'POST') return json({ ok: false, error: 'method' }, 405);
+  if (req.method !== 'POST') return json({ ok: false, error: 'method' }, 405, cors);
 
   let body: any;
-  try { body = await req.json(); } catch { return json({ ok: false, error: 'bad json' }, 400); }
+  try { body = await req.json(); } catch { return json({ ok: false, error: 'bad json' }, 400, cors); }
 
   const ctx = body?.ctx ?? {};
   const country = req.headers.get('cf-ipcountry') || req.headers.get('x-country') || null;
@@ -105,7 +115,7 @@ Deno.serve(async (req) => {
         user_agent: userAgent,
       };
       const { error: lerr } = await supabase.from('leads').insert(lead);
-      if (lerr) return json({ ok: false, error: lerr.message }, 500);
+      if (lerr) return json({ ok: false, error: lerr.message }, 500, cors);
       leadSaved = 1;
       // Уведомляем админов в Telegram (не блокируем ответ сайту при ошибке).
       try { await notifyAdmins(supabase, lead, deviceFromUA(userAgent || '')); } catch (_e) { /* best-effort */ }
@@ -144,9 +154,9 @@ Deno.serve(async (req) => {
       extra:       { rel: e?.rel ?? null, aux: e?.aux ?? null, max_depth: e?.max_depth ?? null },
     }));
     const { error } = await supabase.from('site_events').insert(rows);
-    if (error) return json({ ok: false, error: error.message }, 500);
+    if (error) return json({ ok: false, error: error.message }, 500, cors);
     eventsSaved = rows.length;
   }
 
-  return json({ ok: true, n: eventsSaved, lead: leadSaved });
+  return json({ ok: true, n: eventsSaved, lead: leadSaved }, 200, cors);
 });
