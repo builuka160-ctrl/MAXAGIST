@@ -123,6 +123,8 @@ section{scroll-margin-top:100px}
 .hero-svc{margin-top:16px;font-family:var(--sans);font-size:.86rem;letter-spacing:.04em;
   color:var(--gold-dim);max-width:560px;line-height:1.7}
 .hero-geo{margin-top:22px;font-size:.85rem;line-height:1.6;color:var(--muted-2);max-width:560px}
+.ov-sub{margin-top:14px;font-family:var(--sans);font-size:.95rem;letter-spacing:.05em;color:var(--gold)}
+.ov-trust{margin-top:26px;font-size:.85rem;letter-spacing:.02em;color:var(--muted-2)}
 .hero .lead{font-size:1.16rem;color:var(--muted);max-width:520px;margin-top:24px}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
 .hero-art{position:relative;display:flex;justify-content:center;padding:14px}
