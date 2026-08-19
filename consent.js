@@ -1,92 +1,140 @@
 /*
- * MAXAGIST — баннер согласия на cookies + Google Consent Mode v2.
+ * MAXAGIST — согласие на cookies и Google Consent Mode v2.
  *
- * Зачем: Google Ads и GA4 для трафика из ЕЭЗ требуют Consent Mode v2. Значения
- * по умолчанию (denied) выставляются инлайном в <head> ДО загрузки gtag.js —
- * здесь только UI и отправка consent update после выбора пользователя.
+ * Выбор хранится в localStorage['mx_consent_v2'] = {analytics, ads, ts}.
+ * Значения по умолчанию (denied) выставляются инлайном в <head> ДО загрузки
+ * gtag.js — здесь только интерфейс и отправка consent update.
  *
- * Выбор хранится в localStorage['mx_consent'] = 'all' | 'necessary'.
- * Пока выбора нет — баннер показан, реклама и аналитика не пишут куки
- * (Google при этом собирает обезличенные сигналы через modeling).
+ * Три равнозначные кнопки: «Принять», «Отклонить», «Настроить». Отказ стоит
+ * рядом с согласием и выглядит так же — тёмных паттернов быть не должно.
+ *
+ * Собственный трекер (tracker.js) уважает DNT/GPC самостоятельно и от этого
+ * баннера не зависит: он не пишет рекламные куки и не собирает PII.
  */
 (function () {
   'use strict';
 
-  var KEY = 'mx_consent';
+  var KEY = 'mx_consent_v2';
+  var LEGACY = 'mx_consent';
 
-  function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function read() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var v = JSON.parse(raw);
+        if (v && typeof v === 'object') return { analytics: !!v.analytics, ads: !!v.ads };
+      }
+      // выбор, сделанный до появления настроек, не спрашиваем заново
+      var old = localStorage.getItem(LEGACY);
+      if (old === 'all') return { analytics: true, ads: true };
+      if (old === 'necessary') return { analytics: false, ads: false };
+    } catch (e) {}
+    return null;
+  }
+
+  function save(v) {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ analytics: !!v.analytics, ads: !!v.ads, ts: new Date().toISOString() }));
+      localStorage.setItem(LEGACY, (v.analytics && v.ads) ? 'all' : 'necessary');
+    } catch (e) {}
+  }
+
+  function apply(v) {
+    var a = v.analytics ? 'granted' : 'denied';
+    var d = v.ads ? 'granted' : 'denied';
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        ad_storage: d, ad_user_data: d, ad_personalization: d, analytics_storage: a
+      });
+    }
+    if (typeof window.fbq === 'function') {
+      try { window.fbq('consent', v.ads ? 'grant' : 'revoke'); } catch (e) {}
+    }
+  }
 
   function lang() {
-    var l = null;
-    try { l = localStorage.getItem('lang'); } catch (e) {}
+    var l = window.MX_LANG;
+    if (!l) { try { l = localStorage.getItem('lang'); } catch (e) {} }
     l = l || (document.documentElement.lang || 'ru').slice(0, 2);
     return (l === 'lv' || l === 'en') ? l : 'ru';
   }
 
   var T = {
     ru: {
-      text: 'Мы используем cookies для аналитики и рекламы, чтобы понимать, какие страницы полезны. Без согласия работают только необходимые.',
-      all: 'Принять',
-      need: 'Только необходимые',
-      more: 'Подробнее'
+      text: 'Мы используем cookies: обязательные — чтобы сайт работал, аналитические и рекламные — чтобы понимать, какие страницы полезны.',
+      more: 'Подробнее', all: 'Принять', none: 'Отклонить', settings: 'Настроить',
+      necessary: 'Обязательные', necessaryNote: 'Нужны для работы сайта, отключить нельзя.',
+      analytics: 'Аналитика', analyticsNote: 'Обезличенная статистика посещений.',
+      ads: 'Реклама', adsNote: 'Оценка эффективности рекламы и ремаркетинг.',
+      save: 'Сохранить выбор', back: 'Назад'
     },
     lv: {
-      text: 'Izmantojam sīkdatnes analītikai un reklāmai, lai saprastu, kuras lapas ir noderīgas. Bez piekrišanas darbojas tikai nepieciešamās.',
-      all: 'Piekrītu',
-      need: 'Tikai nepieciešamās',
-      more: 'Sīkāk'
+      text: 'Izmantojam sīkdatnes: obligātās — lai vietne darbotos, analītiskās un reklāmas — lai saprastu, kuras lapas ir noderīgas.',
+      more: 'Sīkāk', all: 'Piekrītu', none: 'Noraidīt', settings: 'Iestatīt',
+      necessary: 'Obligātās', necessaryNote: 'Nepieciešamas vietnes darbībai, tās atslēgt nevar.',
+      analytics: 'Analītika', analyticsNote: 'Anonīma apmeklējumu statistika.',
+      ads: 'Reklāma', adsNote: 'Reklāmas efektivitātes novērtēšana un remārketings.',
+      save: 'Saglabāt izvēli', back: 'Atpakaļ'
     },
     en: {
-      text: 'We use cookies for analytics and advertising to see which pages are useful. Without consent only essential ones are used.',
-      all: 'Accept',
-      need: 'Essential only',
-      more: 'Details'
+      text: 'We use cookies: essential ones to run the site, analytics and advertising ones to see which pages are useful.',
+      more: 'Details', all: 'Accept', none: 'Reject', settings: 'Customise',
+      necessary: 'Essential', necessaryNote: 'Required for the site to work, cannot be disabled.',
+      analytics: 'Analytics', analyticsNote: 'Anonymous visit statistics.',
+      ads: 'Advertising', adsNote: 'Measuring ad performance and remarketing.',
+      save: 'Save choices', back: 'Back'
     }
   };
-
-  function update(granted) {
-    var v = granted ? 'granted' : 'denied';
-    if (typeof window.gtag === 'function') {
-      window.gtag('consent', 'update', {
-        ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v
-      });
-    }
-    if (typeof window.fbq === 'function') {
-      try { window.fbq('consent', granted ? 'grant' : 'revoke'); } catch (e) {}
-    }
-  }
 
   function render() {
     var t = T[lang()];
     var box = document.createElement('div');
     box.className = 'cookie-bar';
     box.setAttribute('role', 'dialog');
-    box.setAttribute('aria-live', 'polite');
+    box.setAttribute('aria-label', 'Cookies');
     box.innerHTML =
-      '<p>' + t.text + ' <a href="#terms">' + t.more + '</a></p>' +
-      '<div class="cookie-btns">' +
-        '<button type="button" class="c-need">' + t.need + '</button>' +
-        '<button type="button" class="c-all">' + t.all + '</button>' +
+      '<div class="cb-main">' +
+        '<p>' + t.text + ' <a href="#terms">' + t.more + '</a></p>' +
+        '<div class="cookie-btns">' +
+          '<button type="button" class="c-set">' + t.settings + '</button>' +
+          '<button type="button" class="c-none">' + t.none + '</button>' +
+          '<button type="button" class="c-all">' + t.all + '</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cb-prefs" hidden>' +
+        '<label class="cb-row cb-fixed"><input type="checkbox" checked disabled>' +
+          '<span><b>' + t.necessary + '</b><small>' + t.necessaryNote + '</small></span></label>' +
+        '<label class="cb-row"><input type="checkbox" class="c-an">' +
+          '<span><b>' + t.analytics + '</b><small>' + t.analyticsNote + '</small></span></label>' +
+        '<label class="cb-row"><input type="checkbox" class="c-ad">' +
+          '<span><b>' + t.ads + '</b><small>' + t.adsNote + '</small></span></label>' +
+        '<div class="cookie-btns">' +
+          '<button type="button" class="c-back">' + t.back + '</button>' +
+          '<button type="button" class="c-save">' + t.save + '</button>' +
+        '</div>' +
       '</div>';
     document.body.appendChild(box);
     requestAnimationFrame(function () { box.classList.add('show'); });
 
-    function close(choice, granted) {
-      save(choice);
-      update(granted);
+    var main = box.querySelector('.cb-main');
+    var prefs = box.querySelector('.cb-prefs');
+
+    function close(v) {
+      save(v); apply(v);
       box.classList.remove('show');
       setTimeout(function () { box.remove(); }, 320);
-      document.body.classList.remove('has-consent-bar');
     }
-    box.querySelector('.c-all').onclick = function () { close('all', true); };
-    box.querySelector('.c-need').onclick = function () { close('necessary', false); };
-    document.body.classList.add('has-consent-bar');
+    box.querySelector('.c-all').onclick = function () { close({ analytics: true, ads: true }); };
+    box.querySelector('.c-none').onclick = function () { close({ analytics: false, ads: false }); };
+    box.querySelector('.c-set').onclick = function () { main.hidden = true; prefs.hidden = false; };
+    box.querySelector('.c-back').onclick = function () { prefs.hidden = true; main.hidden = false; };
+    box.querySelector('.c-save').onclick = function () {
+      close({ analytics: box.querySelector('.c-an').checked, ads: box.querySelector('.c-ad').checked });
+    };
   }
 
-  var choice = stored();
-  if (choice === 'all') { update(true); return; }
-  if (choice === 'necessary') { return; }
+  var choice = read();
+  if (choice) { apply(choice); return; }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', render);

@@ -2,17 +2,23 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<script src="lang.js"></script>
 <!-- Google tag (gtag.js) — GA4 + Google Ads + Consent Mode v2 -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  /* Consent Mode v2. До согласия рекламные и аналитические хранилища запрещены — этого требует
-     Google для трафика из ЕЭЗ. Баннер согласия — consent.js, он шлёт consent update. */
+  /* Consent Mode v2. До выбора пользователя реклама и аналитика запрещены —
+     этого требует Google для трафика из ЕЭЗ. Интерфейс выбора — consent.js,
+     он присылает consent update. Хранилище: mx_consent_v2 {analytics, ads}. */
   (function () {
-    var ok = false; try { ok = localStorage.getItem('mx_consent') === 'all'; } catch (e) {}
-    var v = ok ? 'granted' : 'denied';
+    var a = 'denied', d = 'denied';
+    try {
+      var c = JSON.parse(localStorage.getItem('mx_consent_v2') || 'null');
+      if (!c && localStorage.getItem('mx_consent') === 'all') c = { analytics: true, ads: true };
+      if (c) { a = c.analytics ? 'granted' : 'denied'; d = c.ads ? 'granted' : 'denied'; }
+    } catch (e) {}
     gtag('consent', 'default', {
-      ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v,
+      ad_storage: d, ad_user_data: d, ad_personalization: d, analytics_storage: a,
       functionality_storage: 'granted', security_storage: 'granted', wait_for_update: 500
     });
   })();
@@ -24,7 +30,9 @@
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-try{ if(localStorage.getItem('mx_consent')!=='all') fbq('consent','revoke'); }catch(e){}
+try{ var __c=JSON.parse(localStorage.getItem('mx_consent_v2')||'null');
+  if(!__c && localStorage.getItem('mx_consent')==='all') __c={ads:true};
+  if(!(__c&&__c.ads)) fbq('consent','revoke'); }catch(e){ fbq('consent','revoke'); }
 fbq('init','1383733323705616');
 fbq('track','PageView');
 </script>
@@ -213,7 +221,7 @@ fbq('track','PageView');
         <span>Записаться в WhatsApp</span></a>
     </div>
 
-    <p style="opacity:.8">Другие услуги: <a href="sportivnyj-massazh-riga.html">спортивный массаж</a> · <a href="anticelulitnyj-massazh-riga.html">антицеллюлитный массаж</a> · <a href="vyezd.html">массаж с выездом</a><br>Где принимаю: <a href="massazh-pinki-saliena.html">Piņķi и Saliena</a> · <a href="massazh-imanta-zolitude.html">Иманта и Золитуде</a> · <a href="index.html#services">все услуги</a></p>
+    <p style="opacity:.8">Другие услуги: <a href="sportivnyj-massazh-riga.html">спортивный массаж</a> · <a href="anticelulitnyj-massazh-riga.html">антицеллюлитный массаж</a> · <a href="vyezd.html">массаж с выездом</a><br>Где принимаю: <a href="massage-pinki-saliena.html">Piņķi и Saliena</a> · <a href="massazh-imanta-zolitude.html">Иманта и Золитуде</a> · <a href="index.html#services">все услуги</a></p>
   </div>
 </section>
 

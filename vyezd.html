@@ -1,18 +1,24 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-i18n-page>
 <head>
 <meta charset="utf-8">
+<script src="lang.js"></script>
 <!-- Google tag (gtag.js) — GA4 + Google Ads + Consent Mode v2 -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  /* Consent Mode v2. До согласия рекламные и аналитические хранилища запрещены — этого требует
-     Google для трафика из ЕЭЗ. Баннер согласия — consent.js, он шлёт consent update. */
+  /* Consent Mode v2. До выбора пользователя реклама и аналитика запрещены —
+     этого требует Google для трафика из ЕЭЗ. Интерфейс выбора — consent.js,
+     он присылает consent update. Хранилище: mx_consent_v2 {analytics, ads}. */
   (function () {
-    var ok = false; try { ok = localStorage.getItem('mx_consent') === 'all'; } catch (e) {}
-    var v = ok ? 'granted' : 'denied';
+    var a = 'denied', d = 'denied';
+    try {
+      var c = JSON.parse(localStorage.getItem('mx_consent_v2') || 'null');
+      if (!c && localStorage.getItem('mx_consent') === 'all') c = { analytics: true, ads: true };
+      if (c) { a = c.analytics ? 'granted' : 'denied'; d = c.ads ? 'granted' : 'denied'; }
+    } catch (e) {}
     gtag('consent', 'default', {
-      ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v,
+      ad_storage: d, ad_user_data: d, ad_personalization: d, analytics_storage: a,
       functionality_storage: 'granted', security_storage: 'granted', wait_for_update: 500
     });
   })();
@@ -24,7 +30,9 @@
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-try{ if(localStorage.getItem('mx_consent')!=='all') fbq('consent','revoke'); }catch(e){}
+try{ var __c=JSON.parse(localStorage.getItem('mx_consent_v2')||'null');
+  if(!__c && localStorage.getItem('mx_consent')==='all') __c={ads:true};
+  if(!(__c&&__c.ads)) fbq('consent','revoke'); }catch(e){ fbq('consent','revoke'); }
 fbq('init','1383733323705616');
 fbq('track','PageView');
 </script>
@@ -143,20 +151,21 @@ fbq('track','PageView');
   <div class="hero-in">
     <div>
       <span class="eyebrow rise" data-i18n="ov.eyebrow">Выезд: Piņķi, западная Рига и Юрмала</span>
-      <h1 class="rise d1" data-i18n-html="ov.h1" data-edit="ov.h1" data-edit-html>Нет времени на дорогу?<br><span class="price">Спа приедет к вам</span></h1>
-      <p class="lead rise d2" data-i18n="ov.lead">Премиальный массаж дома, в отеле или офисе — в удобное для вас время. Всё оборудование привожу с собой, вам остаётся только расслабиться.</p>
+      <h1 class="rise d1" data-i18n="ov.h1" data-edit="ov.h1">Массаж у вас дома</h1>
+      <p class="ov-sub rise d1" data-i18n="ov.sub">Piņķi · Babīte · западная Рига · Jūrmala</p>
+      <p class="lead rise d2" data-i18n="ov.lead">Стол, бельё, масла и всё необходимое привезу с собой. После массажа не нужно снова садиться в машину и ехать домой.</p>
       <div class="hero-cta rise d2">
         <a class="btn btn-wa" id="wa-hero" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
           <span data-i18n="ov.cta">Вызвать мастера</span></a>
         <a class="btn btn-line" href="#process" data-i18n="ov.cta2">Как это проходит</a>
       </div>
-      <p class="hero-trust rise d3" data-i18n-html="ov.offer">Первый выезд — на специальных условиях. Точные цены и PDF‑меню пришлю в <b>WhatsApp</b> за пару минут.</p>
+      <p class="ov-trust rise d3" data-i18n="ov.trust">Выезд от 90 минут · приезжаю за 10–15 минут · приватный формат</p>
     </div>
     <div class="hero-art">
       <div class="frame glass">
-        <img src="photos/massage-back.jpg" alt="Массаж с выездом" loading="eager">
-        <span class="badge glass"><span class="dot"></span><span data-i18n="ov.badge">Приезжаю по Риге и Юрмале</span></span>
+        <img src="photos/massage-back.jpg" alt="Массаж с выездом на дом" width="722" height="1280" loading="eager" fetchpriority="high">
+        <span class="badge glass"><span class="dot"></span><span data-i18n="ov.badge">Приезжаю в Piņķi, Babīte и Jūrmala</span></span>
       </div>
     </div>
   </div>
@@ -291,7 +300,7 @@ fbq('track','PageView');
         <span data-i18n="ov.end.wa">Написать в WhatsApp</span></a>
       <a class="btn btn-line" href="https://t.me/maxagist" target="_blank" rel="noopener" data-i18n="ov.end.tg">Написать в Telegram</a>
     </div>
-    <p class="outcall-note" data-i18n-html="ov.end.back">Удобнее приехать самим? В студии FIFTY — уютное пространство и онлайн‑запись. <a href="massazh-pinki-saliena.html">Массаж в Piņķi и Saliena →</a></p>
+    <p class="outcall-note" data-i18n-html="ov.end.back">Удобнее приехать самим? В студии FIFTY — уютное пространство и онлайн‑запись. <a href="massage-pinki-saliena.html">Массаж в Piņķi и Saliena →</a></p>
   </div>
 </section>
 
@@ -388,7 +397,7 @@ const I18N = {
     'ov.faq.q3':'Что нужно подготовить','ov.faq.a3':'Только свободное место около 2×3 метра и комфортную температуру. Стол, бельё, масла и музыку привожу с собой.',
     'ov.end.eyebrow':'Заявка','ov.end.h':'Готовы заказать массаж с выездом?','ov.end.p':'Напишите удобным способом — согласуем время и детали за пару минут.',
     'ov.end.wa':'Написать в WhatsApp','ov.end.tg':'Написать в Telegram',
-    'ov.end.back':'Удобнее приехать самим? Студия FIFTY — Jaunā iela 12, Piņķi, есть онлайн‑запись. <a href="massazh-pinki-saliena.html">Массаж в Piņķi и Saliena →</a>',
+    'ov.end.back':'Удобнее приехать самим? Студия FIFTY — Jaunā iela 12, Piņķi, есть онлайн‑запись. <a href="massage-pinki-saliena.html">Массаж в Piņķi и Saliena →</a>',
     'ov.bubble.b':'Хотите выезд?','ov.bubble.text':'Напишите в <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — согласуем время и адрес за пару минут.',
     'foot.about':'Массаж в Риге: студия FIFTY и выезд на дом, в отель, офис.','foot.sections':'Разделы','foot.first':'Первый визит €30',
     'foot.gdprhead':'Данные и GDPR','foot.gdpr':'Форма собирает только имя и телефон — чтобы связаться с вами и согласовать визит. Данные не передаются третьим лицам и не используются для рассылок; удалим по вашему запросу в WhatsApp или по телефону. Cookies для аналитики и рекламы подключаются только после вашего согласия. Контролёр данных — MAXAGIST, Максим Анохин, Рига, +371 28 251 366.',
@@ -427,7 +436,7 @@ const I18N = {
     'ov.faq.q3':'Kas jāsagatavo','ov.faq.a3':'Tikai brīva vieta aptuveni 2×3 metri un komfortabla temperatūra. Galdu, veļu, eļļas un mūziku atvedu līdzi.',
     'ov.end.eyebrow':'Pieteikums','ov.end.h':'Gatavi pasūtīt masāžu ar izbraukumu?','ov.end.p':'Rakstiet ērtā veidā — saskaņosim laiku un detaļas dažu minūšu laikā.',
     'ov.end.wa':'Rakstīt WhatsApp','ov.end.tg':'Rakstīt Telegram',
-    'ov.end.back':'Ērtāk atbraukt pašiem? Studija FIFTY — Jaunā iela 12, Piņķi, ir tiešsaistes pieraksts. <a href="massazh-pinki-saliena.html">Masāža Piņķos un Salienā →</a>',
+    'ov.end.back':'Ērtāk atbraukt pašiem? Studija FIFTY — Jaunā iela 12, Piņķi, ir tiešsaistes pieraksts. <a href="massage-pinki-saliena.html">Masāža Piņķos un Salienā →</a>',
     'ov.bubble.b':'Vēlaties izbraukumu?','ov.bubble.text':'Rakstiet <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — saskaņosim laiku un adresi dažu minūšu laikā.',
     'foot.about':'Masāža Rīgā: studija FIFTY un izbraukums mājās, viesnīcā, birojā.','foot.sections':'Sadaļas','foot.first':'Pirmā vizīte €30',
     'foot.gdprhead':'Dati un GDPR','foot.gdpr':'Forma vāc tikai vārdu un tālruni — lai sazinātos ar jums un saskaņotu vizīti. Dati netiek nodoti trešajām personām un netiek izmantoti izsūtnēm; dzēsīsim pēc jūsu pieprasījuma WhatsApp vai pa tālruni. Analītikas un reklāmas sīkdatnes tiek pieslēgtas tikai pēc jūsu piekrišanas. Datu pārzinis — MAXAGIST, Maksims Anohins, Rīga, +371 28 251 366.',
@@ -466,7 +475,7 @@ const I18N = {
     'ov.faq.q3':'What to prepare','ov.faq.a3':'Only a free area of about 2×3 metres and a comfortable temperature. I bring the table, linen, oils and music.',
     'ov.end.eyebrow':'Request','ov.end.h':'Ready to book an outcall massage?','ov.end.p':'Message me whichever way suits you — we’ll agree on the time and details within minutes.',
     'ov.end.wa':'Message on WhatsApp','ov.end.tg':'Message on Telegram',
-    'ov.end.back':'Prefer to come in yourself? FIFTY studio is at Jaunā iela 12, Piņķi, with online booking. <a href="massazh-pinki-saliena.html">Massage in Piņķi and Saliena →</a>',
+    'ov.end.back':'Prefer to come in yourself? FIFTY studio is at Jaunā iela 12, Piņķi, with online booking. <a href="massage-pinki-saliena.html">Massage in Piņķi and Saliena →</a>',
     'ov.bubble.b':'Want an outcall?','ov.bubble.text':'Message on <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — we’ll agree on the time and address within minutes.',
     'foot.about':'Massage in Riga: FIFTY studio and outcall to home, hotel, office.','foot.sections':'Sections','foot.first':'First visit €30',
     'foot.gdprhead':'Data & GDPR','foot.gdpr':'The form collects only your name and phone number — so we can get in touch and arrange a visit. The data is not shared with third parties and is not used for mailings; we delete it on your request via WhatsApp or by phone. Analytics and advertising cookies are enabled only after your consent. Data controller — MAXAGIST, Maksim Anohin, Riga, +371 28 251 366.',
@@ -521,6 +530,8 @@ function applyLang(lang){
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { const v = dict[el.getAttribute('data-i18n-aria')]; if (v != null) el.setAttribute('aria-label', v); });
   document.querySelectorAll('#lang-switch button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
   try { localStorage.setItem('lang', lang); } catch (e) {}
+  if (typeof window.mxSetLangParam === 'function') window.mxSetLangParam(lang);
+  if (typeof window.mxLangReady === 'function') window.mxLangReady();
   setWaLinks();
   if (window.__applyContentOverrides) window.__applyContentOverrides();
 }
@@ -528,13 +539,8 @@ function applyLang(lang){
 document.getElementById('wa-fab').onclick = () => window.open(waLink(WA_MSG[LANG].fab), '_blank');
 document.querySelectorAll('#lang-switch button').forEach(b => { b.onclick = () => applyLang(b.dataset.lang); });
 
-/* ===== язык: определяем сразу, без экрана-заглушки ===== */
-(function initLang(){
-  let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
-  const b = (navigator.language || '').toLowerCase();
-  const browser = b.startsWith('lv') ? 'lv' : b.startsWith('en') ? 'en' : 'ru';
-  applyLang(saved || browser);
-})();
+/* ===== язык: приоритет ?lang= из URL, решение принимает lang.js ===== */
+applyLang(window.MX_LANG || 'ru');
 
 const burger = document.getElementById('burger'), nav = document.getElementById('nav');
 burger.onclick = () => { const o = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };

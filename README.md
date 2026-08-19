@@ -18,7 +18,7 @@ Jaunā iela 12, Piņķi (рядом Saliena и Babīte), плюс выезд н�
 index.html         — главная: оффер €30, выбор по жалобе, услуги, цены, отзывы, форма
 vyezd.html         — посадочная под выезд на дом, в отель, офис
 podbor.html        — A/B-лендинг под холодный трафик (noindex, вне sitemap)
-massazh-pinki-saliena.html       — гео: Piņķi, Saliena, Babīte (главная локальная)
+massage-pinki-saliena.html       — гео: Piņķi, Saliena, Babīte (главная локальная)
 massazh-imanta-zolitude.html     — гео: Иманта, Золитуде, западная Рига
 anticelulitnyj-massazh-riga.html — SEO: антицеллюлитный массаж
 sportivnyj-massazh-riga.html     — SEO: спортивный массаж
