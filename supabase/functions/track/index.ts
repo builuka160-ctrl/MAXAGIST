@@ -99,22 +99,34 @@ Deno.serve(async (req) => {
     const phone = str(leadIn.phone, 40);
     if (name && phone) {
       const userAgent = (req.headers.get('user-agent') || '').slice(0, 300) || null;
+      const attribution = (leadIn.utm && typeof leadIn.utm === 'object') ? leadIn.utm : (ctx.utm ?? {});
       const lead = {
         name,
         phone,
-        message:    str(leadIn.message, 2000),
-        source:     str(leadIn.source, 40) || 'site',
-        path:       str(leadIn.path, 300) ?? (ctx.path ?? null),
-        referrer:   str(leadIn.referrer, 400) ?? (ctx.ref ?? null),
-        utm:        (leadIn.utm && typeof leadIn.utm === 'object') ? leadIn.utm : (ctx.utm ?? {}),
+        message:      str(leadIn.message, 2000),
+        source:       str(leadIn.source, 40) || 'site',
+        path:         str(leadIn.path, 300) ?? (ctx.path ?? null),
+        landing_page: str(leadIn.landing_page, 500) ?? (ctx.path ?? null),
+        referrer:     str(leadIn.referrer, 400) ?? (ctx.ref ?? null),
+        utm:          attribution,
+        gclid:        str(attribution?.gclid, 180),
+        gbraid:       str(attribution?.gbraid, 180),
+        wbraid:       str(attribution?.wbraid, 180),
+        utm_source:   str(attribution?.source, 120),
+        utm_medium:   str(attribution?.medium, 120),
+        utm_campaign: str(attribution?.campaign, 180),
+        utm_content:  str(attribution?.content, 180),
+        utm_term:     str(attribution?.term, 180),
+        status:       'new',
+        currency:     'EUR',
         country,
-        visitor_id: str(leadIn.uid, 80) ?? (ctx.uid ?? null),
-        session_id: str(leadIn.sid, 80) ?? (ctx.sid ?? null),
-        user_agent: userAgent,
+        visitor_id:   str(leadIn.uid, 80) ?? (ctx.uid ?? null),
+        session_id:   str(leadIn.sid, 80) ?? (ctx.sid ?? null),
+        user_agent:   userAgent,
       };
-      const { error: lerr } = await supabase.from('leads').insert(lead);
+      const { data: savedLead, error: lerr } = await supabase.from('leads').insert(lead).select('id').single();
       if (lerr) return json({ ok: false, error: lerr.message }, 500, cors);
-      leadSaved = 1;
+      leadSaved = Number(savedLead?.id || 0);
       // Уведомляем админов в Telegram (не блокируем ответ сайту при ошибке).
       try { await notifyAdmins(supabase, lead, deviceFromUA(userAgent || '')); } catch (_e) { /* best-effort */ }
     }
@@ -156,5 +168,5 @@ Deno.serve(async (req) => {
     eventsSaved = rows.length;
   }
 
-  return json({ ok: true, n: eventsSaved, lead: leadSaved }, 200, cors);
+  return json({ ok: true, n: eventsSaved, lead: leadSaved ? 1 : 0, lead_id: leadSaved || null }, 200, cors);
 });

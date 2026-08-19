@@ -110,9 +110,10 @@ Deno.serve(async (req) => {
   }
 
   if (action === 'leads') {
+    if (role !== 'admin') return json({ ok: false, error: 'read-only' }, 403);
     const limit = Math.min(500, Math.max(1, Number(body?.limit) || 200));
     const { data, error } = await supabase.from('leads')
-      .select('id,received_at,name,phone,message,source,path,user_agent')
+      .select('id,received_at,created_at,name,phone,message,source,path,landing_page,user_agent,status,status_updated_at,gclid,gbraid,wbraid,utm_source,utm_medium,utm_campaign,utm_content,utm_term,lead_value,revenue,currency,booked_at,visited_at,paid_at')
       .order('received_at', { ascending: false })
       .limit(limit);
     if (error) return json({ ok: false, error: error.message }, 500);
@@ -120,7 +121,28 @@ Deno.serve(async (req) => {
     return json({ ok: true, role, leads: data, total: count ?? (data?.length ?? 0) });
   }
 
+  if (action === 'lead_status_set') {
+    if (role !== 'admin') return json({ ok: false, error: 'read-only' }, 403);
+    const leadId = Number(body?.lead_id);
+    const status = String(body?.status || '');
+    const allowed = new Set(['new','qualified','booked','visited','paid','lost']);
+    if (!Number.isInteger(leadId) || leadId <= 0 || !allowed.has(status)) return json({ ok: false, error: 'bad status update' }, 400);
+    const now = new Date().toISOString();
+    const patch: Record<string, unknown> = { status, status_updated_at: now };
+    if (status === 'booked') patch.booked_at = now;
+    if (status === 'visited') patch.visited_at = now;
+    if (status === 'paid') patch.paid_at = now;
+    if (body?.revenue != null && Number.isFinite(Number(body.revenue)) && Number(body.revenue) >= 0) patch.revenue = Number(body.revenue);
+    if (body?.lead_value != null && Number.isFinite(Number(body.lead_value)) && Number(body.lead_value) >= 0) patch.lead_value = Number(body.lead_value);
+    const { error } = await supabase.from('leads').update(patch).eq('id', leadId);
+    if (error) return json({ ok: false, error: error.message }, 500);
+    const note = String(body?.note || '').trim().slice(0, 500) || null;
+    await supabase.from('lead_status_history').insert({ lead_id: leadId, status, changed_by: user.id, note });
+    return json({ ok: true, status, updated_at: now });
+  }
+
   if (action === 'content_get') {
+    if (role !== 'admin') return json({ ok: false, error: 'read-only' }, 403);
     const { data, error } = await supabase.from('site_content').select('key,value,updated_at');
     if (error) return json({ ok: false, error: error.message }, 500);
     return json({ ok: true, role, content: data });

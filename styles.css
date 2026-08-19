@@ -480,3 +480,337 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
 .rv-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;max-width:520px;margin:0 auto 22px}
 .rv-link{box-sizing:border-box;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border-radius:999px;font-size:13px;font-weight:500;color:#e5c08a;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:rgba(199,161,122,.10);border:1px solid rgba(199,161,122,.28);transition:transform .15s ease,border-color .15s ease,background .15s ease}
 .rv-link:hover{transform:translateY(-2px);border-color:rgba(199,161,122,.5);background:rgba(199,161,122,.16)}
+
+/* ===== Local Piņķi / Saliena marketing additions ===== */
+html,body{min-height:100%;background-color:var(--bg)}
+.hero-offer{margin-top:18px;font-family:var(--serif);font-size:clamp(1.55rem,3vw,2.25rem);color:var(--cream)}
+.hero-offer .price{color:var(--gold-hi);font-weight:500;font-size:1.18em}
+.hero-offer .old{font-family:var(--sans);font-size:.48em;color:var(--muted-2);text-decoration:line-through;margin-left:8px}
+.hero-geo{margin-top:12px;color:var(--gold);font-size:.82rem;letter-spacing:.04em}
+.studio-address{margin:18px 0;color:var(--cream);padding:14px 16px;border-left:2px solid var(--gold);background:rgba(199,161,122,.06);border-radius:0 12px 12px 0}
+.areas{padding:56px 0}
+.areas-in{padding:38px 40px}
+.areas-in h2{font-size:clamp(2rem,4.4vw,3rem);margin-top:12px}
+.areas-in>p{color:var(--muted);max-width:760px;margin-top:16px}
+.area-chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+.area-chips span{padding:8px 13px;border:1px solid var(--line);border-radius:999px;color:var(--cream);background:rgba(199,161,122,.055);font-size:.86rem}
+.areas-actions{margin-top:26px}
+.local-trust{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.local-trust span{padding:9px 13px;border:1px solid var(--line);border-radius:999px;color:var(--gold-hi);font-size:.82rem}
+.problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+.problem-card{padding:24px 20px}.problem-card h3{font-size:1.45rem;color:var(--cream)}.problem-card p{color:var(--muted);margin-top:9px;font-size:.92rem}
+.local-section{padding:56px 0}.local-head{max-width:760px}.local-head h2{font-size:clamp(2rem,4.4vw,3rem);margin-top:12px}.local-head p{color:var(--muted);margin-top:14px}
+.local-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}.local-card{padding:26px}.local-card h3{font-size:1.55rem}.local-card p{color:var(--muted);margin-top:10px}
+.local-location{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.local-location>div{padding:34px}.local-location .photo{min-height:320px;background:url('photos/studio-room.jpg') center/cover no-repeat}
+.local-offer{padding:34px;text-align:center}.local-offer .big{font-family:var(--serif);font-size:clamp(2.8rem,7vw,5.5rem);color:var(--gold-hi)}
+.local-offer .old{color:var(--muted-2);text-decoration:line-through}
+.cert-mini{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}.cert-mini button{border:1px solid var(--line);background:var(--glass);padding:0;border-radius:12px;overflow:hidden;cursor:pointer}.cert-mini img{aspect-ratio:1/1;object-fit:cover;width:100%}
+@media(max-width:900px){.problem-grid{grid-template-columns:1fr 1fr}.local-grid,.local-location{grid-template-columns:1fr}.local-location .photo{min-height:240px}.areas-in{padding:28px 22px}}
+@media(max-width:560px){.problem-grid{grid-template-columns:1fr}.cert-mini{grid-template-columns:repeat(3,1fr)}.hero-offer .old{display:inline-block;margin-left:4px}.areas-actions .btn{width:100%;justify-content:center}}
+
+/* =========================================================
+   VISUAL PASS 2026-08-19 — premium hierarchy + mobile polish
+   ========================================================= */
+:root{
+  --content:1120px;
+  --shadow-soft:0 24px 70px -42px rgba(0,0,0,.92);
+  --shadow-gold:0 26px 70px -44px rgba(199,161,120,.72);
+}
+.wrap{max-width:var(--content)}
+body{background:#141210}
+.bg-base{background:
+  radial-gradient(70% 46% at 80% -8%,rgba(151,111,66,.24),transparent 68%),
+  radial-gradient(45% 40% at 4% 36%,rgba(92,70,105,.11),transparent 74%),
+  linear-gradient(180deg,#15120f 0%,#13110f 54%,#100f0d 100%)}
+.bg-grain{opacity:.035}
+.bg-glow i{opacity:.34}
+
+/* fewer shiny surfaces: glass is now calmer and more premium */
+.glass{background:linear-gradient(155deg,rgba(255,255,255,.064),rgba(255,255,255,.025));
+  border-color:rgba(228,201,162,.19);box-shadow:0 1px 0 rgba(255,255,255,.07) inset,var(--shadow-soft)}
+
+.top{background:rgba(15,13,11,.76);border-bottom-color:rgba(228,201,162,.12)}
+.top-in{height:70px}
+.brand img{height:31px}
+.nav{gap:20px}.nav a{font-size:.82rem}
+.lang{border-color:rgba(228,201,162,.16);background:rgba(255,255,255,.025)}
+
+/* Stronger typographic rhythm */
+.eyebrow{font-size:.69rem;letter-spacing:.28em;color:#d2ad84}
+.hero{padding:86px 0 82px}
+.hero-in{grid-template-columns:minmax(0,1.08fr) minmax(350px,.72fr);gap:72px}
+.hero h1{font-size:clamp(3.35rem,6.1vw,5.35rem);letter-spacing:-.015em;max-width:760px}
+.hero .lead{font-size:1.08rem;line-height:1.7;max-width:610px;color:#aaa092}
+.hero-cta{gap:12px;margin-top:30px}
+.hero-trust{margin-top:22px;line-height:1.5}
+.hero-art{padding:0}
+.hero-art .frame{width:min(390px,100%);padding:10px;border-radius:32px;transform:rotate(.35deg)}
+.hero-art img{aspect-ratio:4/5;object-fit:cover;object-position:center 44%;border-radius:23px}
+.hero-art .badge{left:24px;bottom:24px;padding:9px 14px;background:rgba(18,15,12,.78);border-color:rgba(228,201,162,.2)}
+.hero-art::after{content:"";position:absolute;width:34%;height:1px;right:-12%;top:26%;background:linear-gradient(90deg,var(--line),transparent)}
+
+.btn{min-height:50px;padding:13px 23px;font-size:.94rem;box-shadow:none}
+.btn-gold{box-shadow:0 12px 32px -18px rgba(199,161,120,.9),0 1px 0 rgba(255,255,255,.3) inset}
+.btn-wa{background:rgba(58,163,90,.1);border-color:rgba(76,178,107,.42)}
+
+/* Local landing hero: keep offer visually close to the service, not like a third headline */
+.local-landing .hero{padding-top:72px}
+.local-landing .hero-offer{display:inline-flex;align-items:baseline;gap:9px;margin-top:19px;padding:10px 14px 9px;
+  border-left:2px solid var(--gold);background:linear-gradient(90deg,rgba(199,161,120,.09),transparent 80%);border-radius:0 12px 12px 0}
+.local-landing .hero-offer .old{margin-left:0}
+.local-landing .hero .lead{margin-top:19px}
+
+/* Trust row: facts instead of a cloud of pills */
+.local-trust{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin:28px 0 4px;
+  border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+.local-trust span{position:relative;padding:13px 11px;border:0;border-radius:0;text-align:center;color:#c9bdad;
+  font-size:.76rem;line-height:1.25;letter-spacing:.025em;background:none}
+.local-trust span+span::before{content:"";position:absolute;left:0;top:30%;bottom:30%;width:1px;background:var(--line-2)}
+
+/* Sections breathe more, but headings stay aligned */
+.local-section{padding:76px 0}
+.local-head{max-width:700px}
+.local-head h2{font-size:clamp(2.4rem,4.4vw,3.55rem);letter-spacing:-.01em}
+.local-head p{max-width:620px;font-size:1.02rem;line-height:1.7}
+
+/* Problem cards: restrained, numbered and asymmetric */
+.problem-grid{counter-reset:problem;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
+.problem-card{counter-increment:problem;min-height:220px;padding:26px 22px 24px;overflow:hidden;transition:transform .22s,border-color .22s,background .22s}
+.problem-card::before{content:"0" counter(problem);display:block;margin-bottom:44px;font-family:var(--sans);font-size:.68rem;
+  letter-spacing:.18em;color:var(--gold-dim)}
+.problem-card h3{font-size:1.48rem}
+.problem-card p{font-size:.9rem;line-height:1.58}
+.problem-card:hover{transform:translateY(-4px);border-color:rgba(228,201,162,.34);background:linear-gradient(155deg,rgba(228,201,162,.09),rgba(255,255,255,.02))}
+.problem-grid .problem-card:first-child{background:linear-gradient(155deg,rgba(199,161,120,.105),rgba(255,255,255,.025))}
+
+/* Local info cards */
+.local-grid{gap:14px;margin-top:30px}
+.local-card{padding:30px 30px 32px;min-height:170px}
+.local-card h3{font-size:1.65rem}.local-card p{line-height:1.65}
+
+/* Location gets a true editorial split */
+.local-location{grid-template-columns:.9fr 1.1fr;min-height:420px;border-radius:28px}
+.local-location>div:first-child{padding:48px 46px;align-self:center}
+.local-location .photo{min-height:420px;position:relative;background-position:center 42%}
+.local-location .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,18,16,.2),transparent 38%)}
+.studio-address{margin:20px 0 14px;padding:13px 15px;background:rgba(199,161,120,.045);border-left-width:1px}
+
+/* First-visit offer: quiet luxury, not a coupon banner */
+.local-offer{max-width:860px;margin:auto;padding:52px 44px 48px;border-radius:28px;background:
+  radial-gradient(70% 130% at 50% 0%,rgba(199,161,120,.12),transparent 63%),
+  linear-gradient(155deg,rgba(255,255,255,.055),rgba(255,255,255,.02))}
+.local-offer .big{margin:6px 0 5px;font-size:clamp(3.8rem,7vw,6.5rem);line-height:.92}
+.local-offer .old{font-family:var(--sans);font-size:.22em;vertical-align:middle;margin-left:12px}
+.local-offer>p{color:var(--muted);font-size:.96rem}
+
+/* Certifications feel like a visual strip rather than buttons */
+.cert-mini{grid-template-columns:repeat(5,1fr);gap:8px;margin-top:24px}
+.cert-mini button{border-radius:10px;border-color:rgba(228,201,162,.14);opacity:.84;transition:opacity .2s,transform .2s,border-color .2s}
+.cert-mini button:hover{opacity:1;transform:translateY(-2px);border-color:rgba(228,201,162,.34)}
+
+/* Geography: group places into readable zones instead of one tag cloud */
+.areas{padding:70px 0}
+.areas-in{padding:44px 46px 42px;overflow:hidden}
+.areas-in h2{font-size:clamp(2.45rem,4.5vw,3.55rem);letter-spacing:-.01em}
+.areas-in>p{max-width:700px;font-size:1rem;line-height:1.68}
+.area-groups{display:grid;grid-template-columns:1.2fr .9fr .72fr;gap:12px;margin-top:30px}
+.area-group{padding:20px 18px 18px;border:1px solid var(--line-2);border-radius:16px;background:rgba(255,255,255,.018)}
+.area-group-primary{border-color:rgba(199,161,120,.24);background:linear-gradient(155deg,rgba(199,161,120,.075),rgba(255,255,255,.014))}
+.area-label{display:block;margin-bottom:13px;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.area-chips{gap:6px;margin-top:0}
+.area-chips span{padding:5px 0;border:0;border-radius:0;background:none;color:#c9c0b3;font-size:.82rem}
+.area-chips span:not(:last-child)::after{content:"·";margin-left:6px;color:var(--gold-dim)}
+.areas-actions{margin-top:24px}
+
+/* Home page: the geography section should not compete with the main offer */
+.home-page #areas .areas-in{background:linear-gradient(155deg,rgba(255,255,255,.045),rgba(255,255,255,.015))}
+
+/* Outcall page: make it feel private/premium, not like the studio page copied */
+.outcall-page .hero h1{max-width:620px}
+.outcall-page .hero .lead{max-width:570px}
+.outcall-page .hero-art .frame{width:min(405px,100%)}
+.outcall-page .hero-art img{object-position:center 52%}
+.outcall-page .formats{padding-top:42px;padding-bottom:54px}
+.outcall-page .fmt-list{grid-template-columns:repeat(3,1fr);gap:14px}
+.outcall-page .fmt{min-height:255px;padding:30px 28px 28px}
+.outcall-page .fmt .fmt-ic{width:44px;height:44px}
+.outcall-page .services{padding-top:70px;padding-bottom:62px}
+.outcall-page .svc-groups{grid-template-columns:1.35fr .65fr;gap:14px}
+.outcall-page .svc-cat{height:100%}
+.outcall-page .outcall-in{padding:48px 46px}
+.outcall-page .steps{margin-top:38px;gap:12px}
+.outcall-page .step{padding:25px 22px 24px;background:rgba(255,255,255,.025)}
+.outcall-page #coverage .areas-in{background:
+  radial-gradient(60% 120% at 100% 0%,rgba(95,75,112,.10),transparent 70%),
+  linear-gradient(155deg,rgba(255,255,255,.05),rgba(255,255,255,.016))}
+
+/* Reviews look less like generic SaaS cards */
+.reviews-grid{gap:14px;margin-top:34px}
+.rv-card{padding:27px 26px;border-radius:18px;background:linear-gradient(155deg,rgba(255,255,255,.048),rgba(255,255,255,.018))}
+.rv-text{font-family:var(--serif);font-size:1.18rem;line-height:1.45;opacity:1}
+.rv-stars{font-size:12px;opacity:.88}
+
+@media(max-width:980px){
+  .hero-in{grid-template-columns:1fr .72fr;gap:38px}
+  .hero h1{font-size:clamp(3rem,7vw,4.5rem)}
+  .local-trust{grid-template-columns:repeat(3,1fr)}
+  .local-trust span:nth-child(4),.local-trust span:nth-child(5){border-top:1px solid var(--line-2)}
+  .area-groups{grid-template-columns:1fr 1fr}.area-group-primary{grid-column:1/-1}
+  .outcall-page .fmt-list{grid-template-columns:1fr 1fr}.outcall-page .fmt:last-child{grid-column:1/-1}
+}
+
+@media(max-width:760px){
+  .hero{padding:50px 0 54px}
+  .hero-in{grid-template-columns:1fr;gap:36px}
+  .hero h1{font-size:clamp(2.85rem,12vw,4rem);line-height:.98}
+  .hero .lead{font-size:1rem;line-height:1.62}
+  .hero-art{margin-top:0}
+  .hero-art .frame{width:min(420px,92%);margin:auto;transform:none}
+  .hero-art::after{display:none}
+  .local-section,.areas{padding:52px 0}
+  .problem-grid{grid-template-columns:1fr 1fr}
+  .problem-card{min-height:195px}
+  .problem-card::before{margin-bottom:30px}
+  .local-location{grid-template-columns:1fr;min-height:0}
+  .local-location>div:first-child{padding:32px 26px}
+  .local-location .photo{min-height:320px;order:-1}
+  .local-location .photo::after{background:linear-gradient(180deg,transparent 60%,rgba(20,18,16,.26))}
+  .areas-in{padding:32px 26px}
+  .outcall-page .svc-groups{grid-template-columns:1fr}
+  .outcall-page .outcall-in{padding:34px 26px}
+}
+
+@media(max-width:560px){
+  body{font-size:16px}
+  .top-in{height:64px}
+  .brand img{height:29px}
+  .hero{padding-top:38px;padding-bottom:46px}
+  .hero h1{font-size:clamp(2.7rem,13vw,3.35rem)}
+  .eyebrow{font-size:.64rem;letter-spacing:.22em;line-height:1.45}
+  .hero-offer{font-size:1.4rem}
+  .local-landing .hero-offer{display:flex;padding:9px 11px 8px}
+  .hero-cta{display:grid;grid-template-columns:1fr;gap:9px;margin-top:25px}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .btn{min-height:49px;padding:12px 18px}
+  .hero-art .frame{width:100%;padding:8px;border-radius:25px}
+  .hero-art img{aspect-ratio:4/4.6;border-radius:18px}
+  .hero-art .badge{left:18px;bottom:18px}
+  .local-trust{grid-template-columns:1fr 1fr;margin-top:24px}
+  .local-trust span{padding:11px 7px;font-size:.72rem}
+  .local-trust span:nth-child(n+3){border-top:1px solid var(--line-2)}
+  .local-trust span:nth-child(odd)::before{display:none}
+  .local-trust span:last-child{grid-column:1/-1}
+  .local-head h2,.areas-in h2{font-size:2.35rem;line-height:1}
+  .problem-grid{grid-template-columns:1fr;gap:10px;margin-top:26px}
+  .problem-card{min-height:0;padding:22px 20px}
+  .problem-card::before{margin-bottom:20px}
+  .problem-card h3{font-size:1.4rem}
+  .local-grid{grid-template-columns:1fr}
+  .local-card{min-height:0;padding:24px 22px}
+  .local-location .photo{min-height:260px}
+  .local-offer{padding:38px 22px 34px}
+  .local-offer .big{font-size:4.4rem}
+  .cert-mini{grid-template-columns:repeat(3,1fr)}
+  .area-groups{grid-template-columns:1fr;gap:9px;margin-top:24px}
+  .area-group-primary{grid-column:auto}
+  .area-group{padding:17px 16px}
+  .area-chips span{font-size:.8rem}
+  .areas-actions{display:grid;width:100%;gap:9px}
+  .areas-actions .btn{width:100%;justify-content:center}
+  .outcall-page .fmt-list{grid-template-columns:1fr}
+  .outcall-page .fmt:last-child{grid-column:auto}
+  .outcall-page .fmt{min-height:0;padding:25px 22px}
+  .outcall-page .services{padding-top:52px;padding-bottom:48px}
+  .outcall-page .outcall-in{padding:28px 21px}
+  .steps{gap:10px}
+  .step{padding:23px 20px}
+  .reviews-grid{grid-template-columns:1fr}
+}
+
+/* Home format chooser — three equal choices read better than a 2+1 orphan grid */
+.home-page .fmt-list{grid-template-columns:repeat(3,1fr);gap:14px}
+.home-page .fmt{min-height:270px;padding:28px 25px 26px}
+.home-page .fmt h3{font-size:1.52rem}
+.home-page .fmt p{font-size:.92rem;line-height:1.58}
+.home-page .fmt .go{padding-top:18px}
+
+/* Service menu: slightly quieter rows and stronger grouping */
+.svc-cat{background:linear-gradient(155deg,rgba(255,255,255,.052),rgba(255,255,255,.018))}
+.svc-cat-h{font-size:1.42rem;letter-spacing:.01em}
+.svc-items li{padding:11px 0}
+.svc-name{line-height:1.4}
+.svc-dur{font-size:.8rem;color:#d5b48f}
+
+/* Studio address should feel like useful local information, not an alert */
+.studio-address b{font-family:var(--serif);font-size:1.14rem;font-weight:500;color:var(--gold-hi)}
+
+@media(max-width:900px){
+  .home-page .fmt-list{grid-template-columns:1fr 1fr}
+  .home-page .fmt:last-child{grid-column:1/-1;min-height:0}
+}
+@media(max-width:560px){
+  .home-page .fmt-list{grid-template-columns:1fr}
+  .home-page .fmt:last-child{grid-column:auto}
+  .home-page .fmt{min-height:0;padding:24px 21px}
+  .svc-items li{gap:10px}
+  .svc-name{font-size:.94rem}
+  .svc-dur{font-size:.75rem}
+}
+
+/* Floating WhatsApp stays out of the way while the primary hero CTA is visible */
+.wa-fab{transition:transform .22s ease,opacity .22s ease,box-shadow .22s ease}
+.wa-fab.fab-hidden{opacity:0;pointer-events:none;transform:translateY(10px) scale(.88)}
+.wa-fab.fab-hidden:hover{transform:translateY(10px) scale(.88)}
+
+/* 2026-08-19 spacing pass — more air between major sections without bloating controls */
+@media(min-width:761px){
+  .formats{padding:54px 0 64px}
+  .services{padding:74px 0 64px}
+  .outcall{padding:54px 0 62px}
+  .offer{padding:82px 0}
+  .studio,.approach,.about{padding:76px 0}
+  .faq{padding:82px 0}
+  .nudge{padding:24px 0 66px}
+  .contacts{padding:82px 0}
+  .areas{padding:88px 0}
+  .local-section{padding:88px 0}
+  .outcall-page .formats{padding-top:62px;padding-bottom:76px}
+  .outcall-page .services{padding-top:86px;padding-bottom:76px}
+  .outcall-page .outcall{padding-top:66px;padding-bottom:72px}
+  .reviews-grid{margin-top:40px}
+  .fmt-intro{margin-bottom:22px}
+  .fmt-list{margin-top:36px}
+  .svc-groups{margin-top:8px}
+  .hero-cta{margin-top:36px}
+  .local-head p{margin-top:18px}
+  .local-grid{margin-top:34px}
+  .problem-grid{margin-top:38px}
+  .area-groups{margin-top:36px}
+}
+
+@media(max-width:760px){
+  .formats{padding:42px 0 54px}
+  .services{padding:58px 0 52px}
+  .outcall{padding:42px 0 52px}
+  .offer{padding:64px 0}
+  .studio,.approach,.about{padding:60px 0}
+  .faq{padding:64px 0}
+  .nudge{padding:16px 0 54px}
+  .contacts{padding:64px 0}
+  .local-section,.areas{padding:64px 0}
+  .fmt-list{margin-top:32px}
+  .local-grid{margin-top:30px}
+  .problem-grid{margin-top:32px}
+  .area-groups{margin-top:30px}
+}
+
+@media(max-width:560px){
+  .hero{padding-top:46px;padding-bottom:58px}
+  .formats{padding-top:46px;padding-bottom:58px}
+  .services{padding-top:60px;padding-bottom:56px}
+  .offer{padding:66px 0}
+  .studio,.approach,.about{padding:62px 0}
+  .local-section,.areas{padding:66px 0}
+  .faq,.contacts{padding:66px 0}
+  .outcall-page .services{padding-top:64px;padding-bottom:58px}
+}

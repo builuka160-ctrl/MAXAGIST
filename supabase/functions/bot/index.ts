@@ -7,7 +7,7 @@
 const BOT_TOKEN = Deno.env.get('BOT_TOKEN') ?? '';
 const FN_URL   = 'https://xqwawjnvvmcydcbswous.supabase.co/functions/v1/bot';
 const APP_URL  = 'https://maxagist.com/app/';
-const SETUP_SECRET = Deno.env.get('SETUP_SECRET') ?? 'setup-maxag-2026';
+const SETUP_SECRET = Deno.env.get('SETUP_SECRET') ?? '';
 
 async function tg(method: string, payload: unknown) {
   const r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${method}`, {
@@ -22,7 +22,11 @@ Deno.serve(async (req) => {
   const url = new URL(req.url);
 
   if (req.method === 'GET') {
-    if (url.searchParams.get('setup') !== SETUP_SECRET) {
+    const requestedSetup = url.searchParams.has('setup');
+    if (requestedSetup && !SETUP_SECRET) {
+      return new Response('Setup disabled: SETUP_SECRET is not configured.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    }
+    if (!requestedSetup || url.searchParams.get('setup') !== SETUP_SECRET) {
       return new Response('MAXAGIST bot is running.', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     }
     const webhook  = await tg('setWebhook', { url: FN_URL, allowed_updates: ['message'], drop_pending_updates: true });

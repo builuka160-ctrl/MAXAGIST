@@ -1,109 +1,57 @@
-/* MAXAGIST — GA4 conversion events (G-D7B249WJS0)
- *
- * Отправляет события конверсии в Google Analytics 4 без правки каждой кнопки:
- * один делегированный слушатель на весь документ ловит клики по WhatsApp,
- * телефону, отзывам и соцсетям, а также сабмит формы лида.
- *
- * gtag() уже объявлен инлайном в <head> каждой страницы. Здесь мы только
- * шлём события. Если gtag почему-то нет — тихо кладём в dataLayer, ничего
- * не ломая. Подключать так: <script defer src="analytics.js"></script>
- *
- * События (в GA4 их можно пометить как «ключевые» / конверсии):
- *   generate_lead  — клик по WhatsApp или отправка формы лида (главная цель)
- *   phone_click    — клик по номеру телефона
- *   review_click   — переход к отзывам (Google Maps / оставить отзыв)
- *   social_click   — переход в Instagram и т.п.
- *
- * Google Ads (AW-18386499497): базовый тег подключён в <head> каждой страницы
- * (ремаркетинг + сбор данных). Ниже — отправка конверсий в Ads. Чтобы конверсия
- * заработала, вставьте её conversion label в AW_LABELS: возьмите его в Google Ads
- * → Цели → Конверсии → нужное действие, часть после слэша в send_to
- * ('AW-18386499497/XXXXXXX' → 'XXXXXXX'). Пока label пуст — событие в Ads молча
- * не шлётся, GA4 и остальное работают как обычно.
+/* MAXAGIST — GA4 / Google Ads / Meta event taxonomy.
+ * Google Ads lead conversion fires only after the backend confirms a saved lead.
+ * WhatsApp clicks are interactions, not leads.
  */
 (function () {
   'use strict';
-
-  // Google Ads conversion labels. Заполните из кабинета Ads (Цели → Конверсии).
   var AW_ID = 'AW-18386499497';
-  var AW_LABELS = {
-    lead: 'e3XgCM2BiOIcEKnvrr9E', // «Отправка формы для потенциальных клиентов»: WhatsApp / форма лида
-    phone: '' // (опционально) звонок по номеру телефона — добавить отдельным action при необходимости
-  };
+  var AW_LABELS = { lead: 'e3XgCM2BiOIcEKnvrr9E', phone: '' };
+  var leadSuccessSent = false;
 
   function send(name, params) {
     params = params || {};
     try {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', name, params);
-      } else {
-        (window.dataLayer = window.dataLayer || []).push(
-          Object.assign({ event: name }, params)
-        );
-      }
-    } catch (e) { /* аналитика не должна мешать сайту */ }
+      if (typeof window.gtag === 'function') window.gtag('event', name, params);
+      else (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, params));
+    } catch (_e) {}
   }
-
-  // Конверсия в Google Ads. Шлём только если для действия задан label —
-  // иначе Ads ругается на пустой send_to, поэтому тихо пропускаем.
   function adConversion(key, params) {
-    var label = AW_LABELS[key];
-    if (!label) return;
-    try {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'conversion', Object.assign(
-          { send_to: AW_ID + '/' + label }, params || {}
-        ));
-      }
-    } catch (e) { /* не мешаем сайту */ }
+    var label = AW_LABELS[key]; if (!label) return;
+    try { if (typeof window.gtag === 'function') window.gtag('event', 'conversion', Object.assign({ send_to: AW_ID + '/' + label }, params || {})); } catch (_e) {}
   }
-
-  // Meta Pixel — стандартные (track) и кастомные (trackCustom) события.
-  // Пиксель копит данные/аудиторию заранее, чтобы будущая реклама в Meta
-  // сразу имела кому ретаргетить.
   function fb(name, params, custom) {
-    try {
-      if (typeof window.fbq === 'function') {
-        window.fbq(custom ? 'trackCustom' : 'track', name, params || {});
-      }
-    } catch (e) { /* не мешаем сайту */ }
+    try { if (typeof window.fbq === 'function') window.fbq(custom ? 'trackCustom' : 'track', name, params || {}); } catch (_e) {}
   }
-
-  // Куда ведёт ссылка/кнопка — нормализуем для матчинга
-  function hrefOf(el) {
-    var a = el.closest && el.closest('a[href]');
-    return a ? (a.getAttribute('href') || '') : '';
-  }
-
+  function hrefOf(el) { var a = el.closest && el.closest('a[href]'); return a ? (a.getAttribute('href') || '') : ''; }
   function isWhatsApp(el, href) {
     if (/wa\.me|api\.whatsapp|whatsapp\.com/i.test(href)) return true;
-    // FAB и карточки «что вас беспокоит» открывают WA через JS (window.open),
-    // у них нет href — ловим по маркерам.
-    if (el.closest && (el.closest('#wa-fab') || el.closest('[data-wa]'))) return true;
-    return false;
+    return !!(el.closest && (el.closest('#wa-fab') || el.closest('[data-wa]')));
+  }
+  function sourceFor(el) {
+    var n = el.closest && el.closest('[data-track]');
+    if (n && n.getAttribute('data-track')) return n.getAttribute('data-track');
+    var a = el.closest && el.closest('[id]');
+    if (a && /^wa-/.test(a.id)) return 'whatsapp:' + a.id.replace(/^wa-/, '');
+    return 'whatsapp';
   }
 
   document.addEventListener('click', function (ev) {
-    var el = ev.target;
-    if (!el || !el.closest) return;
-
+    var el = ev.target; if (!el || !el.closest) return;
     var href = hrefOf(el);
-
     if (isWhatsApp(el, href)) {
-      // Главная конверсия воронки — обращение в WhatsApp (запись/консультация)
-      send('generate_lead', {
-        method: 'whatsapp',
-        link_url: href || 'wa:js',
-        page_location: location.pathname
-      });
-      adConversion('lead', { value: 1.0, currency: 'EUR' });
-      fb('Lead', { content_name: 'whatsapp' });
+      var src = sourceFor(el);
+      send('whatsapp_click', { method: 'whatsapp', source: src, link_url: href || 'wa:js', page_location: location.pathname });
+      fb('Contact', { content_name: src });
       return;
     }
     if (/^tel:/i.test(href)) {
       send('phone_click', { link_url: href, page_location: location.pathname });
-      adConversion('phone', { value: 1.0, currency: 'EUR' });
+      adConversion('phone');
       fb('Contact', { content_name: 'phone' });
+      return;
+    }
+    if (/alteg\.io|altegio/i.test(href)) {
+      send('booking_click', { link_url: href, page_location: location.pathname });
       return;
     }
     if (/writereview|maps\.app\.goo|search\.google\.com\/local|goo\.gl\/maps/i.test(href)) {
@@ -114,17 +62,17 @@
     if (/instagram\.com|t\.me|telegram/i.test(href)) {
       send('social_click', { link_url: href, page_location: location.pathname });
       fb('SocialClick', { link_url: href }, true);
-      return;
     }
-  }, true); // capture — ловим даже если клик уводит со страницы
+  }, true);
 
-  // Отправка формы лида → конверсия ТОЛЬКО после успешного сохранения на сервере.
-  // Обработчик формы (index.html) шлёт кастомное событие 'lead:success', когда
-  // заявка реально принята. Раньше слушали 'submit' — и конверсия засчитывалась
-  // даже при ошибке валидации или сбое сети, раздувая статистику Ads/Meta.
-  document.addEventListener('lead:success', function () {
-    send('generate_lead', { method: 'form', page_location: location.pathname });
-    adConversion('lead', { value: 1.0, currency: 'EUR' });
-    fb('Lead', { content_name: 'form' });
+  document.addEventListener('lead:success', function (ev) {
+    if (leadSuccessSent) return; // protects Ads/GA4 against duplicate custom-event firing
+    leadSuccessSent = true;
+    var method = ev && ev.detail && ev.detail.method || 'form';
+    send('lead_success', { method: method, page_location: location.pathname });
+    send('generate_lead', { method: method, page_location: location.pathname });
+    // No fabricated value/currency: Google Ads conversion action decides its own default value.
+    adConversion('lead');
+    fb('Lead', { content_name: method });
   });
 })();

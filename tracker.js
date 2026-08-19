@@ -70,7 +70,7 @@
   /* --- контекст (общий для всех событий страницы) --- */
   function utm() {
     var q = new URLSearchParams(location.search), o = {};
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid'].forEach(function (k) {
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'gbraid', 'wbraid', 'fbclid'].forEach(function (k) {
       var v = q.get(k); if (v) o[k.replace('utm_', '')] = v.slice(0, 120);
     });
     return o;
