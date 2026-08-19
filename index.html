@@ -2,24 +2,33 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<!-- Google tag (gtag.js) — GA4 + Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7B249WJS0"></script>
+<!-- Google tag (gtag.js) — GA4 + Google Ads + Consent Mode v2 -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  /* Consent Mode v2. До согласия рекламные и аналитические хранилища запрещены — этого требует
+     Google для трафика из ЕЭЗ. Баннер согласия — consent.js, он шлёт consent update. */
+  (function () {
+    var ok = false; try { ok = localStorage.getItem('mx_consent') === 'all'; } catch (e) {}
+    var v = ok ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v,
+      functionality_storage: 'granted', security_storage: 'granted', wait_for_update: 500
+    });
+  })();
   gtag('js', new Date());
   gtag('config', 'G-D7B249WJS0');
   gtag('config', 'AW-18386499497');
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7B249WJS0"></script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+try{ if(localStorage.getItem('mx_consent')!=='all') fbq('consent','revoke'); }catch(e){}
 fbq('init','1383733323705616');
 fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1383733323705616&ev=PageView&noscript=1" alt=""/></noscript>
 <!-- End Meta Pixel Code -->
-<script>try{if(localStorage.getItem('lang'))document.documentElement.classList.add('lang-set');}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#141210">
 <meta name="mobile-web-app-capable" content="yes">
@@ -28,14 +37,14 @@ fbq('track','PageView');
 <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/favicon.svg" color="#c7a17a">
-<title>MAXAGIST — массаж в Риге · студия FIFTY и выезд</title>
-<meta name="description" content="MAXAGIST — массаж в Риге. Студия FIFTY и выезд на дом, в отель, офис. Первый визит — €30. Запись в WhatsApp или онлайн.">
-<meta name="keywords" content="массаж Рига, массаж на дом Рига, выезд массажиста, массаж студия FIFTY, классический массаж, хиромассаж, тайский массаж, masāža Rīga, massage Riga">
+<title>Массаж в Риге — первый визит €30 · студия и выезд | MAXAGIST</title>
+<meta name="description" content="Массаж в Риге: классический, спортивный, антицеллюлитный, лимфодренажный, массаж спины и шеи. Студия FIFTY или выезд на дом, в отель, офис. Первый визит — €30 вместо €50. Ответ в WhatsApp за пару минут.">
+<meta name="keywords" content="массаж Рига, массаж на дом Рига, выезд массажиста, антицеллюлитный массаж Рига, антицеллюлитный массаж, массаж от целлюлита, лимфодренажный массаж Рига, спортивный массаж Рига, массаж спины и шеи Рига, классический массаж, хиромассаж, pretcelulīta masāža Rīga, masāža Rīga, anti-cellulite massage Riga, massage Riga">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="author" content="MAXAGIST · Максим Анохин">
 <link rel="canonical" href="https://maxagist.com/">
-<meta property="og:title" content="MAXAGIST — массаж в Риге · студия FIFTY и выезд">
-<meta property="og:description" content="Массаж без спешки, под ваше состояние. Первый визит — €30. Студия FIFTY или выезд по Риге.">
+<meta property="og:title" content="Массаж в Риге — первый визит €30 · студия FIFTY и выезд">
+<meta property="og:description" content="Классический, спортивный, антицеллюлитный, лимфодренажный массаж. Первый визит — €30 вместо €50. Студия FIFTY или выезд по Риге.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://maxagist.com/">
 <meta property="og:site_name" content="MAXAGIST">
@@ -44,7 +53,7 @@ fbq('track','PageView');
 <meta property="og:image:alt" content="Массаж в студии FIFTY, Рига">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MAXAGIST — массаж в Риге">
-<meta name="twitter:description" content="Первый визит — €30. Студия FIFTY или выезд по Риге. Запись в WhatsApp.">
+<meta name="twitter:description" content="Первый визит — €30 вместо €50. Классический, спортивный, антицеллюлитный массаж. Студия FIFTY или выезд по Риге.">
 <meta name="twitter:image" content="https://maxagist.com/photos/massage-back.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,6 +96,19 @@ fbq('track','PageView');
     "price": "30",
     "priceCurrency": "EUR",
     "description": "Первый визит в студию FIFTY по специальной цене €30 (обычно €50)."
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Массаж в Риге",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Классический массаж" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Спортивный массаж" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Антицеллюлитный массаж" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Лимфодренажный массаж" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Массаж спины и шейно-воротниковой зоны" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Испанский хиромассаж тела и лица" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Массаж с выездом на дом, в отель или офис" } }
+    ]
   }
 }
 </script>
@@ -109,6 +131,16 @@ fbq('track','PageView');
       "@type": "Question",
       "name": "Как записаться на массаж в Риге?",
       "acceptedAnswer": { "@type": "Answer", "text": "Быстрее всего — написать в WhatsApp или Telegram. Можно выбрать слот самому через онлайн-запись Altegio." }
+    },
+    {
+      "@type": "Question",
+      "name": "Сколько стоит массаж в Риге?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Первый визит в студию — €30 вместо €50 на любой массаж длительностью до 60 минут включительно. Полный прайс и PDF-меню присылаем в WhatsApp за пару минут." }
+    },
+    {
+      "@type": "Question",
+      "name": "Делаете антицеллюлитный массаж?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Да. Антицеллюлитный массаж — курсовая работа с зонами бёдер, ягодиц и живота: разгон застоя, тонус кожи и лимфодренаж. Длительность 60 или 90 минут, доступен в студии и с выездом." }
     }
   ]
 }
@@ -120,29 +152,12 @@ fbq('track','PageView');
 </script>
 <script src="tracker.js" defer></script>
 <script src="content.js" defer></script>
+<script src="consent.js" defer></script>
 </head>
 <body id="top">
 <div class="bg-base"></div>
 <div class="bg-glow"><i></i><i></i><i></i></div>
 <div class="bg-grain"></div>
-
-<!-- PRELOADER / LANGUAGE GATE -->
-<div class="preload" id="preload">
-  <div class="preload-in">
-    <div class="logo-wrap">
-      <span class="ring"></span>
-      <img src="photos/logo.png" alt="MAXAGIST">
-    </div>
-    <span class="wm">MAXAGIST</span>
-    <span class="tagline">Masāža Rīgā · Массаж в Риге · Massage in Riga</span>
-    <p class="choose">Izvēlieties valodu · Выберите язык · Choose language</p>
-    <div class="langs">
-      <button type="button" data-lang="lv">Latviešu</button>
-      <button type="button" data-lang="ru">Русский</button>
-      <button type="button" data-lang="en">English</button>
-    </div>
-  </div>
-</div>
 
 <header class="top">
   <div class="wrap top-in">
@@ -150,6 +165,7 @@ fbq('track','PageView');
     <nav class="nav" id="nav">
       <a href="#services" data-i18n="nav.services">Услуги</a>
       <a href="vyezd.html" data-i18n="nav.outcall">Выезд</a>
+      <a href="#prices" data-i18n="nav.prices">Цены</a>
       <a href="#offer" data-i18n="nav.first">Первый визит</a>
       <a href="#studio" data-i18n="nav.studio">Студия</a>
       <a href="#about" data-i18n="nav.about">О специалисте</a>
@@ -177,23 +193,84 @@ fbq('track','PageView');
 <section class="hero wrap">
   <div class="hero-in">
     <div>
-      <span class="eyebrow rise" data-i18n="hero.eyebrow" data-edit="hero.eyebrow">Максим · массаж в Риге, студия и выезд</span>
-      <h1 class="rise d1" data-i18n-html="hero.h1" data-edit="hero.h1" data-edit-html>Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span></h1>
-      <p class="lead rise d2" data-i18n="hero.lead" data-edit="hero.lead">Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.</p>
+      <span class="eyebrow rise" data-i18n="hero.eyebrow" data-edit="hero.eyebrow">Рига · студия FIFTY и выезд на дом</span>
+      <h1 class="rise d1" data-i18n-html="hero.h1" data-edit="hero.h1" data-edit-html>Массаж в Риге<span class="h1-sub">снимаю боль, зажатость и усталость</span></h1>
+      <div class="price-tag rise d1">
+        <span class="pt-price">€30</span>
+        <span class="pt-txt"><b data-i18n="hero.pt.b">Первый визит в студию</b><span data-i18n="hero.pt.s">вместо €50 · любой массаж до 60 минут</span></span>
+      </div>
+      <p class="lead rise d2" data-i18n="hero.lead" data-edit="hero.lead">Напишите, что беспокоит, — подберу технику, силу и длительность под вас. Приём в студии FIFTY или выезд к вам: домой, в отель, офис.</p>
       <div class="hero-cta rise d2">
         <a class="btn btn-wa" id="wa-hero" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
           <span data-i18n="hero.wa">Написать в WhatsApp</span></a>
-        <a class="btn btn-line" href="#offer" data-i18n="hero.book">Или записаться на сайте</a>
+        <a class="btn btn-line" href="tel:+37128251366">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg>
+          <span data-i18n="hero.call">Позвонить</span></a>
       </div>
-      <p class="hero-trust rise d3" data-i18n-html="hero.trust">Не знаете, что выбрать? Просто напишите — подскажем формат и время за пару минут. Отвечаем обычно <b>в течение нескольких минут</b>.</p>
+      <p class="hero-trust rise d3" data-i18n-html="hero.trust">Не знаете, что выбрать? Просто напишите — подскажу формат и время. Отвечаю обычно <b>в течение нескольких минут</b>.</p>
+      <ul class="trustbar rise d3">
+        <li><b>★★★★★</b><span data-i18n="tb.google">оценки в Google</span></li>
+        <li><b>11</b><span data-i18n="tb.certs">дипломов и сертификатов</span></li>
+        <li><b>ITEC</b><span data-i18n="tb.itec">Level 3 · Великобритания</span></li>
+        <li><b data-i18n="tb.timev">2 мин</b><span data-i18n="tb.time">среднее время ответа</span></li>
+      </ul>
     </div>
     <div class="hero-art">
       <div class="frame glass">
-        <img src="photos/massage-back.jpg" alt="Массаж спины в студии FIFTY" loading="eager">
-        <span class="badge glass"><span class="dot"></span><span data-i18n="hero.badge">Онлайн · отвечаем сейчас</span></span>
+        <img src="photos/massage-back.jpg" alt="Массаж спины в студии FIFTY, Рига" loading="eager">
+        <span class="badge glass"><span class="dot"></span><span data-i18n="hero.badge">Онлайн · отвечаю сейчас</span></span>
       </div>
     </div>
+  </div>
+</section>
+
+<div class="thread"><i></i></div>
+
+<!-- PROBLEM PICKER -->
+<section id="problem" class="picker wrap">
+  <div class="pick-intro">
+    <span class="eyebrow" data-i18n="pick.eyebrow">Начните отсюда</span>
+    <h2 data-i18n="pick.h">Что вас беспокоит?</h2>
+    <p data-i18n="pick.p">Выбирать услугу самому не нужно. Нажмите, что ближе, — открою WhatsApp с готовым сообщением, задам пару вопросов и подберу массаж, длительность и формат.</p>
+  </div>
+  <div class="pick-grid">
+    <a class="pick glass" href="#" target="_blank" rel="noopener" data-wa-key="p.back" data-track="problem:back">
+      <h3 data-i18n="pick.back.h">Спина и шея после ноутбука</h3>
+      <p data-i18n="pick.back.p">Зажатость, «каменные» плечи, тяжесть в пояснице после сидячей работы.</p>
+      <span class="pick-tags" data-i18n="pick.back.t">классический · шейно-воротниковая зона</span>
+      <span class="go" data-i18n="pick.go">Подобрать в WhatsApp</span>
+    </a>
+    <a class="pick glass" href="#" target="_blank" rel="noopener" data-wa-key="p.cellulite" data-track="problem:cellulite">
+      <h3 data-i18n="pick.cellulite.h">Целлюлит и тонус кожи</h3>
+      <p data-i18n="pick.cellulite.p">Бёдра, ягодицы, живот: разгоняем застой, работаем с рельефом и упругостью кожи.</p>
+      <span class="pick-tags" data-i18n="pick.cellulite.t">антицеллюлитный · скульптурирующий</span>
+      <span class="go" data-i18n="pick.go">Подобрать в WhatsApp</span>
+    </a>
+    <a class="pick glass" href="#" target="_blank" rel="noopener" data-wa-key="p.sport" data-track="problem:sport">
+      <h3 data-i18n="pick.sport.h">Восстановление после нагрузок</h3>
+      <p data-i18n="pick.sport.p">Забитые мышцы после тренировок, крепатура, скованность и потеря подвижности.</p>
+      <span class="pick-tags" data-i18n="pick.sport.t">спортивный · глубокая проработка</span>
+      <span class="go" data-i18n="pick.go">Подобрать в WhatsApp</span>
+    </a>
+    <a class="pick glass" href="#" target="_blank" rel="noopener" data-wa-key="p.stress" data-track="problem:stress">
+      <h3 data-i18n="pick.stress.h">Стресс и плохой сон</h3>
+      <p data-i18n="pick.stress.p">Не отпускает напряжение, тяжело переключиться и уснуть.</p>
+      <span class="pick-tags" data-i18n="pick.stress.t">аромамассаж · расслабляющий</span>
+      <span class="go" data-i18n="pick.go">Подобрать в WhatsApp</span>
+    </a>
+    <a class="pick glass" href="#" target="_blank" rel="noopener" data-wa-key="p.legs" data-track="problem:legs">
+      <h3 data-i18n="pick.legs.h">Отёки и тяжесть в ногах</h3>
+      <p data-i18n="pick.legs.p">Усталость и ощущение «налитых» ног к вечеру, отёчность.</p>
+      <span class="pick-tags" data-i18n="pick.legs.t">лимфодренажный · массаж ног</span>
+      <span class="go" data-i18n="pick.go">Подобрать в WhatsApp</span>
+    </a>
+    <a class="pick glass" href="#" target="_blank" rel="noopener" data-wa-key="p.other" data-track="problem:other">
+      <h3 data-i18n="pick.other.h">Просто хочу расслабиться</h3>
+      <p data-i18n="pick.other.p">Без конкретной жалобы — час тишины, тепла и спокойной работы с телом.</p>
+      <span class="pick-tags" data-i18n="pick.other.t">хиромассаж · SPA · hot stone</span>
+      <span class="go" data-i18n="pick.go">Подобрать в WhatsApp</span>
+    </a>
   </div>
 </section>
 
@@ -234,7 +311,7 @@ fbq('track','PageView');
   <div class="svc-intro">
     <span class="eyebrow" data-i18n="svc.eyebrow">Услуги студии</span>
     <h2 data-i18n="svc.title">Массаж под ваш запрос</h2>
-    <p data-i18n="svc.intro" data-edit="svc.intro">Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.</p>
+    <p data-i18n="svc.intro" data-edit="svc.intro">Полный список услуг с длительностью. Не уверены, что нужно именно вам, — не выбирайте: напишите, что беспокоит, и я подберу технику сам.</p>
   </div>
   <div class="svc-groups">
     <div class="svc-cat glass">
@@ -242,6 +319,7 @@ fbq('track','PageView');
       <ul class="svc-items">
         <li><span class="svc-name" data-i18n="svc.sport">Спортивный массаж</span><span class="svc-dur">60 / 90 <span data-i18n="svc.min">мин</span></span></li>
         <li><span class="svc-name" data-i18n="svc.classic">Классический массаж</span><span class="svc-dur">60 / 90 <span data-i18n="svc.min">мин</span></span></li>
+        <li><span class="svc-name" data-i18n="svc.anticell">Антицеллюлитный массаж</span><span class="svc-dur">60 / 90 <span data-i18n="svc.min">мин</span></span></li>
         <li><span class="svc-name" data-i18n="svc.back">Массаж спины</span><span class="svc-dur">45 <span data-i18n="svc.min">мин</span></span></li>
         <li><span class="svc-name" data-i18n="svc.neck">Массаж шейно-воротниковой зоны</span><span class="svc-dur">30 <span data-i18n="svc.min">мин</span></span></li>
         <li><span class="svc-name" data-i18n="svc.legs">Массаж ног</span><span class="svc-dur">45 <span data-i18n="svc.min">мин</span></span></li>
@@ -269,15 +347,63 @@ fbq('track','PageView');
       </div>
     </div>
   </div>
-  <div class="svc-foot">
-    <p class="svc-note" data-i18n-html="svc.note">Первый визит — <b>€30</b> на любой массаж из списка длительностью до 60 минут включительно.</p>
+  <div class="svc-price glass" id="prices">
+    <div class="sp-txt">
+      <span class="eyebrow" data-i18n="price.eyebrow">Цены</span>
+      <h3 data-i18n="price.h">Сколько стоит</h3>
+      <ul class="price-list">
+        <li><span data-i18n="price.li1">Первый визит в студию — любой массаж до 60 минут</span><b class="pl-now">€30</b></li>
+        <li><span data-i18n="price.li2">Обычная цена такого визита</span><b class="pl-old">€50</b></li>
+        <li><span data-i18n="price.li3">Остальные услуги, курсы и выезд</span><b class="pl-ask" data-i18n="price.li3v">прайс в WhatsApp</b></li>
+      </ul>
+      <p class="price-why" data-i18n="price.why">Полный прайс и PDF-меню присылаю в WhatsApp за пару минут — вместе с рекомендацией, что подойдёт под ваш запрос и сколько сеансов реально нужно.</p>
+    </div>
     <a class="btn btn-wa" id="wa-price" href="#" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
-      <span data-i18n="svc.price">Узнать цены в WhatsApp</span></a>
+      <span data-i18n="svc.price">Получить прайс в WhatsApp</span></a>
   </div>
 </section>
 
 <div class="thread"><i></i></div>
+
+<!-- REVIEWS -->
+<section id="reviews" class="reviews wrap">
+  <div class="rv-head">
+    <span class="eyebrow" data-i18n="reviews.eyebrow">Отзывы</span>
+    <h2 data-i18n="reviews.h">Что говорят клиенты</h2>
+    <p data-i18n="reviews.sub">Живые отзывы из Google и переписки — без прикрас.</p>
+  </div>
+  <div class="reviews-grid">
+    <article class="rv-card glass">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">«Этот день выдался поистине чудесным — я попала к настоящему волшебнику, Максиму. С самого начала порадовали тёплые нежные руки и приятная обстановка. Если бы попросили оценить по десятибалльной шкале, поставила бы 11 — не помню, когда в последний раз чувствовала себя так хорошо. Искренне рекомендую.»</p>
+      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n1">Клиентка</span><span class="rv-src">Google</span></div>
+    </article>
+    <article class="rv-card glass">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">«Человека настолько присутствующего в моменте и синхронизированного со своим делом я ещё не встречала. Феноменальная эмпатия соединяется с глубочайшей экспертностью. Одна проблема — тебе невозможно найти замену. 🙏❤️»</p>
+      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n2">Клиентка</span><span class="rv-src">WhatsApp</span></div>
+    </article>
+    <article class="rv-card glass">
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">«После твоего массажа резко улучшились подтягивания — первые 6 вообще не чувствовал усилия, делал будто вешу 60 кг. Спасибо! ❤️»</p>
+      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n3">Клиент</span><span class="rv-src">WhatsApp</span></div>
+    </article>
+  </div>
+  <p class="rv-links-label" data-i18n="reviews.more">Ещё отзывы с оценкой ★★★★★ на Google Maps — открываются напрямую:</p>
+  <div class="rv-links">
+    <a class="rv-link" href="https://maps.app.goo.gl/6eZ8qNh9ni91AvHy7" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
+    <a class="rv-link" href="https://maps.app.goo.gl/3tu5bTZSuwr1q3x47" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
+    <a class="rv-link" href="https://maps.app.goo.gl/VVQLsQJLSiQG1Pxm6" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
+    <a class="rv-link" href="https://maps.app.goo.gl/BfbvKSFYwFjij7RKA" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
+    <a class="rv-link" href="https://maps.app.goo.gl/wgRRKXst9qEeAicw5" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
+    <a class="rv-link" href="https://maps.app.goo.gl/pkw8pjLdjDc7TcuM7" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
+  </div>
+  <div class="reviews-cta">
+    <a class="btn btn-gold" href="https://search.google.com/local/reviews?placeid=ChIJy_BVAu5xg4QRtBVVZGAD5xs" target="_blank" rel="noopener" data-i18n="reviews.google">★ Смотреть отзывы в Google</a>
+    <a class="btn btn-line" href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDA4ODkwOTgyMTQ0OTA3?story_media_id=3336069390539993212_65596189926&amp;igsh=MXB4dHk1cXgybXd6Zw==" target="_blank" rel="noopener" data-i18n="reviews.video">Видео-отзывы в Instagram ↗</a>
+  </div>
+</section>
 
 <!-- STUDIO PROCESS -->
 <section id="process" class="outcall wrap">
@@ -320,21 +446,27 @@ fbq('track','PageView');
   <div class="offer-panel glass">
     <div class="offer-info">
       <span class="eyebrow" data-i18n="offer.eyebrow">Новым клиентам</span>
+      <h2 class="offer-h" data-i18n="offer.h">Первый визит в студию — €30</h2>
       <div class="offer-price">€30 <span class="old">€50</span></div>
-      <p data-i18n="offer.p" data-edit="offer.p">Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.</p>
+      <p data-i18n="offer.p" data-edit="offer.p">Любой массаж из списка длительностью до 60 минут. Перед сеансом коротко обсудим, что беспокоит, — и я подберу технику, силу и темп под ваше состояние.</p>
       <ul>
-        <li><i></i><span data-i18n="offer.li1">Цена €30 — за первый визит в студию</span></li>
-        <li><i></i><span data-i18n="offer.li2">Подберём силу, темп и зоны под вас</span></li>
-        <li><i></i><span data-i18n="offer.li3">Свяжемся, чтобы согласовать время</span></li>
+        <li><i></i><span data-i18n="offer.li1">€30 вместо €50 — за первый визит в студию FIFTY</span></li>
+        <li><i></i><span data-i18n="offer.li2">Подберу технику, силу и зоны под ваш запрос</span></li>
+        <li><i></i><span data-i18n="offer.li3">Свяжусь в течение нескольких минут и согласую время</span></li>
+        <li><i></i><span data-i18n="offer.li4">Не подойдёт нажим или темп — скорректирую прямо во время сеанса</span></li>
       </ul>
+      <p class="offer-alt" data-i18n-html="offer.alt">Нужен выезд на дом, в отель или офис? <a href="vyezd.html">Условия выезда →</a></p>
     </div>
     <div>
       <form id="lead-form" novalidate>
+        <p class="form-h" data-i18n="form.h">Оставьте заявку — свяжусь и подберу время</p>
         <label><span data-i18n="form.name">Имя</span><input name="name" required autocomplete="name" placeholder="Как к вам обращаться" data-i18n-ph="form.name.ph"></label>
-        <label><span data-i18n="form.phone">Телефон</span><input type="tel" name="phone" required autocomplete="tel" placeholder="+371 …"></label>
+        <label><span data-i18n="form.phone">Телефон или WhatsApp</span><input type="tel" name="phone" required autocomplete="tel" placeholder="+371 …"></label>
+        <input type="hidden" name="topic" id="lead-topic" value="">
         <label class="consent"><input type="checkbox" required>
           <span data-i18n-html="form.consent">Согласен(-на) на обработку данных для ответа на запрос. <a href="#terms">Условия</a>.</span></label>
-        <button class="btn btn-gold" type="submit" id="submit-btn" data-i18n="form.submit">Оставить заявку</button>
+        <button class="btn btn-gold" type="submit" id="submit-btn" data-i18n="form.submit">Записаться за €30</button>
+        <p class="form-note" data-i18n="form.note">Только имя и телефон. Никакой рассылки — пишу или звоню один раз, чтобы согласовать визит.</p>
         <p class="status" id="status" aria-live="polite"></p>
         <a class="btn btn-wa wa-fallback" id="wa-fallback" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
@@ -391,45 +523,6 @@ fbq('track','PageView');
 
 </section>
 
-<!-- REVIEWS -->
-<section id="reviews" class="reviews wrap">
-  <div class="rv-head">
-    <span class="eyebrow" data-i18n="reviews.eyebrow">Отзывы</span>
-    <h2 data-i18n="reviews.h">Что говорят клиенты</h2>
-    <p data-i18n="reviews.sub">Живые отзывы из Google и переписки — без прикрас.</p>
-  </div>
-  <div class="reviews-grid">
-    <article class="rv-card glass">
-      <div class="rv-stars">★★★★★</div>
-      <p class="rv-text">«Этот день выдался поистине чудесным — я попала к настоящему волшебнику, Максиму. С самого начала порадовали тёплые нежные руки и приятная обстановка. Если бы попросили оценить по десятибалльной шкале, поставила бы 11 — не помню, когда в последний раз чувствовала себя так хорошо. Искренне рекомендую.»</p>
-      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n1">Клиентка</span><span class="rv-src">Google</span></div>
-    </article>
-    <article class="rv-card glass">
-      <div class="rv-stars">★★★★★</div>
-      <p class="rv-text">«Человека настолько присутствующего в моменте и синхронизированного со своим делом я ещё не встречала. Феноменальная эмпатия соединяется с глубочайшей экспертностью. Одна проблема — тебе невозможно найти замену. 🙏❤️»</p>
-      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n2">Клиентка</span><span class="rv-src">WhatsApp</span></div>
-    </article>
-    <article class="rv-card glass">
-      <div class="rv-stars">★★★★★</div>
-      <p class="rv-text">«После твоего массажа резко улучшились подтягивания — первые 6 вообще не чувствовал усилия, делал будто вешу 60 кг. Спасибо! ❤️»</p>
-      <div class="rv-meta"><span class="rv-name" data-i18n="reviews.n3">Клиент</span><span class="rv-src">WhatsApp</span></div>
-    </article>
-  </div>
-  <p class="rv-links-label" data-i18n="reviews.more">Ещё отзывы с оценкой ★★★★★ на Google Maps — открываются напрямую:</p>
-  <div class="rv-links">
-    <a class="rv-link" href="https://maps.app.goo.gl/6eZ8qNh9ni91AvHy7" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
-    <a class="rv-link" href="https://maps.app.goo.gl/3tu5bTZSuwr1q3x47" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
-    <a class="rv-link" href="https://maps.app.goo.gl/VVQLsQJLSiQG1Pxm6" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
-    <a class="rv-link" href="https://maps.app.goo.gl/BfbvKSFYwFjij7RKA" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
-    <a class="rv-link" href="https://maps.app.goo.gl/wgRRKXst9qEeAicw5" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
-    <a class="rv-link" href="https://maps.app.goo.gl/pkw8pjLdjDc7TcuM7" target="_blank" rel="noopener" data-i18n="reviews.link">★ Отзыв на Google ↗</a>
-  </div>
-  <div class="reviews-cta">
-    <a class="btn btn-gold" href="https://search.google.com/local/reviews?placeid=ChIJy_BVAu5xg4QRtBVVZGAD5xs" target="_blank" rel="noopener" data-i18n="reviews.google">★ Смотреть отзывы в Google</a>
-    <a class="btn btn-line" href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDA4ODkwOTgyMTQ0OTA3?story_media_id=3336069390539993212_65596189926&amp;igsh=MXB4dHk1cXgybXd6Zw==" target="_blank" rel="noopener" data-i18n="reviews.video">Видео-отзывы в Instagram ↗</a>
-  </div>
-</section>
-
 <!-- FAQ -->
 <section id="faq" class="faq wrap">
   <div class="faq-head">
@@ -442,6 +535,10 @@ fbq('track','PageView');
     <p class="a" data-i18n="faq.a2">Что-то, в чём вам комфортно. Раздеваетесь только до удобного для вас уровня; во время процедуры используется профессиональное укрытие.</p></details>
   <details><summary><span data-i18n="faq.q3">Когда лучше перенести?</span><span class="pm">+</span></summary>
     <p class="a" data-i18n="faq.a3">При температуре, острой инфекции или плохом самочувствии визит стоит перенести. При беременности, недавней операции или серьёзной травме сначала посоветуйтесь с врачом.</p></details>
+  <details><summary><span data-i18n="faq.q5">Сколько стоит массаж?</span><span class="pm">+</span></summary>
+    <p class="a" data-i18n-html="faq.a5">Первый визит в студию — <b>€30</b> вместо €50 на любой массаж длительностью до 60 минут. Полный прайс, курсы и цены выезда пришлю в WhatsApp за пару минут.</p></details>
+  <details><summary><span data-i18n="faq.q6">Делаете антицеллюлитный массаж?</span><span class="pm">+</span></summary>
+    <p class="a" data-i18n-html="faq.a6">Да. Антицеллюлитный массаж — это работа с бёдрами, ягодицами и животом: разгон застоя, лимфодренаж и тонус кожи. Длительность 60 или 90 минут, доступен и в студии, и с выездом. Заметный результат даёт курс, а не один сеанс — сколько нужно именно вам, скажу после первого визита. <a href="anticelulitnyj-massazh-riga.html">Подробнее об антицеллюлитном массаже →</a></p></details>
   <details><summary><span data-i18n="faq.q4">Как записаться?</span><span class="pm">+</span></summary>
     <p class="a" data-i18n-html="faq.a4">Быстрее всего — написать в WhatsApp или Telegram. Можно выбрать слот самому через <a href="https://n1022981.alteg.io" target="_blank" rel="noopener">Altegio</a>.</p></details>
 </section>
@@ -517,8 +614,10 @@ fbq('track','PageView');
       <div>
         <b data-i18n="foot.sections">Разделы</b>
         <a href="#services" data-i18n="nav.services">Услуги</a>
+        <a href="anticelulitnyj-massazh-riga.html">Антицеллюлитный массаж в Риге</a>
         <a href="sportivnyj-massazh-riga.html">Спортивный массаж в Риге</a>
         <a href="massazh-spiny-shei-riga.html">Массаж спины и шеи в Риге</a>
+        <a href="#prices" data-i18n="nav.prices">Цены</a>
         <a href="#offer" data-i18n="foot.first">Первый визит €30</a>
         <a href="#studio" data-i18n="nav.studio">Студия</a>
         <a href="#about" data-i18n="nav.about">О специалисте</a>
@@ -526,12 +625,25 @@ fbq('track','PageView');
       </div>
       <div>
         <b data-i18n="foot.gdprhead">Данные и GDPR</b>
-        <p class="gdpr" data-i18n="foot.gdpr">Форма собирает только имя и телефон, чтобы мы могли связаться с вами и согласовать визит. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.</p>
+        <p class="gdpr" data-i18n="foot.gdpr">Форма собирает только имя и телефон — чтобы связаться с вами и согласовать визит. Данные не передаются третьим лицам и не используются для рассылок; удалим по вашему запросу в WhatsApp или по телефону. Cookies для аналитики и рекламы подключаются только после вашего согласия. Контролёр данных — MAXAGIST, Максим Анохин, Рига, +371 28 251 366.</p>
       </div>
     </div>
     <div class="copy" data-i18n="foot.copy">© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.</div>
   </div>
 </footer>
+
+<!-- STICKY CTA (mobile) -->
+<div class="cta-bar">
+  <a class="cb cb-wa" data-track="ctabar:whatsapp" id="wa-bar" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+    <span data-i18n="bar.wa">WhatsApp</span></a>
+  <a class="cb" href="tel:+37128251366" data-track="ctabar:call">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg>
+    <span data-i18n="bar.call">Позвонить</span></a>
+  <a class="cb cb-gold" data-track="ctabar:book" href="#offer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+    <span data-i18n="bar.book">Записаться</span></a>
+</div>
 
 <div class="wa-dock">
   <button class="wa-fab" id="wa-fab" aria-label="Написать в WhatsApp">
@@ -581,31 +693,47 @@ const I18N = {
   ru: {
     'a.menu':'Меню','a.close':'Закрыть',
     'reviews.eyebrow':'Отзывы','reviews.h':'Что говорят клиенты','reviews.sub':'Живые отзывы из Google и переписки — без прикрас.','reviews.n1':'Клиентка','reviews.n2':'Клиентка','reviews.n3':'Клиент','reviews.google':'★ Смотреть отзывы в Google','reviews.more':'Ещё отзывы с оценкой ★★★★★ на Google Maps — открываются напрямую:','reviews.video':'Видео-отзывы в Instagram ↗','reviews.link':'★ Отзыв на Google ↗',
-    'nav.services':'Услуги','nav.outcall':'Выезд','nav.first':'Первый визит','nav.studio':'Студия',
+    'nav.services':'Услуги','nav.outcall':'Выезд','nav.prices':'Цены','nav.first':'Первый визит','nav.studio':'Студия',
     'nav.about':'О специалисте','nav.faq':'Вопросы','nav.contacts':'Контакты','nav.call':'Позвонить',
-    'hero.eyebrow':'Максим · массаж в Риге, студия и выезд',
-    'hero.h1':'Первый визит —<br><span class="price">€30</span><span class="old">обычно €50</span>',
-    'hero.lead':'Знакомство с форматом и массаж, подобранный под ваше тело и запрос. Приём в студии FIFTY либо выезд к вам — домой, в отель или офис.',
-    'hero.wa':'Написать в WhatsApp','hero.book':'Или записаться на сайте',
-    'hero.trust':'Не знаете, что выбрать? Просто напишите — подскажем формат и время за пару минут. Отвечаем обычно <b>в течение нескольких минут</b>.',
-    'hero.badge':'Онлайн · отвечаем сейчас',
+    'hero.eyebrow':'Рига · студия FIFTY и выезд на дом',
+    'hero.h1':'Массаж в Риге<span class="h1-sub">снимаю боль, зажатость и усталость</span>',
+    'hero.pt.b':'Первый визит в студию','hero.pt.s':'вместо €50 · любой массаж до 60 минут',
+    'hero.lead':'Напишите, что беспокоит, — подберу технику, силу и длительность под вас. Приём в студии FIFTY или выезд к вам: домой, в отель, офис.',
+    'hero.wa':'Написать в WhatsApp','hero.call':'Позвонить',
+    'hero.trust':'Не знаете, что выбрать? Просто напишите — подскажу формат и время. Отвечаю обычно <b>в течение нескольких минут</b>.',
+    'hero.badge':'Онлайн · отвечаю сейчас',
+    'tb.google':'оценки в Google','tb.certs':'дипломов и сертификатов','tb.itec':'Level 3 · Великобритания',
+    'tb.timev':'2 мин','tb.time':'среднее время ответа',
+    'pick.eyebrow':'Начните отсюда','pick.h':'Что вас беспокоит?',
+    'pick.p':'Выбирать услугу самому не нужно. Нажмите, что ближе, — открою WhatsApp с готовым сообщением, задам пару вопросов и подберу массаж, длительность и формат.',
+    'pick.go':'Подобрать в WhatsApp',
+    'pick.back.h':'Спина и шея после ноутбука','pick.back.p':'Зажатость, «каменные» плечи, тяжесть в пояснице после сидячей работы.','pick.back.t':'классический · шейно-воротниковая зона',
+    'pick.cellulite.h':'Целлюлит и тонус кожи','pick.cellulite.p':'Бёдра, ягодицы, живот: разгоняем застой, работаем с рельефом и упругостью кожи.','pick.cellulite.t':'антицеллюлитный · скульптурирующий',
+    'pick.sport.h':'Восстановление после нагрузок','pick.sport.p':'Забитые мышцы после тренировок, крепатура, скованность и потеря подвижности.','pick.sport.t':'спортивный · глубокая проработка',
+    'pick.stress.h':'Стресс и плохой сон','pick.stress.p':'Не отпускает напряжение, тяжело переключиться и уснуть.','pick.stress.t':'аромамассаж · расслабляющий',
+    'pick.legs.h':'Отёки и тяжесть в ногах','pick.legs.p':'Усталость и ощущение «налитых» ног к вечеру, отёчность.','pick.legs.t':'лимфодренажный · массаж ног',
+    'pick.other.h':'Просто хочу расслабиться','pick.other.p':'Без конкретной жалобы — час тишины, тепла и спокойной работы с телом.','pick.other.t':'хиромассаж · SPA · hot stone',
+    'bar.wa':'WhatsApp','bar.call':'Позвонить','bar.book':'Записаться',
     'fmt.title':'Как вам удобнее',
     'fmt.intro':'Выберите удобный формат приёма плюс запись онлайн. Если не знаете, что выбрать, напишите в WhatsApp — подскажем под вашу ситуацию.',
     'fmt.studio.h':'В студии FIFTY','fmt.studio.p':'Тихое пространство для расслабления и работы с привычным напряжением.','fmt.studio.go':'Подробнее',
     'fmt.outcall.h':'С выездом','fmt.outcall.p':'Приедем с оборудованием домой, в отель или офис по Риге и рядом.','fmt.outcall.go':'Запросить',
     'fmt.online.h':'Онлайн-запись','fmt.online.p':'Свободные слоты и запись через Altegio, когда удобно.','fmt.online.go':'Открыть Altegio ↗',
     'svc.eyebrow':'Услуги студии','svc.title':'Массаж под ваш запрос',
-    'svc.intro':'Полный список услуг студии с длительностью. Цены не публикуем — актуальный прайс и PDF-меню пришлём в WhatsApp за пару минут.',
+    'svc.intro':'Полный список услуг с длительностью. Не уверены, что нужно именно вам, — не выбирайте: напишите, что беспокоит, и я подберу технику сам.',
     'svc.min':'мин',
     'svc.cat.massage':'Массаж','svc.cat.spanish':'Испанские техники и остео','svc.cat.spa':'SPA',
     'svc.sport':'Спортивный массаж','svc.classic':'Классический массаж','svc.back':'Массаж спины',
     'svc.neck':'Массаж шейно-воротниковой зоны','svc.legs':'Массаж ног','svc.visceral':'Висцеральный массаж',
-    'svc.sculpt':'Скульптурирующий массаж','svc.lymph':'Лимфодренажный массаж',
+    'svc.sculpt':'Скульптурирующий массаж','svc.lymph':'Лимфодренажный массаж','svc.anticell':'Антицеллюлитный массаж',
     'svc.chiro':'Испанский хиромассаж тела','svc.face':'Испанский массаж лица',
     'svc.osteolift':'Остеолифтинг лица и декольте','svc.osteobody':'Остео-боди',
     'svc.hotstone':'Hot stone massage','svc.aroma':'Аромамассаж',
-    'svc.note':'Первый визит — <b>€30</b> на любой массаж из списка длительностью до 60 минут включительно.',
-    'svc.price':'Узнать цены в WhatsApp',
+    'svc.price':'Получить прайс в WhatsApp',
+    'price.eyebrow':'Цены','price.h':'Сколько стоит',
+    'price.li1':'Первый визит в студию — любой массаж до 60 минут','price.li2':'Обычная цена такого визита',
+    'price.li3':'Остальные услуги, курсы и выезд','price.li3v':'прайс в WhatsApp',
+    'price.why':'Полный прайс и PDF-меню присылаю в WhatsApp за пару минут — вместе с рекомендацией, что подойдёт под ваш запрос и сколько сеансов реально нужно.',
     'sp.eyebrow':'В студии FIFTY','sp.h':'Как проходит массаж в студии',
     'sp.p':'Спокойный и понятный сценарий — без спешки и неловкости. Вот что происходит от вашего прихода до конца сеанса.',
     'sp.s1h':'Встреча и разговор','sp.s1p':'Короткий разговор до сеанса: запрос, самочувствие, зоны внимания и противопоказания.',
@@ -613,11 +741,16 @@ const I18N = {
     'sp.s3h':'Сам сеанс','sp.s3p':'Массаж без спешки в тихой студии. Профессиональное укрытие, комфортная температура, музыка.',
     'sp.s4h':'После сеанса','sp.s4p':'Пара рекомендаций, вода и, при желании, согласуем следующий визит — без давления.',
     'offer.eyebrow':'Новым клиентам',
-    'offer.p':'Первый визит в студию по специальной цене. Короткий разговор до сеанса, чтобы понять запрос, и массаж под ваше состояние.',
-    'offer.li1':'Цена €30 — за первый визит в студию','offer.li2':'Подберём силу, темп и зоны под вас','offer.li3':'Свяжемся, чтобы согласовать время',
-    'form.name':'Имя','form.name.ph':'Как к вам обращаться','form.phone':'Телефон',
+    'offer.h':'Первый визит в студию — €30',
+    'offer.p':'Любой массаж из списка длительностью до 60 минут. Перед сеансом коротко обсудим, что беспокоит, — и я подберу технику, силу и темп под ваше состояние.',
+    'offer.li1':'€30 вместо €50 — за первый визит в студию FIFTY','offer.li2':'Подберу технику, силу и зоны под ваш запрос','offer.li3':'Свяжусь в течение нескольких минут и согласую время',
+    'offer.li4':'Не подойдёт нажим или темп — скорректирую прямо во время сеанса',
+    'offer.alt':'Нужен выезд на дом, в отель или офис? <a href="vyezd.html">Условия выезда →</a>',
+    'form.h':'Оставьте заявку — свяжусь и подберу время',
+    'form.note':'Только имя и телефон. Никакой рассылки — пишу или звоню один раз, чтобы согласовать визит.',
+    'form.name':'Имя','form.name.ph':'Как к вам обращаться','form.phone':'Телефон или WhatsApp',
     'form.consent':'Согласен(-на) на обработку данных для ответа на запрос. <a href="#terms">Условия</a>.',
-    'form.submit':'Оставить заявку','form.wafallback':'Отправить в WhatsApp',
+    'form.submit':'Записаться за €30','form.wafallback':'Отправить в WhatsApp',
     'studio.eyebrow':'Студия FIFTY','studio.h':'Место, где можно выдохнуть',
     'studio.p':'Приём проходит в FIFTY Beauty Studio. Откройте карту для навигации — детали доступа пришлём после подтверждения записи.',
     'studio.map':'Открыть карту ↗','studio.site':'Сайт FIFTY ↗','studio.pin':'FIFTY · Рига',
@@ -630,6 +763,8 @@ const I18N = {
     'faq.q1':'Как подготовиться?','faq.a1':'Ничего особенного. Приходите на несколько минут раньше, пейте воду как обычно и расскажите о травмах, самочувствии и пожеланиях до начала сеанса.',
     'faq.q2':'Что надеть?','faq.a2':'Что-то, в чём вам комфортно. Раздеваетесь только до удобного для вас уровня; во время процедуры используется профессиональное укрытие.',
     'faq.q3':'Когда лучше перенести?','faq.a3':'При температуре, острой инфекции или плохом самочувствии визит стоит перенести. При беременности, недавней операции или серьёзной травме сначала посоветуйтесь с врачом.',
+    'faq.q5':'Сколько стоит массаж?','faq.a5':'Первый визит в студию — <b>€30</b> вместо €50 на любой массаж длительностью до 60 минут. Полный прайс, курсы и цены выезда пришлю в WhatsApp за пару минут.',
+    'faq.q6':'Делаете антицеллюлитный массаж?','faq.a6':'Да. Антицеллюлитный массаж — это работа с бёдрами, ягодицами и животом: разгон застоя, лимфодренаж и тонус кожи. Длительность 60 или 90 минут, доступен и в студии, и с выездом. Заметный результат даёт курс, а не один сеанс — сколько нужно именно вам, скажу после первого визита. <a href="anticelulitnyj-massazh-riga.html">Подробнее об антицеллюлитном массаже →</a>',
     'faq.q4':'Как записаться?','faq.a4':'Быстрее всего — написать в WhatsApp или Telegram. Можно выбрать слот самому через <a href="https://n1022981.alteg.io" target="_blank" rel="noopener">Altegio</a>.',
     'approach.eyebrow':'Мой подход','approach.h':'Зачем нужен массаж?',
     'approach.p1':'Массаж — это система оздоровления, в которой сочетаются традиционные и доказательные подходы через мануальное и инструментальное воздействие на кожу, мышцы и соединительную ткань, а также нервную систему и ум.',
@@ -644,7 +779,7 @@ const I18N = {
     'contact.wa.s':'Ответим за пару минут','contact.call.b':'Позвонить',
     'contact.online.b':'Онлайн-запись','contact.online.s':'Свободные слоты в Altegio','contact.map.b':'Карта студии','contact.map.s':'FIFTY Beauty Studio, Рига','contact.reviews.b':'Отзывы в Google','contact.reviews.s':'Оценки клиентов на Картах',
     'foot.about':'Массаж в Риге: студия FIFTY и выезд на дом, в отель, офис.','foot.sections':'Разделы','foot.first':'Первый визит €30','foot.gdprhead':'Данные и GDPR',
-    'foot.gdpr':'Форма собирает только имя и телефон, чтобы мы могли связаться с вами и согласовать визит. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.',
+    'foot.gdpr':'Форма собирает только имя и телефон — чтобы связаться с вами и согласовать визит. Данные не передаются третьим лицам и не используются для рассылок; удалим по вашему запросу в WhatsApp или по телефону. Cookies для аналитики и рекламы подключаются только после вашего согласия. Контролёр данных — MAXAGIST, Максим Анохин, Рига, +371 28 251 366.',
     'foot.copy':'© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.',
     'bubble.b':'Не знаете, что выбрать?','bubble.text':'Напишите в <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — подскажем формат и время за пару минут.',
     'st.fill':'Заполните имя, телефон и отметьте согласие.','st.dev':'Supabase не подключён (dev). Можно отправить заявку в WhatsApp:',
@@ -653,31 +788,47 @@ const I18N = {
   lv: {
     'a.menu':'Izvēlne','a.close':'Aizvērt',
     'reviews.eyebrow':'Atsauksmes','reviews.h':'Ko saka klienti','reviews.sub':'Īstas atsauksmes no Google un sarakstes — bez izskaistinājumiem.','reviews.n1':'Kliente','reviews.n2':'Kliente','reviews.n3':'Klients','reviews.google':'★ Skatīt atsauksmes Google','reviews.more':'Vēl atsauksmes ar ★★★★★ vērtējumu Google Maps — atveras tieši:','reviews.video':'Video atsauksmes Instagram ↗','reviews.link':'★ Atsauksme Google ↗',
-    'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.first':'Pirmā vizīte','nav.studio':'Studija',
+    'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.prices':'Cenas','nav.first':'Pirmā vizīte','nav.studio':'Studija',
     'nav.about':'Par speciālistu','nav.faq':'Jautājumi','nav.contacts':'Kontakti','nav.call':'Zvanīt',
-    'hero.eyebrow':'Maksims · masāža Rīgā, studija un izbraukums',
-    'hero.h1':'Pirmā vizīte —<br><span class="price">€30</span><span class="old">parasti €50</span>',
-    'hero.lead':'Iepazīšanās ar formātu un masāža, kas pielāgota jūsu ķermenim un vēlmēm. Pieņemšana studijā FIFTY vai izbraukums pie jums — mājās, viesnīcā vai birojā.',
-    'hero.wa':'Rakstīt uz WhatsApp','hero.book':'Vai pieteikties mājaslapā',
-    'hero.trust':'Nezināt, ko izvēlēties? Vienkārši uzrakstiet — ieteiksim formātu un laiku pāris minūtēs. Parasti atbildam <b>dažu minūšu laikā</b>.',
-    'hero.badge':'Tiešsaistē · atbildam tagad',
+    'hero.eyebrow':'Rīga · studija FIFTY un izbraukums',
+    'hero.h1':'Masāža Rīgā<span class="h1-sub">noņemu sāpes, saspringumu un nogurumu</span>',
+    'hero.pt.b':'Pirmā vizīte studijā','hero.pt.s':'€50 vietā · jebkura masāža līdz 60 minūtēm',
+    'hero.lead':'Uzrakstiet, kas satrauc, — pielāgošu tehniku, spēku un ilgumu jums. Pieņemšana studijā FIFTY vai izbraukums pie jums: mājās, viesnīcā, birojā.',
+    'hero.wa':'Rakstīt uz WhatsApp','hero.call':'Zvanīt',
+    'hero.trust':'Nezināt, ko izvēlēties? Vienkārši uzrakstiet — ieteikšu formātu un laiku. Parasti atbildu <b>dažu minūšu laikā</b>.',
+    'hero.badge':'Tiešsaistē · atbildu tagad',
+    'tb.google':'vērtējumi Google','tb.certs':'diplomi un sertifikāti','tb.itec':'Level 3 · Lielbritānija',
+    'tb.timev':'2 min','tb.time':'vidējais atbildes laiks',
+    'pick.eyebrow':'Sāciet šeit','pick.h':'Kas jūs satrauc?',
+    'pick.p':'Pakalpojums nav jāizvēlas pašam. Nospiediet to, kas tuvāk, — atvēršu WhatsApp ar gatavu ziņu, uzdošu pāris jautājumus un pielāgošu masāžu, ilgumu un formātu.',
+    'pick.go':'Pieteikties WhatsApp',
+    'pick.back.h':'Mugura un kakls pēc datora','pick.back.p':'Saspringums, «akmens» pleci, smagums krustos pēc sēdoša darba.','pick.back.t':'klasiskā · kakla-plecu zona',
+    'pick.cellulite.h':'Celulīts un ādas tonuss','pick.cellulite.p':'Gurni, sēžamvieta, vēders: izdzenam sastrēgumu, strādājam ar reljefu un ādas elastību.','pick.cellulite.t':'pretcelulīta · skulpturējošā',
+    'pick.sport.h':'Atjaunošanās pēc slodzes','pick.sport.p':'Pārslogoti muskuļi pēc treniņiem, muskuļu sāpes, sastingums un kustību ierobežojums.','pick.sport.t':'sporta · dziļā masāža',
+    'pick.stress.h':'Stress un slikts miegs','pick.stress.p':'Saspringums nepāriet, grūti atslēgties un aizmigt.','pick.stress.t':'aromamasāža · relaksējošā',
+    'pick.legs.h':'Tūska un smagums kājās','pick.legs.p':'Nogurums un «pielietu» kāju sajūta vakarā, tūska.','pick.legs.t':'limfodrenāža · kāju masāža',
+    'pick.other.h':'Vienkārši gribu atpūsties','pick.other.p':'Bez konkrētas sūdzības — stunda klusuma, siltuma un mierīga darba ar ķermeni.','pick.other.t':'hiromasāža · SPA · hot stone',
+    'bar.wa':'WhatsApp','bar.call':'Zvanīt','bar.book':'Pieteikties',
     'fmt.title':'Kā jums ērtāk',
     'fmt.intro':'Izvēlieties ērtu pieņemšanas formātu plus pieraksts tiešsaistē. Ja nezināt, ko izvēlēties, rakstiet uz WhatsApp — ieteiksim jūsu situācijai.',
     'fmt.studio.h':'Studijā FIFTY','fmt.studio.p':'Klusa telpa atslābināšanās un ierastā saspringuma atbrīvošanai.','fmt.studio.go':'Sīkāk',
     'fmt.outcall.h':'Ar izbraukumu','fmt.outcall.p':'Atbrauksim ar aprīkojumu mājās, viesnīcā vai birojā Rīgā un tuvumā.','fmt.outcall.go':'Pieprasīt',
     'fmt.online.h':'Pieraksts tiešsaistē','fmt.online.p':'Brīvie laiki un pieraksts caur Altegio, kad ērti.','fmt.online.go':'Atvērt Altegio ↗',
     'svc.eyebrow':'Studijas pakalpojumi','svc.title':'Masāža jūsu vajadzībām',
-    'svc.intro':'Pilns studijas pakalpojumu saraksts ar ilgumu. Cenas nepublicējam — aktuālo cenrādi un PDF izvēlni atsūtīsim WhatsApp pāris minūtēs.',
+    'svc.intro':'Pilns pakalpojumu saraksts ar ilgumu. Ja neesat pārliecināts, kas vajadzīgs tieši jums, — neizvēlieties: uzrakstiet, kas satrauc, un es pielāgošu tehniku pats.',
     'svc.min':'min',
     'svc.cat.massage':'Masāža','svc.cat.spanish':'Spāņu tehnikas un osteo','svc.cat.spa':'SPA',
     'svc.sport':'Sporta masāža','svc.classic':'Klasiskā masāža','svc.back':'Muguras masāža',
     'svc.neck':'Kakla-plecu zonas masāža','svc.legs':'Kāju masāža','svc.visceral':'Viscerālā masāža',
-    'svc.sculpt':'Skulpturējošā masāža','svc.lymph':'Limfodrenāžas masāža',
+    'svc.sculpt':'Skulpturējošā masāža','svc.lymph':'Limfodrenāžas masāža','svc.anticell':'Pretcelulīta masāža',
     'svc.chiro':'Spāņu ķermeņa hiromasāža','svc.face':'Spāņu sejas masāža',
     'svc.osteolift':'Sejas un dekoltē osteolifts','svc.osteobody':'Osteo-body',
     'svc.hotstone':'Hot stone masāža','svc.aroma':'Aromamasāža',
-    'svc.note':'Pirmā vizīte — <b>€30</b> jebkurai masāžai no saraksta, kuras ilgums nepārsniedz 60 minūtes.',
-    'svc.price':'Uzzināt cenas WhatsApp',
+    'svc.price':'Saņemt cenrādi WhatsApp',
+    'price.eyebrow':'Cenas','price.h':'Cik maksā',
+    'price.li1':'Pirmā vizīte studijā — jebkura masāža līdz 60 minūtēm','price.li2':'Parastā šādas vizītes cena',
+    'price.li3':'Pārējie pakalpojumi, kursi un izbraukums','price.li3v':'cenrādis WhatsApp',
+    'price.why':'Pilnu cenrādi un PDF izvēlni atsūtu WhatsApp pāris minūtēs — kopā ar ieteikumu, kas derēs jūsu vajadzībām un cik seansu tiešām vajag.',
     'sp.eyebrow':'Studijā FIFTY','sp.h':'Kā notiek masāža studijā',
     'sp.p':'Mierīgs un saprotams scenārijs — bez steigas un neveiklības. Lūk, kas notiek no jūsu ierašanās līdz seansa beigām.',
     'sp.s1h':'Sagaidīšana un saruna','sp.s1p':'Īsa saruna pirms seansa: vēlmes, pašsajūta, uzmanības zonas un kontrindikācijas.',
@@ -685,11 +836,16 @@ const I18N = {
     'sp.s3h':'Pats seanss','sp.s3p':'Masāža bez steigas klusā studijā. Profesionāls pārsegs, patīkama temperatūra, mūzika.',
     'sp.s4h':'Pēc seansa','sp.s4p':'Daži ieteikumi, ūdens un, ja vēlaties, saskaņojam nākamo vizīti — bez spiediena.',
     'offer.eyebrow':'Jauniem klientiem',
-    'offer.p':'Pirmā vizīte studijā par īpašu cenu. Īsa saruna pirms seansa, lai saprastu vēlmes, un masāža atbilstoši jūsu stāvoklim.',
-    'offer.li1':'Cena €30 — par pirmo vizīti studijā','offer.li2':'Pielāgosim spēku, tempu un zonas jums','offer.li3':'Sazināsimies, lai saskaņotu laiku',
-    'form.name':'Vārds','form.name.ph':'Kā jūs uzrunāt','form.phone':'Tālrunis',
+    'offer.h':'Pirmā vizīte studijā — €30',
+    'offer.p':'Jebkura masāža no saraksta ar ilgumu līdz 60 minūtēm. Pirms seansa īsi pārrunāsim, kas satrauc, — un es pielāgošu tehniku, spēku un tempu jūsu stāvoklim.',
+    'offer.li1':'€30 €50 vietā — par pirmo vizīti studijā FIFTY','offer.li2':'Pielāgošu tehniku, spēku un zonas jūsu vajadzībām','offer.li3':'Sazināšos dažu minūšu laikā un saskaņosim laiku',
+    'offer.li4':'Ja spiediens vai temps neder — koriģēšu tieši seansa laikā',
+    'offer.alt':'Vajadzīgs izbraukums uz mājām, viesnīcu vai biroju? <a href="vyezd.html">Izbraukuma nosacījumi →</a>',
+    'form.h':'Atstājiet pieteikumu — sazināšos un piemeklēšu laiku',
+    'form.note':'Tikai vārds un tālrunis. Nekādu izsūtņu — rakstu vai zvanu vienu reizi, lai saskaņotu vizīti.',
+    'form.name':'Vārds','form.name.ph':'Kā jūs uzrunāt','form.phone':'Tālrunis vai WhatsApp',
     'form.consent':'Piekrītu datu apstrādei, lai atbildētu uz pieprasījumu. <a href="#terms">Noteikumi</a>.',
-    'form.submit':'Atstāt pieteikumu','form.wafallback':'Nosūtīt uz WhatsApp',
+    'form.submit':'Pieteikties par €30','form.wafallback':'Nosūtīt uz WhatsApp',
     'studio.eyebrow':'Studija FIFTY','studio.h':'Vieta, kur atvilkt elpu',
     'studio.p':'Pieņemšana notiek FIFTY Beauty Studio. Atveriet karti navigācijai — piekļuves detaļas nosūtīsim pēc pieraksta apstiprināšanas.',
     'studio.map':'Atvērt karti ↗','studio.site':'FIFTY mājaslapa ↗','studio.pin':'FIFTY · Rīga',
@@ -702,6 +858,8 @@ const I18N = {
     'faq.q1':'Kā sagatavoties?','faq.a1':'Nekas īpašs. Ieradieties dažas minūtes agrāk, dzeriet ūdeni kā parasti un pastāstiet par traumām, pašsajūtu un vēlmēm pirms seansa sākuma.',
     'faq.q2':'Ko vilkt mugurā?','faq.a2':'Kaut ko, kurā jūtaties ērti. Izģērbjaties tikai līdz jums ērtam līmenim; procedūras laikā tiek izmantots profesionāls pārsegs.',
     'faq.q3':'Kad labāk pārcelt?','faq.a3':'Ja ir temperatūra, akūta infekcija vai slikta pašsajūta, vizīti vēlams pārcelt. Grūtniecības, nesenas operācijas vai nopietnas traumas gadījumā vispirms konsultējieties ar ārstu.',
+    'faq.q5':'Cik maksā masāža?','faq.a5':'Pirmā vizīte studijā — <b>€30</b> €50 vietā jebkurai masāžai ar ilgumu līdz 60 minūtēm. Pilnu cenrādi, kursus un izbraukuma cenas atsūtīšu WhatsApp pāris minūtēs.',
+    'faq.q6':'Vai darāt pretcelulīta masāžu?','faq.a6':'Jā. Pretcelulīta masāža ir darbs ar gurniem, sēžamvietu un vēderu: sastrēguma izdzīšana, limfodrenāža un ādas tonuss. Ilgums 60 vai 90 minūtes, pieejama gan studijā, gan ar izbraukumu. Manāmu rezultātu dod kurss, nevis viens seanss — cik vajag tieši jums, pateikšu pēc pirmās vizītes. <a href="anticelulitnyj-massazh-riga.html">Vairāk par pretcelulīta masāžu →</a>',
     'faq.q4':'Kā pieteikties?','faq.a4':'Visātrāk — rakstīt uz WhatsApp vai Telegram. Var izvēlēties laiku pats caur <a href="https://n1022981.alteg.io" target="_blank" rel="noopener">Altegio</a>.',
     'approach.eyebrow':'Mana pieeja','approach.h':'Kāpēc vajadzīga masāža?',
     'approach.p1':'Masāža ir veselības uzlabošanas sistēma, kurā apvienojas tradicionālās un pierādījumos balstītas pieejas caur manuālu un instrumentālu iedarbību uz ādu, muskuļiem un saistaudiem, kā arī nervu sistēmu un prātu.',
@@ -716,7 +874,7 @@ const I18N = {
     'contact.wa.s':'Atbildēsim pāris minūtēs','contact.call.b':'Zvanīt',
     'contact.online.b':'Pieraksts tiešsaistē','contact.online.s':'Brīvie laiki Altegio','contact.map.b':'Studijas karte','contact.map.s':'FIFTY Beauty Studio, Rīga','contact.reviews.b':'Atsauksmes Google','contact.reviews.s':'Klientu vērtējumi kartēs',
     'foot.about':'Masāža Rīgā: studija FIFTY un izbraukums uz mājām, viesnīcu, biroju.','foot.sections':'Sadaļas','foot.first':'Pirmā vizīte €30','foot.gdprhead':'Dati un GDPR',
-    'foot.gdpr':'Forma vāc tikai vārdu un tālruni, lai mēs varētu ar jums sazināties un saskaņot vizīti. Juridiskie rekvizīti, glabāšanas termiņš un datu pārziņa kontakti jāapstiprina pirms publiskās palaišanas.',
+    'foot.gdpr':'Forma vāc tikai vārdu un tālruni — lai sazinātos ar jums un saskaņotu vizīti. Dati netiek nodoti trešajām personām un netiek izmantoti izsūtnēm; dzēsīsim pēc jūsu pieprasījuma WhatsApp vai pa tālruni. Analītikas un reklāmas sīkdatnes tiek pieslēgtas tikai pēc jūsu piekrišanas. Datu pārzinis — MAXAGIST, Maksims Anohins, Rīga, +371 28 251 366.',
     'foot.copy':'© 2026 MAXAGIST · Masāža veicina atslābināšanos un labsajūtu, bet neaizstāj medicīnisku diagnostiku vai ārstēšanu.',
     'bubble.b':'Nezināt, ko izvēlēties?','bubble.text':'Rakstiet uz <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — ieteiksim formātu un laiku pāris minūtēs.',
     'st.fill':'Aizpildiet vārdu, tālruni un atzīmējiet piekrišanu.','st.dev':'Supabase nav pievienots (dev). Pieteikumu var nosūtīt WhatsApp:',
@@ -725,31 +883,47 @@ const I18N = {
   en: {
     'a.menu':'Menu','a.close':'Close',
     'reviews.eyebrow':'Reviews','reviews.h':'What clients say','reviews.sub':'Real reviews from Google and chats — unedited.','reviews.n1':'Client','reviews.n2':'Client','reviews.n3':'Client','reviews.google':'★ See reviews on Google','reviews.more':'More ★★★★★ reviews on Google Maps — open directly:','reviews.video':'Video reviews on Instagram ↗','reviews.link':'★ Review on Google ↗',
-    'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio',
+    'nav.services':'Services','nav.outcall':'Outcall','nav.prices':'Prices','nav.first':'First visit','nav.studio':'Studio',
     'nav.about':'About','nav.faq':'FAQ','nav.contacts':'Contacts','nav.call':'Call',
-    'hero.eyebrow':'Maksim · massage in Riga, studio & outcall',
-    'hero.h1':'First visit —<br><span class="price">€30</span><span class="old">usually €50</span>',
-    'hero.lead':'A first session to get to know the format, with massage tailored to your body and needs. At FIFTY studio or an outcall to you — home, hotel or office.',
-    'hero.wa':'Message on WhatsApp','hero.book':'Or book on the site',
-    'hero.trust':'Not sure what to choose? Just write — we’ll suggest a format and time in a couple of minutes. We usually reply <b>within a few minutes</b>.',
+    'hero.eyebrow':'Riga · FIFTY studio & outcall',
+    'hero.h1':'Massage in Riga<span class="h1-sub">releasing pain, tension and fatigue</span>',
+    'hero.pt.b':'First studio visit','hero.pt.s':'instead of €50 · any massage up to 60 minutes',
+    'hero.lead':'Tell me what bothers you — I’ll pick the technique, pressure and duration for you. At FIFTY studio or an outcall to you: home, hotel, office.',
+    'hero.wa':'Message on WhatsApp','hero.call':'Call',
+    'hero.trust':'Not sure what to choose? Just write — I’ll suggest a format and time. I usually reply <b>within a few minutes</b>.',
     'hero.badge':'Online · replying now',
+    'tb.google':'ratings on Google','tb.certs':'diplomas and certificates','tb.itec':'Level 3 · United Kingdom',
+    'tb.timev':'2 min','tb.time':'average reply time',
+    'pick.eyebrow':'Start here','pick.h':'What’s bothering you?',
+    'pick.p':'You don’t have to pick a service yourself. Tap what feels closest — I’ll open WhatsApp with a ready message, ask a couple of questions and choose the massage, duration and format.',
+    'pick.go':'Choose it on WhatsApp',
+    'pick.back.h':'Back and neck after a laptop','pick.back.p':'Tightness, “stone” shoulders and heaviness in the lower back from desk work.','pick.back.t':'classic · neck and shoulders',
+    'pick.cellulite.h':'Cellulite and skin tone','pick.cellulite.p':'Thighs, buttocks, belly: clearing stagnation, working on texture and skin firmness.','pick.cellulite.t':'anti-cellulite · body sculpting',
+    'pick.sport.h':'Recovery after training','pick.sport.p':'Tight muscles after workouts, soreness, stiffness and lost mobility.','pick.sport.t':'sports · deep tissue',
+    'pick.stress.h':'Stress and poor sleep','pick.stress.p':'Tension won’t let go, hard to switch off and fall asleep.','pick.stress.t':'aroma · relaxing',
+    'pick.legs.h':'Swelling and heavy legs','pick.legs.p':'Tiredness and that “full” feeling in the legs by the evening, puffiness.','pick.legs.t':'lymphatic drainage · leg massage',
+    'pick.other.h':'I just want to relax','pick.other.p':'No specific complaint — an hour of quiet, warmth and calm work with the body.','pick.other.t':'chiromassage · SPA · hot stone',
+    'bar.wa':'WhatsApp','bar.call':'Call','bar.book':'Book',
     'fmt.title':'However suits you best',
     'fmt.intro':'Choose a way to be seen that suits you, plus online booking. If you’re not sure what to choose, message us on WhatsApp — we’ll advise for your situation.',
     'fmt.studio.h':'At FIFTY studio','fmt.studio.p':'A quiet space to relax and work through familiar tension.','fmt.studio.go':'Learn more',
     'fmt.outcall.h':'With outcall','fmt.outcall.p':'We come with equipment to your home, hotel or office in Riga and nearby.','fmt.outcall.go':'Request',
     'fmt.online.h':'Online booking','fmt.online.p':'Free slots and booking via Altegio, whenever it suits you.','fmt.online.go':'Open Altegio ↗',
     'svc.eyebrow':'Studio services','svc.title':'Massage for your needs',
-    'svc.intro':'The full list of studio services with durations. We don’t publish prices — we’ll send the current price list and PDF menu on WhatsApp in a couple of minutes.',
+    'svc.intro':'The full list of services with durations. Not sure what you need? Don’t choose — write what bothers you and I’ll pick the technique myself.',
     'svc.min':'min',
     'svc.cat.massage':'Massage','svc.cat.spanish':'Spanish techniques & osteo','svc.cat.spa':'SPA',
     'svc.sport':'Sports massage','svc.classic':'Classic massage','svc.back':'Back massage',
     'svc.neck':'Neck & shoulder massage','svc.legs':'Leg massage','svc.visceral':'Visceral massage',
-    'svc.sculpt':'Body-sculpting massage','svc.lymph':'Lymphatic drainage massage',
+    'svc.sculpt':'Body-sculpting massage','svc.lymph':'Lymphatic drainage massage','svc.anticell':'Anti-cellulite massage',
     'svc.chiro':'Spanish body chiromassage','svc.face':'Spanish facial massage',
     'svc.osteolift':'Face & décolleté osteolifting','svc.osteobody':'Osteo-body',
     'svc.hotstone':'Hot stone massage','svc.aroma':'Aroma massage',
-    'svc.note':'First visit — <b>€30</b> for any massage on the list lasting up to 60 minutes.',
-    'svc.price':'Ask prices on WhatsApp',
+    'svc.price':'Get the price list on WhatsApp',
+    'price.eyebrow':'Prices','price.h':'How much it costs',
+    'price.li1':'First studio visit — any massage up to 60 minutes','price.li2':'Regular price of the same visit',
+    'price.li3':'Other services, courses and outcall','price.li3v':'price list on WhatsApp',
+    'price.why':'I send the full price list and PDF menu on WhatsApp within a couple of minutes — together with a recommendation on what suits your request and how many sessions you actually need.',
     'sp.eyebrow':'At FIFTY studio','sp.h':'How a studio massage goes',
     'sp.p':'A calm, predictable flow — no rush, no awkwardness. Here’s what happens from the moment you arrive to the end of the session.',
     'sp.s1h':'Welcome & talk','sp.s1p':'A short chat before the session: your needs, how you feel, focus areas and any contraindications.',
@@ -757,11 +931,16 @@ const I18N = {
     'sp.s3h':'The session','sp.s3p':'Unhurried massage in a quiet studio. Professional draping, comfortable temperature, music.',
     'sp.s4h':'After the session','sp.s4p':'A few recommendations, water and — if you like — we agree a next visit, with no pressure.',
     'offer.eyebrow':'For new clients',
-    'offer.p':'A first studio visit at a special price. A short talk before the session to understand your needs, and massage tuned to how you feel.',
-    'offer.li1':'€30 price — for a first studio visit','offer.li2':'We’ll tune pressure, pace and areas to you','offer.li3':'We’ll get in touch to agree a time',
-    'form.name':'Name','form.name.ph':'How should we address you','form.phone':'Phone',
+    'offer.h':'First studio visit — €30',
+    'offer.p':'Any massage from the list up to 60 minutes. Before the session we briefly discuss what bothers you — and I tune the technique, pressure and pace to how you feel.',
+    'offer.li1':'€30 instead of €50 — for a first visit to FIFTY studio','offer.li2':'I’ll pick the technique, pressure and areas for your request','offer.li3':'I’ll reply within a few minutes and agree a time',
+    'offer.li4':'If the pressure or pace doesn’t suit you, I adjust it during the session',
+    'offer.alt':'Need an outcall to your home, hotel or office? <a href="vyezd.html">Outcall details →</a>',
+    'form.h':'Leave a request — I’ll get in touch and find a time',
+    'form.note':'Just a name and a phone number. No mailing list — I write or call once to agree the visit.',
+    'form.name':'Name','form.name.ph':'How should we address you','form.phone':'Phone or WhatsApp',
     'form.consent':'I agree to my data being processed to answer my request. <a href="#terms">Terms</a>.',
-    'form.submit':'Leave a request','form.wafallback':'Send via WhatsApp',
+    'form.submit':'Book for €30','form.wafallback':'Send via WhatsApp',
     'studio.eyebrow':'FIFTY studio','studio.h':'A place to breathe out',
     'studio.p':'Sessions take place at FIFTY Beauty Studio. Open the map for directions — access details are sent after your booking is confirmed.',
     'studio.map':'Open map ↗','studio.site':'FIFTY website ↗','studio.pin':'FIFTY · Riga',
@@ -774,6 +953,8 @@ const I18N = {
     'faq.q1':'How do I prepare?','faq.a1':'Nothing special. Arrive a few minutes early, drink water as usual, and tell us about any injuries, how you feel and your wishes before the session starts.',
     'faq.q2':'What should I wear?','faq.a2':'Something you feel comfortable in. You undress only to a level that’s comfortable for you; professional draping is used during the procedure.',
     'faq.q3':'When is it better to reschedule?','faq.a3':'With a fever, an acute infection or feeling unwell, it’s best to reschedule. In case of pregnancy, recent surgery or a serious injury, consult a doctor first.',
+    'faq.q5':'How much does a massage cost?','faq.a5':'A first studio visit is <b>€30</b> instead of €50 for any massage up to 60 minutes. I’ll send the full price list, course prices and outcall rates on WhatsApp within a couple of minutes.',
+    'faq.q6':'Do you do anti-cellulite massage?','faq.a6':'Yes. Anti-cellulite massage works with the thighs, buttocks and belly: clearing stagnation, lymphatic drainage and skin tone. It runs 60 or 90 minutes and is available both in the studio and as an outcall. Visible results come from a course rather than a single session — I’ll tell you how many you need after the first visit. <a href="anticelulitnyj-massazh-riga.html">More about anti-cellulite massage →</a>',
     'faq.q4':'How do I book?','faq.a4':'The quickest way is to message on WhatsApp or Telegram. You can also pick a slot yourself via <a href="https://n1022981.alteg.io" target="_blank" rel="noopener">Altegio</a>.',
     'approach.eyebrow':'My approach','approach.h':'Why do you need massage?',
     'approach.p1':'Massage is a system of wellness that combines traditional and evidence-based approaches through manual and instrument-assisted work on the skin, muscles and connective tissue, as well as the nervous system and the mind.',
@@ -788,7 +969,7 @@ const I18N = {
     'contact.wa.s':'We reply within a couple of minutes','contact.call.b':'Call',
     'contact.online.b':'Online booking','contact.online.s':'Free slots in Altegio','contact.map.b':'Studio map','contact.map.s':'FIFTY Beauty Studio, Riga','contact.reviews.b':'Google reviews','contact.reviews.s':'Client ratings on Maps',
     'foot.about':'Massage in Riga: FIFTY studio and outcall to your home, hotel or office.','foot.sections':'Sections','foot.first':'First visit €30','foot.gdprhead':'Data & GDPR',
-    'foot.gdpr':'The form collects only your name and phone so we can get in touch and arrange a visit. Legal details, retention period and data controller contacts must be confirmed before public launch.',
+    'foot.gdpr':'The form collects only your name and phone number — so we can get in touch and arrange a visit. The data is not shared with third parties and is not used for mailings; we delete it on your request via WhatsApp or by phone. Analytics and advertising cookies are enabled only after your consent. Data controller — MAXAGIST, Maksim Anohin, Riga, +371 28 251 366.',
     'foot.copy':'© 2026 MAXAGIST · Massage supports relaxation and wellbeing but does not replace medical diagnosis or treatment.',
     'bubble.b':'Not sure what to choose?','bubble.text':'Message us on <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — we’ll suggest a format and time in a couple of minutes.',
     'st.fill':'Fill in your name, phone and tick the consent box.','st.dev':'Supabase isn’t connected (dev). You can send the request on WhatsApp:',
@@ -804,7 +985,14 @@ const WA_MSG = {
     outcall:'Здравствуйте! Хочу уточнить про выезд массажа. Адрес и пожелания: ',
     contact:'Здравствуйте! Подскажите по массажу, пожалуйста.',
     bubble:'Здравствуйте! Не могу определиться с форматом — подскажете?',
-    fab:'Здравствуйте! Хочу записаться на массаж.'
+    fab:'Здравствуйте! Хочу записаться на массаж.',
+    bar:'Здравствуйте! Хочу записаться на массаж.',
+    'p.back':'Здравствуйте! Беспокоит спина и шея после сидячей работы. Что посоветуете?',
+    'p.cellulite':'Здравствуйте! Интересует антицеллюлитный массаж — бёдра, ягодицы, живот. Что посоветуете?',
+    'p.sport':'Здравствуйте! Нужно восстановление после нагрузок, мышцы забиты. Что посоветуете?',
+    'p.stress':'Здравствуйте! Стресс и плохой сон — хочу расслабляющий массаж. Что посоветуете?',
+    'p.legs':'Здравствуйте! Отёки и тяжесть в ногах. Какой массаж подойдёт?',
+    'p.other':'Здравствуйте! Хочу просто расслабиться — подберите, пожалуйста, массаж.'
   },
   lv: {
     hero:'Sveiki! Vēlos pieteikties pirmajai vizītei par €30.',
@@ -814,7 +1002,14 @@ const WA_MSG = {
     outcall:'Sveiki! Vēlos precizēt par masāžas izbraukumu. Adrese un vēlmes: ',
     contact:'Sveiki! Lūdzu, pastāstiet par masāžu.',
     bubble:'Sveiki! Nevaru izlemt par formātu — vai varat ieteikt?',
-    fab:'Sveiki! Vēlos pieteikties masāžai.'
+    fab:'Sveiki! Vēlos pieteikties masāžai.',
+    bar:'Sveiki! Vēlos pieteikties masāžai.',
+    'p.back':'Sveiki! Satrauc mugura un kakls pēc sēdoša darba. Ko ieteiktu?',
+    'p.cellulite':'Sveiki! Interesē pretcelulīta masāža — gurni, sēžamvieta, vēders. Ko ieteiktu?',
+    'p.sport':'Sveiki! Vajag atjaunošanos pēc slodzes, muskuļi pārslogoti. Ko ieteiktu?',
+    'p.stress':'Sveiki! Stress un slikts miegs — vēlos relaksējošu masāžu. Ko ieteiktu?',
+    'p.legs':'Sveiki! Tūska un smagums kājās. Kāda masāža derēs?',
+    'p.other':'Sveiki! Vienkārši gribu atpūsties — lūdzu, piemeklējiet masāžu.'
   },
   en: {
     hero:'Hello! I’d like to book a first visit for €30.',
@@ -824,13 +1019,20 @@ const WA_MSG = {
     outcall:'Hello! I’d like to ask about a massage outcall. Address and wishes: ',
     contact:'Hello! Could you tell me about your massage, please.',
     bubble:'Hello! I can’t decide on the format — could you advise?',
-    fab:'Hello! I’d like to book a massage.'
+    fab:'Hello! I’d like to book a massage.',
+    bar:'Hello! I’d like to book a massage.',
+    'p.back':'Hello! My back and neck bother me after desk work. What would you suggest?',
+    'p.cellulite':'Hello! I’m interested in anti-cellulite massage — thighs, buttocks, belly. What would you suggest?',
+    'p.sport':'Hello! I need recovery after training, my muscles are tight. What would you suggest?',
+    'p.stress':'Hello! Stress and poor sleep — I’d like a relaxing massage. What would you suggest?',
+    'p.legs':'Hello! Swelling and heavy legs. Which massage would suit?',
+    'p.other':'Hello! I just want to relax — could you pick a massage for me?'
   }
 };
 const WA_LBL = {
-  ru: { lead:'Здравствуйте! Заявка с сайта на первый визит €30.', name:'Имя', phone:'Телефон' },
-  lv: { lead:'Sveiki! Pieteikums no mājaslapas pirmajai vizītei €30.', name:'Vārds', phone:'Tālrunis' },
-  en: { lead:'Hello! A request from the website for a first visit €30.', name:'Name', phone:'Phone' }
+  ru: { lead:'Здравствуйте! Заявка с сайта на первый визит €30.', name:'Имя', phone:'Телефон', topic:'Запрос' },
+  lv: { lead:'Sveiki! Pieteikums no mājaslapas pirmajai vizītei €30.', name:'Vārds', phone:'Tālrunis', topic:'Vēlme' },
+  en: { lead:'Hello! A request from the website for a first visit €30.', name:'Name', phone:'Phone', topic:'Request' }
 };
 
 let LANG = 'ru';
@@ -840,7 +1042,12 @@ function setWaLinks(){
   const set = (id, msg) => { const el = document.getElementById(id); if (el) el.href = waLink(msg); };
   set('wa-hero', m.hero); set('wa-about', m.about); set('wa-nudge', m.nudge);
   set('wa-outcall', m.outcall); set('wa-contact', m.contact); set('wa-bubble-link', m.bubble);
-  set('wa-price', m.price);
+  set('wa-price', m.price); set('wa-bar', m.bar);
+  // карточки «что вас беспокоит» — каждая открывает чат с уже написанным запросом
+  document.querySelectorAll('[data-wa-key]').forEach(el => {
+    const msg = m[el.getAttribute('data-wa-key')];
+    if (msg) el.href = waLink(msg);
+  });
 }
 
 function applyLang(lang){
@@ -862,19 +1069,12 @@ function applyLang(lang){
 document.getElementById('wa-fab').onclick = () => window.open(waLink(WA_MSG[LANG].fab), '_blank');
 document.querySelectorAll('#lang-switch button').forEach(b => { b.onclick = () => applyLang(b.dataset.lang); });
 
-/* ===== preloader / language gate ===== */
-const preload = document.getElementById('preload');
-function dismissPreload(){ preload.classList.add('hide'); setTimeout(() => { preload.style.display = 'none'; }, 650); }
+/* ===== язык: определяем сразу, без экрана-заглушки ===== */
 (function initLang(){
   let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
   const b = (navigator.language || '').toLowerCase();
   const browser = b.startsWith('lv') ? 'lv' : b.startsWith('en') ? 'en' : 'ru';
   applyLang(saved || browser);
-  preload.querySelectorAll('.langs button').forEach(b => {
-    b.addEventListener('click', () => { applyLang(b.dataset.lang); dismissPreload(); });
-  });
-  if (saved) { preload.classList.add('auto'); setTimeout(dismissPreload, 1200); }
-  else { setTimeout(() => { if (preload.style.display !== 'none') dismissPreload(); }, 15000); }
 })();
 
 const burger = document.getElementById('burger'), nav = document.getElementById('nav');
@@ -884,6 +1084,18 @@ nav.querySelectorAll('a').forEach(a => a.onclick = () => { nav.classList.remove(
 const bubble = document.getElementById('wa-bubble');
 if (!sessionStorage.getItem('wa-hidden')) setTimeout(() => bubble.classList.add('show'), 4000);
 document.getElementById('wa-x').onclick = () => { bubble.classList.remove('show'); sessionStorage.setItem('wa-hidden', '1'); };
+
+/* ===== выбранная жалоба: подставляем её в заявку, чтобы не переспрашивать ===== */
+const leadTopic = document.getElementById('lead-topic');
+document.querySelectorAll('.pick[data-wa-key]').forEach(a => {
+  a.addEventListener('click', () => {
+    const h = a.querySelector('h3');
+    if (!h || !leadTopic) return;
+    leadTopic.value = h.textContent.trim();
+    try { sessionStorage.setItem('mx_topic', leadTopic.value); } catch (e) {}
+  });
+});
+try { const t = sessionStorage.getItem('mx_topic'); if (t && leadTopic) leadTopic.value = t; } catch (e) {}
 
 const form = document.getElementById('lead-form');
 const statusEl = document.getElementById('status');
@@ -901,7 +1113,9 @@ form.addEventListener('submit', async e => {
   const utm = {}; new URLSearchParams(location.search).forEach((v,k)=>{ if(/^utm_|^(gclid|fbclid)$/.test(k)) utm[k.replace('utm_','')] = v.slice(0,120); });
   const payload = { name:d.name.trim(), phone:d.phone.trim(), source:'landing',
     path: location.pathname, referrer: document.referrer||'', utm };
-  const waText = `${L.lead}\n${L.name}: ${payload.name}\n${L.phone}: ${payload.phone}`;
+  if (d.topic) payload.message = `${L.topic}: ${d.topic.slice(0,200)}`;
+  const waText = `${L.lead}\n${L.name}: ${payload.name}\n${L.phone}: ${payload.phone}`
+    + (payload.message ? `\n${payload.message}` : '');
   waFallback.href = waLink(waText);
 
   if (!LEAD_ENDPOINT) {

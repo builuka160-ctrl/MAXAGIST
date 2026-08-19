@@ -2,22 +2,32 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<!-- Google tag (gtag.js) — GA4 + Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7B249WJS0"></script>
+<!-- Google tag (gtag.js) — GA4 + Google Ads + Consent Mode v2 -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  /* Consent Mode v2. До согласия рекламные и аналитические хранилища запрещены — этого требует
+     Google для трафика из ЕЭЗ. Баннер согласия — consent.js, он шлёт consent update. */
+  (function () {
+    var ok = false; try { ok = localStorage.getItem('mx_consent') === 'all'; } catch (e) {}
+    var v = ok ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v,
+      functionality_storage: 'granted', security_storage: 'granted', wait_for_update: 500
+    });
+  })();
   gtag('js', new Date());
   gtag('config', 'G-D7B249WJS0');
   gtag('config', 'AW-18386499497');
 </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7B249WJS0"></script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+try{ if(localStorage.getItem('mx_consent')!=='all') fbq('consent','revoke'); }catch(e){}
 fbq('init','1383733323705616');
 fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1383733323705616&ev=PageView&noscript=1" alt=""/></noscript>
 <!-- End Meta Pixel Code -->
 <script>try{if(localStorage.getItem('lang'))document.documentElement.classList.add('lang-set');}catch(e){}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -87,6 +97,7 @@ fbq('track','PageView');
 </script>
 <script src="tracker.js" defer></script>
 <script src="content.js" defer></script>
+<script src="consent.js" defer></script>
 </head>
 <body id="top">
 <div class="bg-base"></div>
@@ -312,12 +323,25 @@ fbq('track','PageView');
       </div>
       <div>
         <b data-i18n="foot.gdprhead">Данные и GDPR</b>
-        <p class="gdpr" data-i18n="foot.gdpr">Форма собирает только имя и телефон, чтобы мы могли связаться с вами и организовать визит. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.</p>
+        <p class="gdpr" data-i18n="foot.gdpr">Форма собирает только имя и телефон — чтобы связаться с вами и согласовать визит. Данные не передаются третьим лицам и не используются для рассылок; удалим по вашему запросу в WhatsApp или по телефону. Cookies для аналитики и рекламы подключаются только после вашего согласия. Контролёр данных — MAXAGIST, Максим Анохин, Рига, +371 28 251 366.</p>
       </div>
     </div>
     <div class="copy" data-i18n="foot.copy">© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.</div>
   </div>
 </footer>
+
+<!-- STICKY CTA (mobile) -->
+<div class="cta-bar">
+  <a class="cb cb-wa" data-track="ctabar:whatsapp" id="wa-bar" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2Zm5.7 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.1Z"/></svg>
+    <span data-i18n="bar.wa">WhatsApp</span></a>
+  <a class="cb" href="tel:+37128251366" data-track="ctabar:call">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 2 6a2 2 0 0 1 2-2Z"/></svg>
+    <span data-i18n="bar.call">Позвонить</span></a>
+  <a class="cb cb-gold" data-track="ctabar:book" href="index.html#offer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+    <span data-i18n="bar.book">Записаться</span></a>
+</div>
 
 <div class="wa-dock">
   <button class="wa-fab" id="wa-fab" aria-label="Написать в WhatsApp">
@@ -345,6 +369,7 @@ const I18N = {
   ru: {
     'nav.services':'Услуги','nav.outcall':'Выезд','nav.first':'Первый визит','nav.studio':'Студия','nav.faq':'Вопросы','nav.contacts':'Контакты','nav.call':'Позвонить',
     'a.menu':'Меню','a.close':'Закрыть',
+    'bar.wa':'WhatsApp','bar.call':'Позвонить','bar.book':'Записаться',
     'ov.eyebrow':'Выезд по Риге и Юрмале',
     'ov.h1':'Нет времени на дорогу?<br><span class="price">Спа приедет к вам</span>',
     'ov.lead':'Премиальный массаж дома, в отеле или офисе — в удобное для вас время. Всё оборудование привожу с собой, вам остаётся только расслабиться.',
@@ -377,12 +402,13 @@ const I18N = {
     'ov.end.back':'Удобнее приехать самим? В студии FIFTY — уютное пространство и онлайн‑запись. <a href="index.html#studio">Открыть страницу студии →</a>',
     'ov.bubble.b':'Хотите выезд?','ov.bubble.text':'Напишите в <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — согласуем время и адрес за пару минут.',
     'foot.about':'Массаж в Риге: студия FIFTY и выезд на дом, в отель, офис.','foot.sections':'Разделы','foot.first':'Первый визит €30',
-    'foot.gdprhead':'Данные и GDPR','foot.gdpr':'Форма собирает только имя и телефон, чтобы мы могли связаться с вами и организовать визит. Юридические реквизиты, срок хранения и контакты контролёра данных нужно утвердить до публичного запуска.',
+    'foot.gdprhead':'Данные и GDPR','foot.gdpr':'Форма собирает только имя и телефон — чтобы связаться с вами и согласовать визит. Данные не передаются третьим лицам и не используются для рассылок; удалим по вашему запросу в WhatsApp или по телефону. Cookies для аналитики и рекламы подключаются только после вашего согласия. Контролёр данных — MAXAGIST, Максим Анохин, Рига, +371 28 251 366.',
     'foot.copy':'© 2026 MAXAGIST · Массаж поддерживает расслабление и хорошее самочувствие, но не заменяет медицинскую диагностику или лечение.'
   },
   lv: {
     'nav.services':'Pakalpojumi','nav.outcall':'Izbraukums','nav.first':'Pirmā vizīte','nav.studio':'Studija','nav.faq':'Jautājumi','nav.contacts':'Kontakti','nav.call':'Zvanīt',
     'a.menu':'Izvēlne','a.close':'Aizvērt',
+    'bar.wa':'WhatsApp','bar.call':'Zvanīt','bar.book':'Pieteikties',
     'ov.eyebrow':'Izbraukums Rīgā un Jūrmalā',
     'ov.h1':'Nav laika ceļam?<br><span class="price">Spa atbrauks pie jums</span>',
     'ov.lead':'Premium masāža mājās, viesnīcā vai birojā — jums ērtā laikā. Visu aprīkojumu atvedu līdzi, jums atliek tikai atslābināties.',
@@ -415,12 +441,13 @@ const I18N = {
     'ov.end.back':'Ērtāk atbraukt pašiem? Studijā FIFTY — mājīga telpa un tiešsaistes pieraksts. <a href="index.html#studio">Atvērt studijas lapu →</a>',
     'ov.bubble.b':'Vēlaties izbraukumu?','ov.bubble.text':'Rakstiet <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — saskaņosim laiku un adresi dažu minūšu laikā.',
     'foot.about':'Masāža Rīgā: studija FIFTY un izbraukums mājās, viesnīcā, birojā.','foot.sections':'Sadaļas','foot.first':'Pirmā vizīte €30',
-    'foot.gdprhead':'Dati un GDPR','foot.gdpr':'Forma vāc tikai vārdu un tālruni, lai mēs varētu ar jums sazināties un organizēt vizīti. Juridiskos rekvizītus, glabāšanas termiņu un datu pārziņa kontaktus jāapstiprina pirms publiskās palaišanas.',
+    'foot.gdprhead':'Dati un GDPR','foot.gdpr':'Forma vāc tikai vārdu un tālruni — lai sazinātos ar jums un saskaņotu vizīti. Dati netiek nodoti trešajām personām un netiek izmantoti izsūtnēm; dzēsīsim pēc jūsu pieprasījuma WhatsApp vai pa tālruni. Analītikas un reklāmas sīkdatnes tiek pieslēgtas tikai pēc jūsu piekrišanas. Datu pārzinis — MAXAGIST, Maksims Anohins, Rīga, +371 28 251 366.',
     'foot.copy':'© 2026 MAXAGIST · Masāža veicina atslābināšanos un labsajūtu, bet neaizstāj medicīnisko diagnostiku vai ārstēšanu.'
   },
   en: {
     'nav.services':'Services','nav.outcall':'Outcall','nav.first':'First visit','nav.studio':'Studio','nav.faq':'FAQ','nav.contacts':'Contacts','nav.call':'Call',
     'a.menu':'Menu','a.close':'Close',
+    'bar.wa':'WhatsApp','bar.call':'Call','bar.book':'Book',
     'ov.eyebrow':'Outcall across Riga & Jurmala',
     'ov.h1':'No time to travel?<br><span class="price">The spa comes to you</span>',
     'ov.lead':'Premium massage at home, in your hotel or office — at a time that suits you. I bring all the equipment; you just relax.',
@@ -453,7 +480,7 @@ const I18N = {
     'ov.end.back':'Prefer to come in yourself? The FIFTY studio offers a cosy space and online booking. <a href="index.html#studio">Open the studio page →</a>',
     'ov.bubble.b':'Want an outcall?','ov.bubble.text':'Message on <a href="#" id="wa-bubble-link" target="_blank" rel="noopener">WhatsApp</a> — we’ll agree on the time and address within minutes.',
     'foot.about':'Massage in Riga: FIFTY studio and outcall to home, hotel, office.','foot.sections':'Sections','foot.first':'First visit €30',
-    'foot.gdprhead':'Data & GDPR','foot.gdpr':'The form collects only your name and phone so we can get in touch and arrange a visit. Legal details, retention period and data controller contacts must be approved before public launch.',
+    'foot.gdprhead':'Data & GDPR','foot.gdpr':'The form collects only your name and phone number — so we can get in touch and arrange a visit. The data is not shared with third parties and is not used for mailings; we delete it on your request via WhatsApp or by phone. Analytics and advertising cookies are enabled only after your consent. Data controller — MAXAGIST, Maksim Anohin, Riga, +371 28 251 366.',
     'foot.copy':'© 2026 MAXAGIST · Massage supports relaxation and wellbeing but does not replace medical diagnosis or treatment.'
   }
 };
@@ -463,21 +490,24 @@ const WA_MSG = {
     price:'Здравствуйте! Пришлите, пожалуйста, актуальные цены на выезд и PDF‑меню.',
     final:'Здравствуйте! Хочу заказать массаж с выездом. Удобное время и адрес: ',
     bubble:'Здравствуйте! Хочу уточнить про выезд массажа.',
-    fab:'Здравствуйте! Хочу заказать массаж с выездом.'
+    fab:'Здравствуйте! Хочу заказать массаж с выездом.',
+    bar:'Здравствуйте! Хочу заказать массаж с выездом.'
   },
   lv: {
     hero:'Sveiki! Vēlos pasūtīt masāžu ar izbraukumu. Adrese un vēlmes: ',
     price:'Sveiki! Lūdzu, atsūtiet aktuālās izbraukuma cenas un PDF izvēlni.',
     final:'Sveiki! Vēlos pasūtīt masāžu ar izbraukumu. Ērts laiks un adrese: ',
     bubble:'Sveiki! Vēlos precizēt par masāžas izbraukumu.',
-    fab:'Sveiki! Vēlos pasūtīt masāžu ar izbraukumu.'
+    fab:'Sveiki! Vēlos pasūtīt masāžu ar izbraukumu.',
+    bar:'Sveiki! Vēlos pasūtīt masāžu ar izbraukumu.'
   },
   en: {
     hero:'Hello! I’d like to book an outcall massage. Address and wishes: ',
     price:'Hello! Please send me your current outcall prices and the PDF menu.',
     final:'Hello! I’d like to book an outcall massage. Convenient time and address: ',
     bubble:'Hello! I’d like to ask about a massage outcall.',
-    fab:'Hello! I’d like to book an outcall massage.'
+    fab:'Hello! I’d like to book an outcall massage.',
+    bar:'Hello! I’d like to book an outcall massage.'
   }
 };
 
@@ -487,6 +517,7 @@ function setWaLinks(){
   const m = WA_MSG[LANG];
   const set = (id, msg) => { const el = document.getElementById(id); if (el) el.href = waLink(msg); };
   set('wa-hero', m.hero); set('wa-price', m.price); set('wa-final', m.final); set('wa-bubble-link', m.bubble);
+  set('wa-bar', m.bar);
 }
 
 function applyLang(lang){

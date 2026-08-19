@@ -108,40 +108,6 @@ section{scroll-margin-top:100px}
 .lang button:hover{color:var(--cream)}
 .lang button.on{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#1a140d}
 
-/* preloader / language gate */
-.preload{position:fixed;inset:0;z-index:200;display:grid;place-items:center;
-  background:radial-gradient(90% 70% at 50% 28%,#221c14,#141210 72%);
-  transition:opacity .6s ease}
-.preload.hide{opacity:0}
-/* returning visitors already picked a language — skip the gate so it never flashes on navigation */
-html.lang-set .preload{display:none}
-.preload-in{display:flex;flex-direction:column;align-items:center;gap:22px;padding:26px;text-align:center;
-  max-width:420px}
-.preload .logo-wrap{position:relative;width:118px;height:118px;display:grid;place-items:center}
-.preload .logo-wrap::before{content:"";position:absolute;inset:6px;border-radius:50%;
-  background:radial-gradient(circle,rgba(199,161,120,.4),transparent 66%);filter:blur(12px);
-  animation:prepulse 2.4s ease-in-out infinite}
-.preload .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(199,161,120,.18);
-  border-top-color:var(--gold);animation:prespin 1.25s linear infinite}
-.preload img{width:62px;height:auto;position:relative;animation:prelogo 1s cubic-bezier(.2,.7,.2,1) both}
-.preload .wm{font-family:var(--serif);font-size:1.55rem;letter-spacing:.42em;padding-left:.42em;
-  color:var(--cream);animation:prefade .9s .15s both}
-.preload .tagline{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
-  animation:prefade .9s .3s both}
-.preload .choose{margin-top:4px;font-size:.82rem;letter-spacing:.05em;color:var(--muted);
-  animation:prefade .9s .45s both}
-.preload .langs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:prefade .9s .55s both}
-.preload .langs button{padding:13px 30px;border-radius:999px;cursor:pointer;font-family:var(--sans);
-  font-weight:600;font-size:.98rem;letter-spacing:.02em;color:var(--cream);
-  background:var(--glass-2);border:1px solid var(--glass-border);transition:.2s}
-.preload .langs button:hover{border-color:var(--gold);color:var(--gold-hi);transform:translateY(-2px);
-  background:linear-gradient(180deg,rgba(228,201,162,.16),rgba(199,161,120,.06))}
-.preload.auto .choose,.preload.auto .langs{display:none}
-@keyframes prespin{to{transform:rotate(360deg)}}
-@keyframes prepulse{0%,100%{opacity:.45;transform:scale(.92)}50%{opacity:1;transform:scale(1.06)}}
-@keyframes prelogo{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:none}}
-@keyframes prefade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
 /* hero — asymmetric */
 .hero{padding:74px 0 64px}
 .hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
@@ -197,10 +163,6 @@ html.lang-set .preload{display:none}
 .svc-name{color:var(--cream);font-size:1rem}
 .svc-dur{color:var(--gold);font-family:var(--sans);font-size:.85rem;letter-spacing:.03em;
   white-space:nowrap;font-variant-numeric:tabular-nums}
-.svc-foot{margin-top:24px;display:flex;justify-content:space-between;align-items:center;
-  gap:20px 26px;flex-wrap:wrap}
-.svc-note{color:var(--muted);font-size:.9rem;max-width:560px}
-.svc-note b{color:var(--gold-hi);font-weight:700}
 
 /* outcall path */
 .outcall{padding:20px 0 12px}
@@ -480,3 +442,108 @@ footer{margin-top:26px;border-top:1px solid var(--line-2);padding:52px 0 30px}
 .rv-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;max-width:520px;margin:0 auto 22px}
 .rv-link{box-sizing:border-box;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border-radius:999px;font-size:13px;font-weight:500;color:#e5c08a;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:rgba(199,161,122,.10);border:1px solid rgba(199,161,122,.28);transition:transform .15s ease,border-color .15s ease,background .15s ease}
 .rv-link:hover{transform:translateY(-2px);border-color:rgba(199,161,122,.5);background:rgba(199,161,122,.16)}
+
+
+/* ============================================================
+   Конверсионные блоки: цена в герое, выбор по жалобе, прайс,
+   липкая панель действий и баннер согласия.
+   ============================================================ */
+
+/* hero: подзаголовок, цена, полоса доверия */
+.hero h1 .h1-sub{display:block;font-family:var(--sans);font-weight:400;font-size:.26em;
+  letter-spacing:.01em;line-height:1.35;color:var(--muted);margin-top:16px;max-width:16em}
+.price-tag{display:inline-flex;align-items:center;gap:14px;margin-top:26px;padding:12px 24px 12px 18px;
+  border-radius:999px;border:1px solid var(--glass-border);
+  background:linear-gradient(140deg,rgba(228,201,162,.17),rgba(199,161,120,.05))}
+.price-tag .pt-price{font-family:var(--serif);font-size:2.1rem;line-height:1;color:var(--gold-hi)}
+.price-tag .pt-txt{display:flex;flex-direction:column;gap:3px}
+.price-tag .pt-txt b{font-size:.95rem;font-weight:600;color:var(--cream)}
+.price-tag .pt-txt span{font-size:.8rem;color:var(--muted)}
+.trustbar{list-style:none;margin:28px 0 0;padding:0;display:grid;max-width:640px;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 22px}
+.trustbar li{display:flex;flex-direction:column;gap:3px}
+.trustbar b{font-family:var(--sans);font-size:1rem;font-weight:700;letter-spacing:.02em;color:var(--gold-hi)}
+.trustbar span{font-size:.76rem;letter-spacing:.02em;color:var(--muted-2)}
+
+/* «что вас беспокоит» — вход в воронку без выбора услуги */
+.picker{padding-top:28px;padding-bottom:14px}
+.pick-intro{max-width:740px;margin-bottom:30px}
+.pick-intro h2{font-size:clamp(2rem,3.6vw,3rem);margin:14px 0 12px}
+.pick-intro p{color:var(--muted)}
+.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pick{display:flex;flex-direction:column;gap:9px;padding:26px 26px 22px;transition:.22s}
+.pick:hover{transform:translateY(-3px);border-color:var(--gold-dim)}
+.pick h3{font-size:1.38rem;color:var(--cream)}
+.pick p{color:var(--muted);font-size:.94rem}
+.pick-tags{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim)}
+.pick .go{margin-top:auto;padding-top:16px;color:var(--gold);font-family:var(--sans);
+  font-size:.85rem;font-weight:600;letter-spacing:.04em}
+.pick .go::after{content:" →"}
+
+/* прайс */
+.svc-price{margin-top:26px;padding:30px 32px;display:grid;grid-template-columns:1fr auto;
+  gap:24px 34px;align-items:center}
+.svc-price h3{font-size:1.8rem;margin:10px 0 16px;color:var(--cream)}
+.price-list{list-style:none;margin:0 0 14px;padding:0;max-width:640px}
+.price-list li{display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+  padding:11px 0;border-bottom:1px solid var(--line-2);color:var(--muted);font-size:.96rem}
+.price-list li:last-child{border-bottom:0}
+.price-list b{font-family:var(--sans);white-space:nowrap;font-variant-numeric:tabular-nums}
+.pl-now{font-size:1.4rem;color:var(--gold-hi)}
+.pl-old{color:var(--muted-2);text-decoration:line-through;text-decoration-color:var(--gold-dim)}
+.pl-ask{color:var(--gold);font-size:.88rem;font-weight:600}
+.price-why{color:var(--muted);font-size:.89rem;max-width:640px}
+
+/* блок заявки */
+.offer-h{font-size:1.9rem;margin:14px 0 4px;color:var(--cream)}
+.offer-alt{margin-top:18px;font-size:.89rem;color:var(--muted)}
+.offer-alt a{color:var(--gold);border-bottom:1px solid var(--line)}
+.form-h{font-family:var(--serif);font-size:1.45rem;line-height:1.2;margin:0 0 18px;color:var(--cream)}
+.form-note{margin-top:12px;font-size:.79rem;line-height:1.5;color:var(--muted-2)}
+
+/* липкая панель действий — на телефоне запись всегда в одном касании */
+.cta-bar{display:none}
+
+/* баннер согласия на cookies (Consent Mode v2) */
+.cookie-bar{position:fixed;z-index:120;left:50%;transform:translate(-50%,150%);
+  bottom:calc(14px + env(safe-area-inset-bottom));width:min(780px,calc(100% - 28px));
+  display:flex;align-items:center;justify-content:space-between;gap:16px 22px;flex-wrap:wrap;
+  padding:16px 20px;border-radius:var(--r-md);border:1px solid var(--glass-border);
+  background:rgba(27,24,19,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 20px 50px rgba(0,0,0,.45);transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+.cookie-bar.show{transform:translate(-50%,0)}
+.cookie-bar p{flex:1 1 320px;margin:0;font-size:.83rem;line-height:1.5;color:var(--muted)}
+.cookie-bar a{color:var(--gold);border-bottom:1px solid var(--line)}
+.cookie-btns{display:flex;gap:10px;flex-wrap:wrap}
+.cookie-btns button{min-height:44px;padding:11px 20px;border-radius:999px;cursor:pointer;
+  font-family:var(--sans);font-weight:600;font-size:.83rem;color:var(--cream);
+  background:var(--glass-2);border:1px solid var(--glass-border);transition:.18s}
+.cookie-btns button:hover{transform:translateY(-1px)}
+.cookie-btns .c-all{background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+  color:#1a140d;border-color:transparent}
+
+@media(max-width:1100px){ .pick-grid{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:900px){
+  .pick-grid{grid-template-columns:1fr}
+  .svc-price{grid-template-columns:1fr;padding:26px 22px}
+  .svc-price .btn{width:100%;justify-content:center}
+  .price-tag{width:100%}
+  .trustbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+  .hero h1 .h1-sub{font-size:.3em}
+  .hero{padding-top:36px;padding-bottom:44px}
+  .price-tag{margin-top:20px}
+  .picker{padding-top:14px;padding-bottom:8px}
+  body{padding-bottom:76px}
+  .wa-dock{display:none}
+  .cta-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;position:fixed;z-index:90;
+    left:0;right:0;bottom:0;padding-bottom:env(safe-area-inset-bottom);
+    background:rgba(20,18,16,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border-top:1px solid var(--line)}
+  .cb{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    min-height:62px;padding:9px 6px;font-family:var(--sans);font-size:.75rem;font-weight:600;
+    letter-spacing:.02em;color:var(--cream);text-align:center}
+  .cb svg{width:20px;height:20px}
+  .cb-wa{color:#7fe0a0}
+  .cb-gold{color:var(--gold-hi)}
+  .cookie-bar{bottom:calc(80px + env(safe-area-inset-bottom))}
+}
