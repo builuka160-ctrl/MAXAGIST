@@ -8,11 +8,17 @@
  * шлём события. Если gtag почему-то нет — тихо кладём в dataLayer, ничего
  * не ломая. Подключать так: <script defer src="analytics.js"></script>
  *
- * События (в GA4 их можно пометить как «ключевые» / конверсии):
- *   generate_lead  — клик по WhatsApp или отправка формы лида (главная цель)
- *   phone_click    — клик по номеру телефона
- *   review_click   — переход к отзывам (Google Maps / оставить отзыв)
- *   social_click   — переход в Instagram и т.п.
+ * Разделение конверсий (важно для Smart Bidding):
+ *   ПЕРВИЧНЫЕ  — generate_lead (форма реально сохранена на сервере)
+ *                и офлайн-события booked / paid, которые загружаются в Ads
+ *                со стороны Supabase по сохранённому gclid.
+ *   ВТОРИЧНЫЕ  — whatsapp_click, phone_click, altegio_click, review_click,
+ *                social_click. Это намерение, а не клиент: если оптимизировать
+ *                кампании по ним, Google будет искать людей, которые жмут
+ *                кнопку, а не тех, кто приходит на массаж.
+ *
+ * Раньше клик по WhatsApp слался как generate_lead — от этого отказались
+ * сознательно: у одного мастера цена ошибки в обучении ставок слишком высока.
  *
  * Google Ads (AW-18386499497): базовый тег подключён в <head> каждой страницы
  * (ремаркетинг + сбор данных). Ниже — отправка конверсий в Ads. Чтобы конверсия
@@ -25,10 +31,45 @@
   'use strict';
 
   // Google Ads conversion labels. Заполните из кабинета Ads (Цели → Конверсии).
+  // Действие в Ads помечайте как Primary только для `lead`; остальные — Secondary.
   var AW_ID = 'AW-18386499497';
   var AW_LABELS = {
-    lead: 'e3XgCM2BiOIcEKnvrr9E', // «Отправка формы для потенциальных клиентов»: WhatsApp / форма лида
-    phone: '' // (опционально) звонок по номеру телефона — добавить отдельным action при необходимости
+    lead: 'e3XgCM2BiOIcEKnvrr9E', // PRIMARY: форма заявки успешно сохранена
+    whatsapp: '',                 // SECONDARY: клик по WhatsApp — создайте отдельное действие
+    phone: '',                    // SECONDARY: клик по номеру телефона
+    booking_click: ''             // SECONDARY: переход в онлайн-запись Altegio
+  };
+
+  /* Идентификаторы рекламного клика. Нужны, чтобы позже вернуть в Google
+     офлайн-результат («записался», «пришёл», «оплатил») по этому же клику —
+     именно на таких данных Smart Bidding начинает искать реальных клиентов,
+     а не любителей нажать кнопку. Храним только при согласии на рекламные
+     хранилища; из текущего URL читаем всегда. */
+  var CLICK_KEYS = ['gclid', 'wbraid', 'gbraid', 'fbclid', 'msclkid'];
+
+  function readClickIds() {
+    var out = {}, q;
+    try { q = new URLSearchParams(location.search); } catch (e) { return out; }
+    CLICK_KEYS.forEach(function (k) { var v = q.get(k); if (v) out[k] = String(v).slice(0, 200); });
+    return out;
+  }
+  function consentGranted() {
+    try { return localStorage.getItem('mx_consent') === 'all'; } catch (e) { return false; }
+  }
+  (function storeClickIds() {
+    var found = readClickIds();
+    if (!Object.keys(found).length || !consentGranted()) return;
+    try {
+      found.ts = new Date().toISOString();
+      found.landing = location.pathname;
+      localStorage.setItem('mx_click', JSON.stringify(found));
+    } catch (e) { /* приватный режим — не страшно */ }
+  })();
+  // Заявка может уйти со страницы без параметров в URL — отдаём сохранённые.
+  window.mxClickIds = function () {
+    var live = readClickIds();
+    if (Object.keys(live).length) return live;
+    try { return JSON.parse(localStorage.getItem('mx_click') || '{}'); } catch (e) { return {}; }
   };
 
   function send(name, params) {
@@ -90,20 +131,26 @@
     var href = hrefOf(el);
 
     if (isWhatsApp(el, href)) {
-      // Главная конверсия воронки — обращение в WhatsApp (запись/консультация)
-      send('generate_lead', {
+      // Намерение, а не клиент: вторичная конверсия.
+      send('whatsapp_click', {
         method: 'whatsapp',
         link_url: href || 'wa:js',
         page_location: location.pathname
       });
-      adConversion('lead', { value: 1.0, currency: 'EUR' });
-      fb('Lead', { content_name: 'whatsapp' });
+      adConversion('whatsapp');
+      fb('Contact', { content_name: 'whatsapp' });
       return;
     }
     if (/^tel:/i.test(href)) {
       send('phone_click', { link_url: href, page_location: location.pathname });
-      adConversion('phone', { value: 1.0, currency: 'EUR' });
+      adConversion('phone');
       fb('Contact', { content_name: 'phone' });
+      return;
+    }
+    if (/alteg\.io|altegio/i.test(href)) {
+      send('altegio_click', { link_url: href, page_location: location.pathname });
+      adConversion('booking_click');
+      fb('Schedule', { content_name: 'altegio' });
       return;
     }
     if (/writereview|maps\.app\.goo|search\.google\.com\/local|goo\.gl\/maps/i.test(href)) {
